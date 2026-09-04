@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/init/060626-client_table_schema.sql
+  - include:
+      file: db/changelog/init/060626-client_nverified_table_schema.sql
