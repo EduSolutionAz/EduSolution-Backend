@@ -3,9 +3,11 @@ package com.edu.edusolution.service;
 import com.edu.edusolution.dto.request.ClientPasswordCreationRequestDTO;
 import com.edu.edusolution.dto.request.ClientRegisterRequestDTO;
 import com.edu.edusolution.dto.request.ClientVerificationRequestDTO;
+import com.edu.edusolution.dto.request.LoginRequest;
 import com.edu.edusolution.dto.response.ClientPasswordCreationResponseDTO;
 import com.edu.edusolution.dto.response.ClientRegisterResponseDTO;
 import com.edu.edusolution.dto.response.ClientVerificationResponseDTO;
+import com.edu.edusolution.dto.response.LoginResponse;
 import com.edu.edusolution.entity.client.ClientEntity;
 import com.edu.edusolution.entity.client.ClientNVerifiedEntity;
 import com.edu.edusolution.entity.client.ClientRoles;
@@ -17,6 +19,8 @@ import com.edu.edusolution.repository.ClientNVerifiedRepository;
 import com.edu.edusolution.repository.ClientRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +39,9 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientNVerifiedRepository clientNVerifiedRepository;
     private final MailService mailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+    private final AuthenticationService authenticationService;
 
     public ClientRegisterResponseDTO clientRegister (ClientRegisterRequestDTO request) {
         Optional<ClientEntity> clientEntity = clientRepository.findByClientEmail(request.getClientEmail());
@@ -110,6 +117,21 @@ public class ClientService {
                 .isProfileCreated(true)
                 .clientEmail(request.getClientEmail())
                 .build();
+    }
+    public LoginResponse authenticate(LoginRequest request) {
+        ClientEntity user = clientRepository.findByClientEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        String jwtToken = jwtService.generateToken(user);
+
+        return new LoginResponse(jwtToken, jwtService.getExpirationTime());
     }
 
     /* Private Methods that will help us to focus on business logic in public methods */

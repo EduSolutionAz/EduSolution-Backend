@@ -3,9 +3,11 @@ package com.edu.edusolution.controller;
 import com.edu.edusolution.dto.request.ClientPasswordCreationRequestDTO;
 import com.edu.edusolution.dto.request.ClientRegisterRequestDTO;
 import com.edu.edusolution.dto.request.ClientVerificationRequestDTO;
+import com.edu.edusolution.dto.request.LoginRequest;
 import com.edu.edusolution.dto.response.ClientPasswordCreationResponseDTO;
 import com.edu.edusolution.dto.response.ClientRegisterResponseDTO;
 import com.edu.edusolution.dto.response.ClientVerificationResponseDTO;
+import com.edu.edusolution.dto.response.LoginResponse;
 import com.edu.edusolution.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,11 @@ public class ClientController {
     @PostMapping("/register/password")
     public ResponseEntity<ClientPasswordCreationResponseDTO> clientVerify(@Valid @RequestBody ClientPasswordCreationRequestDTO request){
         return ResponseEntity.ok(clientService.clientCreation(request));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> clientLogin(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(clientService.authenticate(request));
     }
 
 }

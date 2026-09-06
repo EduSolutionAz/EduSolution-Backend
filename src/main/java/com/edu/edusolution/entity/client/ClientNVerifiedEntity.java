@@ -50,5 +50,5 @@ public class ClientNVerifiedEntity {
 
     @CreationTimestamp
     @Column(name = "client_created_at", insertable = false, updatable = false)
-    private String clientCreatedAt;
+    private OffsetDateTime clientCreatedAt;
 }
