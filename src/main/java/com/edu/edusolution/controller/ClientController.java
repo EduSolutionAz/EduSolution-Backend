@@ -35,7 +35,7 @@ public class ClientController {
     }
 
     @PostMapping("/register/password")
-    public ResponseEntity<ClientPasswordCreationResponseDTO> clientVerify(@Valid @RequestBody ClientPasswordCreationRequestDTO request){
+    public ResponseEntity<ClientPasswordCreationResponseDTO> clientPasswordCreation(@Valid @RequestBody ClientPasswordCreationRequestDTO request){
         return ResponseEntity.ok(clientService.clientCreation(request));
     }
 

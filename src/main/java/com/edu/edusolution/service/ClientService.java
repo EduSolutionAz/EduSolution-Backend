@@ -42,20 +42,20 @@ public class ClientService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Transactional
     public ClientRegisterResponseDTO clientRegister (ClientRegisterRequestDTO request) {
-        Optional<ClientEntity> clientEntity = clientRepository.findByClientEmail(request.getClientEmail());
+        Optional<ClientEntity> clientEntity = clientRepository.findByClientEmailOrClientNumber(request.getClientEmail(), request.getClientPhone());
 
         if(clientEntity.isPresent()){
-            throw new ClientAlreadyExistsException(CLIENT_ALREADY_EXISTS_EMAIL_MSG);
+            throw new ClientAlreadyExistsException(CLIENT_ALREADY_EXISTS_EMAIL_PHONE_MSG);
         }
 
-        Optional<ClientNVerifiedEntity> checkClient= clientNVerifiedRepository.findByClientEmailAndClientNumber(request.getClientEmail(), request.getClientPhone());
-        System.out.println("NOW clientNV");
+        Optional<ClientNVerifiedEntity> checkClient= clientNVerifiedRepository.findByClientEmailOrClientNumber(request.getClientEmail(), request.getClientPhone());
         ClientNVerifiedEntity clientNV = getClientNVEntity(checkClient, request.getClientEmail(), request.getClientName(), request.getClientPhone());
-        System.out.println("Passed clientNV");
         boolean isEligibleForEmail = checkEligibilityForVerificationEmail(clientNV);
-        System.out.println("Mail Sending");
+
         if(!isEligibleForEmail){
             return ClientRegisterResponseDTO
                     .builder()
@@ -68,6 +68,7 @@ public class ClientService {
         return sendVerificationEmail(clientNV);
     }
 
+    @Transactional
     public ClientVerificationResponseDTO clientVerify (ClientVerificationRequestDTO request) {
 
         Optional<ClientEntity> clientEntity = clientRepository.findByClientEmail(request.getClientEmail());
@@ -101,13 +102,13 @@ public class ClientService {
         if (!checkClient.getAccountState().equals(PendingState.PASSWORD_PENDING)) {
             throw new VerificationFailedException();
         }
-        System.out.println(request.getClientPassword());
+
         ClientEntity client = new ClientEntity();
         client.setClientRoles(ClientRoles.USER);
         client.setClientName(checkClient.getClientName());
         client.setClientEmail(checkClient.getClientEmail());
         client.setClientNumber(checkClient.getClientNumber());
-        client.setClientPassword(passwordCreator(request.getClientPassword()));
+        client.setClientPassword(bCryptPasswordEncoder.encode(request.getClientPassword()));
 
         clientRepository.save(client);
         clientNVerifiedRepository.delete(checkClient);
@@ -120,7 +121,7 @@ public class ClientService {
     }
     public LoginResponse authenticate(LoginRequest request) {
         ClientEntity user = clientRepository.findByClientEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ClientNotFoundException(CLIENT_NOT_FOUND_MSG));
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -216,7 +217,7 @@ public class ClientService {
             checkClient.setAccountState(PendingState.PASSWORD_PENDING);
             clientNVerifiedRepository.save(checkClient);
         } else {
-            throw new VerificationFailedException();
+            throw new VerificationFailedException(VERIFICATION_CODE_FAILED_MSG);
         }
     }
 
@@ -238,12 +239,5 @@ public class ClientService {
                     .clientEmail(checkClient.getClientEmail())
                     .build();
         }
-    }
-
-    private String passwordCreator(String raw){
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-        return encoder.encode(raw);
-
     }
 }

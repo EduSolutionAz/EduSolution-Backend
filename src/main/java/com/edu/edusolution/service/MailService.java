@@ -21,7 +21,6 @@ public class MailService {
         try {
             javaMailSender.send(message);
         } catch (MailException ex){
-            System.out.println(ex.getMessage());
             throw new MailSendingException();
         }
 

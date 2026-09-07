@@ -7,20 +7,26 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import static com.edu.edusolution.constants.DtoConstants.*;
+import static com.edu.edusolution.constants.DtoConstants.EMAIL_JSON_FIELD;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class LoginRequest {
-    @NotBlank(message = "email is required")
-    @NotNull(message = "email cannot be null")
-    @Size(max = 50, message = "email must not exceed 50 characters")
-    @Email(message = "email must be a valid email address")
-    @JsonProperty("email")
+
+    @NotBlank(message = EMAIL_IS_REQUIRED_MSG)
+    @NotNull(message = EMAIL_IS_REQUIRED_MSG)
+    @Size(max = 50, message = EMAIL_LENGTH_MSG)
+    @Email(message = EMAIL_VALID_MSG)
+    @JsonProperty(EMAIL_JSON_FIELD)
     String email;
 
-    @NotBlank(message = "password is required")
-    @NotNull(message = "password cannot be null")
-    @Size(max = 18, message = "password must not exceed 18 characters")
-    @JsonProperty("password")
+    @Size(min = 9, max = 20, message = PASSWORD_LENGTH_MSG)
+    @JsonProperty(PASSWORD_JSON_FIELD)
+    @NotNull(message = PASSWORD_IS_REQUIRED_MSG)
+    @NotBlank(message = PASSWORD_IS_REQUIRED_MSG)
     String password;
 }

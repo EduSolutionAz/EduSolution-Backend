@@ -25,12 +25,11 @@ public class ClientNVerifiedEntity {
     private UUID clientId;
 
     // Data will be used
-    @Column(name = "client_name", unique = true, nullable = false, length = 50)
+    @Column(name = "client_name", nullable = false, length = 50)
     private String clientName;
 
-    @Column(name = "client_email", unique = true, nullable = false, length = 100)
+    @Column(name = "client_email", unique = true, nullable = false, length = 50)
     private String clientEmail;
-    //---------------------
 
     @Column(name = "client_number", unique = true, nullable = false, length = 15)
     private String clientNumber;

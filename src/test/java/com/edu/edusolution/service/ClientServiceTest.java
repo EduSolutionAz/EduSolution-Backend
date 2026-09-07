@@ -16,6 +16,8 @@ import com.edu.edusolution.repository.ClientNVerifiedRepository;
 import com.edu.edusolution.repository.ClientRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
@@ -37,6 +39,14 @@ public class ClientServiceTest {
     private ClientNVerifiedRepository clientNVerifiedRepository;
     @MockitoBean
     private  MailService mailService;
+    @MockitoBean
+    private  AuthenticationManager authenticationManager;
+    @MockitoBean
+    private  JwtService jwtService;
+    @MockitoBean
+    private  AuthenticationService authenticationService;
+    @MockitoBean
+    private  BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private ClientService clientService;
@@ -47,8 +57,8 @@ public class ClientServiceTest {
         String name = "user";
         String phone = "+48123456789";
 
-        when(clientRepository.findByClientEmail(email)).thenReturn(Optional.empty());
-        when(clientNVerifiedRepository.findByClientEmail(email)).thenReturn(Optional.empty());
+        when(clientRepository.findByClientEmailOrClientNumber(email, phone)).thenReturn(Optional.empty());
+        when(clientNVerifiedRepository.findByClientEmailOrClientNumber(email, phone)).thenReturn(Optional.empty());
 
         ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).clientPhone(phone).build());
 
@@ -90,10 +100,10 @@ public class ClientServiceTest {
         client.setClientCodeLastSent(OffsetDateTime.now().minusMinutes(1));
         client.setAccountState(PendingState.VERIFICATION_PENDING);
 
-        when(clientRepository.findByClientEmail(email)).thenReturn(Optional.empty());
-        when(clientNVerifiedRepository.findByClientEmail(email)).thenReturn(Optional.of(client));
+        when(clientRepository.findByClientEmailOrClientNumber(email, phone)).thenReturn(Optional.empty());
+        when(clientNVerifiedRepository.findByClientEmailOrClientNumber(email, phone)).thenReturn(Optional.of(client));
 
-        ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).build());
+        ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).clientPhone(phone).build());
 
         assertFalse(response.isCodeSent());
         assertEquals(PendingState.VERIFICATION_PENDING, response.getRegisterStatus());
@@ -112,10 +122,10 @@ public class ClientServiceTest {
         client.setClientCodeLastSent(OffsetDateTime.now().minusMinutes(1));
         client.setAccountState(PendingState.PASSWORD_PENDING);
 
-        when(clientRepository.findByClientEmail(email)).thenReturn(Optional.empty());
-        when(clientNVerifiedRepository.findByClientEmail(email)).thenReturn(Optional.of(client));
+        when(clientRepository.findByClientEmailOrClientNumber(email,phone)).thenReturn(Optional.empty());
+        when(clientNVerifiedRepository.findByClientEmailOrClientNumber(email,phone)).thenReturn(Optional.of(client));
 
-        ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).build());
+        ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).clientPhone(phone).build());
 
         assertFalse(response.isCodeSent());
         assertEquals(PendingState.PASSWORD_PENDING, response.getRegisterStatus());
@@ -132,9 +142,9 @@ public class ClientServiceTest {
         clientEntity.setClientName(name);
         clientEntity.setClientNumber(phone);
 
-        when(clientRepository.findByClientEmail(email)).thenReturn(Optional.of(clientEntity));
+        when(clientRepository.findByClientEmailOrClientNumber(email,phone)).thenReturn(Optional.of(clientEntity));
 
-        ClientAlreadyExistsException exception = assertThrows(ClientAlreadyExistsException.class, () -> clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).build()));
+        ClientAlreadyExistsException exception = assertThrows(ClientAlreadyExistsException.class, () -> clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).clientPhone(phone).build()));
 
         assertEquals(exception.getCode(), CLIENT_ALREADY_EXISTS_CODE);
     }

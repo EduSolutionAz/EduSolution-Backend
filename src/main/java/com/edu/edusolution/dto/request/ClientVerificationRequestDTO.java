@@ -9,22 +9,27 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import static com.edu.edusolution.constants.DtoConstants.*;
+import static com.edu.edusolution.constants.DtoConstants.EMAIL_JSON_FIELD;
 
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class ClientVerificationRequestDTO {
 
-    @NotBlank(message = "email is required")
-    @NotNull(message = "email cannot be null")
-    @Size(max = 50, message = "email must not exceed 50 characters")
-    @Email(message = "email must be a valid email address")
-    @JsonProperty("email")
+    @NotBlank(message = EMAIL_IS_REQUIRED_MSG)
+    @NotNull(message = EMAIL_IS_REQUIRED_MSG)
+    @Size(max = 50, message = EMAIL_LENGTH_MSG)
+    @Email(message = EMAIL_VALID_MSG)
+    @JsonProperty(EMAIL_JSON_FIELD)
     private String clientEmail;
 
-    @Size(max = 6, message = "Verification code is only 6 characters")
-    @NotNull(message = "code cannot be null")
-    @NotBlank(message = "code cannot be blank")
-    @JsonProperty("code")
+    @Size(max = 6, min = 6, message = CODE_LENGTH_MSG)
+    @NotNull(message = CODE_IS_REQUIRED_MSG)
+    @NotBlank(message = CODE_IS_REQUIRED_MSG)
+    @JsonProperty(CODE_JSON_FIELD)
     private String verificationCode;
 }
