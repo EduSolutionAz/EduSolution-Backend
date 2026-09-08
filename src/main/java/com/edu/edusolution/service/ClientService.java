@@ -3,9 +3,11 @@ package com.edu.edusolution.service;
 import com.edu.edusolution.dto.request.ClientPasswordCreationRequestDTO;
 import com.edu.edusolution.dto.request.ClientRegisterRequestDTO;
 import com.edu.edusolution.dto.request.ClientVerificationRequestDTO;
+import com.edu.edusolution.dto.request.LoginRequest;
 import com.edu.edusolution.dto.response.ClientPasswordCreationResponseDTO;
 import com.edu.edusolution.dto.response.ClientRegisterResponseDTO;
 import com.edu.edusolution.dto.response.ClientVerificationResponseDTO;
+import com.edu.edusolution.dto.response.LoginResponse;
 import com.edu.edusolution.entity.client.ClientEntity;
 import com.edu.edusolution.entity.client.ClientNVerifiedEntity;
 import com.edu.edusolution.entity.client.ClientRoles;
@@ -17,6 +19,8 @@ import com.edu.edusolution.repository.ClientNVerifiedRepository;
 import com.edu.edusolution.repository.ClientRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,20 +39,23 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientNVerifiedRepository clientNVerifiedRepository;
     private final MailService mailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+    private final AuthenticationService authenticationService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Transactional
     public ClientRegisterResponseDTO clientRegister (ClientRegisterRequestDTO request) {
-        Optional<ClientEntity> clientEntity = clientRepository.findByClientEmail(request.getClientEmail());
+        Optional<ClientEntity> clientEntity = clientRepository.findByClientEmailOrClientNumber(request.getClientEmail(), request.getClientPhone());
 
         if(clientEntity.isPresent()){
-            throw new ClientAlreadyExistsException(CLIENT_ALREADY_EXISTS_EMAIL_MSG);
+            throw new ClientAlreadyExistsException(CLIENT_ALREADY_EXISTS_EMAIL_PHONE_MSG);
         }
 
-        Optional<ClientNVerifiedEntity> checkClient= clientNVerifiedRepository.findByClientEmailAndClientNumber(request.getClientEmail(), request.getClientPhone());
-        System.out.println("NOW clientNV");
+        Optional<ClientNVerifiedEntity> checkClient= clientNVerifiedRepository.findByClientEmailOrClientNumber(request.getClientEmail(), request.getClientPhone());
         ClientNVerifiedEntity clientNV = getClientNVEntity(checkClient, request.getClientEmail(), request.getClientName(), request.getClientPhone());
-        System.out.println("Passed clientNV");
         boolean isEligibleForEmail = checkEligibilityForVerificationEmail(clientNV);
-        System.out.println("Mail Sending");
+
         if(!isEligibleForEmail){
             return ClientRegisterResponseDTO
                     .builder()
@@ -61,6 +68,7 @@ public class ClientService {
         return sendVerificationEmail(clientNV);
     }
 
+    @Transactional
     public ClientVerificationResponseDTO clientVerify (ClientVerificationRequestDTO request) {
 
         Optional<ClientEntity> clientEntity = clientRepository.findByClientEmail(request.getClientEmail());
@@ -94,13 +102,13 @@ public class ClientService {
         if (!checkClient.getAccountState().equals(PendingState.PASSWORD_PENDING)) {
             throw new VerificationFailedException();
         }
-        System.out.println(request.getClientPassword());
+
         ClientEntity client = new ClientEntity();
         client.setClientRoles(ClientRoles.USER);
         client.setClientName(checkClient.getClientName());
         client.setClientEmail(checkClient.getClientEmail());
         client.setClientNumber(checkClient.getClientNumber());
-        client.setClientPassword(passwordCreator(request.getClientPassword()));
+        client.setClientPassword(bCryptPasswordEncoder.encode(request.getClientPassword()));
 
         clientRepository.save(client);
         clientNVerifiedRepository.delete(checkClient);
@@ -110,6 +118,21 @@ public class ClientService {
                 .isProfileCreated(true)
                 .clientEmail(request.getClientEmail())
                 .build();
+    }
+    public LoginResponse authenticate(LoginRequest request) {
+        ClientEntity user = clientRepository.findByClientEmail(request.getEmail())
+                .orElseThrow(() -> new ClientNotFoundException(CLIENT_NOT_FOUND_MSG));
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        String jwtToken = jwtService.generateToken(user);
+
+        return new LoginResponse(jwtToken, jwtService.getExpirationTime());
     }
 
     /* Private Methods that will help us to focus on business logic in public methods */
@@ -194,7 +217,7 @@ public class ClientService {
             checkClient.setAccountState(PendingState.PASSWORD_PENDING);
             clientNVerifiedRepository.save(checkClient);
         } else {
-            throw new VerificationFailedException();
+            throw new VerificationFailedException(VERIFICATION_CODE_FAILED_MSG);
         }
     }
 
@@ -216,12 +239,5 @@ public class ClientService {
                     .clientEmail(checkClient.getClientEmail())
                     .build();
         }
-    }
-
-    private String passwordCreator(String raw){
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-        return encoder.encode(raw);
-
     }
 }
