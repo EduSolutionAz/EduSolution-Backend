@@ -34,4 +34,8 @@ public class ExceptionConstants {
 
     //Data Integrity
     public static final String DATA_INTEGRITY_PROBLEM_CODE = "DATA_INTEGRITY_PROBLEM";
+
+    // Country Exception
+    public static final String COUNTRY_NOT_FOUND_CODE = "COUNTRY_NOT_FOUND";
+    public static final String COUNTRY_NOT_FOUND_MSG = "Country with this name not found";
 }

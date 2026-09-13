@@ -38,7 +38,8 @@ public class SecurityConfig {
                             "/api/v1/user/register",
                             "/api/v1/user/register/verify",
                             "/api/v1/user/register/password",
-                            "/api/v1/user/login"
+                            "/api/v1/user/login",
+                            "/api/v1/country/**"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })

@@ -32,8 +32,14 @@ public class CountryEntity {
     @Column(name = "country_photo_url", nullable = false)
     private String countryPhotoUrl;
 
+    @Column(name = "university_count", nullable = false)
+    private int universityCount;
+
     @Column(name = "tuition_fee_entry", nullable = false)
     private BigDecimal tuitionFeeEntry;
+
+    @Column(name = "rental_fee_entry")
+    private BigDecimal rentalFeeEntry;
 
     @Column(name = "visa_help", nullable = false)
     private boolean visaHelp;

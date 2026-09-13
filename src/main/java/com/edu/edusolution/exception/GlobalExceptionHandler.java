@@ -1,5 +1,6 @@
 package com.edu.edusolution.exception;
 
+import com.edu.edusolution.dto.response.CountrySectionResponseDTO;
 import com.edu.edusolution.dto.response.exception.ExceptionResponseDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ExceptionResponseDTO> handleDataIntegrityViolationException(DataIntegrityViolationException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(DATA_INTEGRITY_PROBLEM_CODE,ex.getMessage()));
+    }
+
+    @ExceptionHandler(CountryNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleCountryNotFoundException(CountryNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 }
