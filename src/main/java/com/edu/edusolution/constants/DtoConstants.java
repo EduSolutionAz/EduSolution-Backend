@@ -24,5 +24,5 @@ public class DtoConstants {
 
     public static final String CODE_IS_REQUIRED_MSG = "CODE is required to proceed";
     public static final String CODE_LENGTH_MSG = "CODE must be 6 characters";
-    public static final String CODE_JSON_FIELD = "CODE";
+    public static final String CODE_JSON_FIELD = "code";
 }
