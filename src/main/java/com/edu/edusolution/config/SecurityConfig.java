@@ -39,7 +39,9 @@ public class SecurityConfig {
                             "/api/v1/user/register/verify",
                             "/api/v1/user/register/password",
                             "/api/v1/user/login",
-                            "/api/v1/country/**"
+                            "/api/v1/country/**",
+                            "/api/v1/applicant/add",
+                            "/api/v1/applicant/top_comments"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
