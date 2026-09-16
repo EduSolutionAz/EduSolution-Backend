@@ -24,8 +24,6 @@ public class CountryService {
     private final CountrySectionRepository countrySectionRepository;
     private final UniversityRepository universityRepository;
 
-    // todo - api for countries(Done) and api for partner universities
-
     public CountrySectionResponseDTO getCountryInformation(CountrySectionRequestDTO request) {
         CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
                 .orElseThrow
