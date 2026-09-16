@@ -15,4 +15,6 @@ public interface CountryRepository extends JpaRepository<CountryEntity, UUID> {
     List<CountryEntity> findTop10By();
 
     Optional<CountryEntity> findByCountryNameIgnoreCase(String countryName);
+
+    List<CountryEntity> findAllByTopList(boolean topList);
 }
