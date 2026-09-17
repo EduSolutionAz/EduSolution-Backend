@@ -3,7 +3,7 @@
 --changeset ally:130926-universities_table_schema
 
 CREATE TABLE universities (
-                              university_id UUID PRIMARY KEY,
+                              university_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                               country_id UUID,
                               university_name VARCHAR(255) NOT NULL UNIQUE,
                               university_type VARCHAR(255),
