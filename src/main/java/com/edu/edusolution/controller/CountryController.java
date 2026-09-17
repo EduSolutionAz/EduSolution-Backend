@@ -1,6 +1,7 @@
 package com.edu.edusolution.controller;
 
 import com.edu.edusolution.dto.request.CountrySectionRequestDTO;
+import com.edu.edusolution.dto.response.CountryFlagResponseDTO;
 import com.edu.edusolution.dto.response.CountrySectionResponseDTO;
 import com.edu.edusolution.dto.response.TopCountriesInfoResponse;
 import com.edu.edusolution.service.CountryService;
@@ -24,8 +25,13 @@ public class CountryController {
         return ResponseEntity.ok(countryService.getCountryInformation(new CountrySectionRequestDTO(countryName)));
     }
 
-    @GetMapping("/topCountries")
+    @GetMapping("/top_countries")
     public ResponseEntity<List<TopCountriesInfoResponse>> getTopCountries(){
         return ResponseEntity.ok(countryService.getTopCountriesInformation());
+    }
+
+    @GetMapping("/country_logos")
+    public ResponseEntity<List<CountryFlagResponseDTO>> getCountryFlags(){
+        return ResponseEntity.ok(countryService.getCountryTopFlags());
     }
 }

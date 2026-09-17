@@ -47,6 +47,9 @@ public class CountryEntity {
     @Column(name = "dormitory_help", nullable = false)
     private boolean dormitoryHelp;
 
+    @Column(name = "top_list")
+    private boolean topList;
+
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private OffsetDateTime createdAt;

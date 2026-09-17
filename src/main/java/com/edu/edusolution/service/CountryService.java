@@ -1,6 +1,7 @@
 package com.edu.edusolution.service;
 
 import com.edu.edusolution.dto.request.CountrySectionRequestDTO;
+import com.edu.edusolution.dto.response.CountryFlagResponseDTO;
 import com.edu.edusolution.dto.response.CountrySectionResponseDTO;
 import com.edu.edusolution.dto.response.TopCountriesInfoResponse;
 import com.edu.edusolution.entity.country.CountryEntity;
@@ -22,7 +23,6 @@ public class CountryService {
     private final CountryRepository countryRepository;
     private final CountrySectionRepository countrySectionRepository;
     private final UniversityRepository universityRepository;
-
 
     public CountrySectionResponseDTO getCountryInformation(CountrySectionRequestDTO request) {
         CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
@@ -53,7 +53,7 @@ public class CountryService {
                 .build();
     }
 
-    public List<TopCountriesInfoResponse> getTopCountriesInformation(){
+    public List<TopCountriesInfoResponse> getTopCountriesInformation() {
         List<CountryEntity> countries = countryRepository.findTop10By();
 
         return countries.stream()
@@ -67,5 +67,20 @@ public class CountryService {
                         .build()
                 )
                 .toList();
+    }
+
+    public List<CountryFlagResponseDTO> getCountryTopFlags() {
+        List<CountryEntity> countryEntities = countryRepository.findAllByTopList(true);
+
+        return countryEntities
+                .stream()
+                .map(
+                        countryEntity ->
+                                CountryFlagResponseDTO.builder()
+                                        .countryFlagUrl(countryEntity.getCountryFlagUrl())
+                                        .build()
+                )
+                .toList();
+
     }
 }

@@ -12,6 +12,7 @@ CREATE TABLE countries (
                            rental_fee_entry NUMERIC,
                            visa_help BOOLEAN NOT NULL,
                            dormitory_help BOOLEAN NOT NULL,
+                           top_list BOOLEAN,
                            created_at TIMESTAMP WITH TIME ZONE NOT NULL,
                            updated_at TIMESTAMP WITH TIME ZONE NOT NULL
 );

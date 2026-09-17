@@ -9,6 +9,7 @@ CREATE TABLE universities (
                               university_type VARCHAR(255),
                               description VARCHAR(255) NOT NULL,
                               university_logo_url VARCHAR(255),
+                              top_list BOOLEAN,
                               city VARCHAR(255) NOT NULL,
 
                               CONSTRAINT fk_university_country
