@@ -3,7 +3,7 @@
 --changeset ally:130926-university_sections_table_schema
 
 CREATE TABLE university_sections (
-                                     section_id UUID PRIMARY KEY,
+                                     section_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                                      university_id UUID NOT NULL,
                                      faculty_id UUID,
                                      title VARCHAR(255) NOT NULL,
