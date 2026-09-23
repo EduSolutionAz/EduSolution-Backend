@@ -37,8 +37,8 @@ public class UniversityEntity {
     @Column(name = "university_logo_url")
     private String universityLogoUrl;
 
-    @Column(name = "top_list")
-    private boolean topList;
+//    @Column(name = "top_list")
+//    private boolean topList;
 
     @Column(nullable = false)
     private String city;

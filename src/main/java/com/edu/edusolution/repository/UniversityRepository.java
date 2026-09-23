@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface UniversityRepository extends JpaRepository<UniversityEntity, UUID> {
     List<UniversityEntity> findAllByCountry(CountryEntity country);
 
-    List<UniversityEntity> findAllByTopList(boolean topList);
+    List<UniversityEntity> findTop10By();
 }

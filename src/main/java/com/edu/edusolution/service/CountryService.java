@@ -24,6 +24,7 @@ public class CountryService {
     private final CountrySectionRepository countrySectionRepository;
     private final UniversityRepository universityRepository;
 
+    // For specific information about the country
     public CountrySectionResponseDTO getCountryInformation(CountrySectionRequestDTO request) {
         CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
                 .orElseThrow
@@ -53,8 +54,9 @@ public class CountryService {
                 .build();
     }
 
+    // For Specific Details shown in main
     public List<TopCountriesInfoResponse> getTopCountriesInformation() {
-        List<CountryEntity> countries = countryRepository.findTop10By();
+        List<CountryEntity> countries = countryRepository.findTop5By();
 
         return countries.stream()
                 .map(countryEntity -> TopCountriesInfoResponse
@@ -69,8 +71,9 @@ public class CountryService {
                 .toList();
     }
 
+    // For Country Flags shown in Main
     public List<CountryFlagResponseDTO> getCountryTopFlags() {
-        List<CountryEntity> countryEntities = countryRepository.findAllByTopList(true);
+        List<CountryEntity> countryEntities = countryRepository.findTop10By();
 
         return countryEntities
                 .stream()

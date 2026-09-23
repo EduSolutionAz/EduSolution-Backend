@@ -15,6 +15,8 @@ public class DtoConstants {
     public static final String PASSWORD_JSON_FIELD = "password";
 
     public static final String NAME_IS_REQUIRED_MSG = "Name is required to proceed";
+    public static final String NAME_IS_REQUIRED_NULL_MSG = "Name is required to proceed. Name cannot be null";
+    public static final String NAME_IS_REQUIRED_BLANK_MSG = "Name is required to proceed. Name cannot be blank";
     public static final String NAME_LENGTH_MSG = "Name must not exceed 50 characters";
     public static final String NAME_JSON_FIELD = "name";
 
@@ -25,4 +27,14 @@ public class DtoConstants {
     public static final String CODE_IS_REQUIRED_MSG = "CODE is required to proceed";
     public static final String CODE_LENGTH_MSG = "CODE must be 6 characters";
     public static final String CODE_JSON_FIELD = "code";
+
+    public static final String COUNTRY_IS_REQUIRED_NULL_MSG = "Country cannot be null";
+    public static final String COUNTRY_IS_REQUIRED_BLANK_MSG = "Country cannot be blank";
+
+    public static final String COMMENT_IS_REQUIRED_NULL_MSG = "Comment cannot be null";
+    public static final String COMMENT_IS_REQUIRED_BLANK_MSG = "Comment cannot be blank";
+    public static final String COMMENT_SIZE_MSG = "Comment cannot be less than 20 characters and more than 256 characters";
+
+    public static final String SERVICE_IS_REQUIRED_NULL_MSG = "Service type cannot be null";
+    public static final String SERVICE_IS_REQUIRED_BLANK_MSG = "Service type cannot be blank";
 }
