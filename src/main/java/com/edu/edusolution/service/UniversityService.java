@@ -15,7 +15,7 @@ public class UniversityService {
     private final UniversityRepository universityRepository;
 
     public List<UniversityLogoResponseDTO> getUniversityLogos(){
-        List<UniversityEntity> universityEntities = universityRepository.findAllByTopList(true);
+        List<UniversityEntity> universityEntities = universityRepository.findTop10By();
 
         return universityEntities
                 .stream()

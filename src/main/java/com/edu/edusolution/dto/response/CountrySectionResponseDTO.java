@@ -1,5 +1,6 @@
 package com.edu.edusolution.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 public class CountrySectionResponseDTO {
     private String title;
+    @JsonProperty("photo_url")
     private String photoUrl;
     private String content;
     private List<String> universities;
