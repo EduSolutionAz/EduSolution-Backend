@@ -21,6 +21,7 @@ public class DtoConstants {
     public static final String NAME_IS_REQUIRED_NULL_MSG = "Name is required to proceed. Name cannot be null";
     public static final String NAME_IS_REQUIRED_BLANK_MSG = "Name is required to proceed. Name cannot be blank";
     public static final String NAME_LENGTH_MSG = "Name must not exceed 50 characters";
+    public static final String NAME_FULL_LENGTH_MSG = "Name must not exceed 100 characters";
     public static final String NAME_JSON_FIELD = "name";
 
     public static final String PHONE_IS_REQUIRED_MSG = "Phone is required to proceed";
@@ -84,6 +85,10 @@ public class DtoConstants {
 
     public static final String DORMITORY_HELP_IS_REQUIRED_NULL_MSG = "Dormitory Help cannot be null";
     public static final String DORMITORY_HELP_IS_REQUIRED_BLANK_MSG = "Dormitory Help cannot be blank";
+
+    public static final String TOKEN_LENGTH_MSG = "Token must be exactly 36 characters";
+    public static final String TOKEN_IS_REQUIRED_NULL_MSG = "Token cannot be null";
+    public static final String TOKEN_IS_REQUIRED_BLANK_MSG = "Token cannot be blank";
 
 
 

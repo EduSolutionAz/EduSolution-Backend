@@ -2,7 +2,7 @@
 
 --changeset ally:130926-faculties_table_schema
 
-CREATE TABLE faculties
+CREATE TABLE IF NOT EXISTS faculties
 (
     faculty_id    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     university_id UUID         NOT NULL,

@@ -45,7 +45,9 @@ public class SecurityConfig {
                             "/api/v1/country/add_country",
                             "/api/v1/country/delete_country",
                             "/api/v1/university/add_university",
-                            "/api/v1/university/delete_university"
+                            "/api/v1/university/delete_university",
+                            "/api/v1/applicant/generate",
+                            "/api/v1/applicant/review"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })

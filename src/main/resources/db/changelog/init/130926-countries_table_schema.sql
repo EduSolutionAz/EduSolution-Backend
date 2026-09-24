@@ -2,7 +2,7 @@
 
 --changeset ally:130926-countries_table_schema
 
-CREATE TABLE countries
+CREATE TABLE IF NOT EXISTS countries
 (
     country_id        UUID PRIMARY KEY                  DEFAULT gen_random_uuid(),
     country_name      VARCHAR(255)             NOT NULL UNIQUE,

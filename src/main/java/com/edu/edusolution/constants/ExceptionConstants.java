@@ -54,4 +54,8 @@ public class ExceptionConstants {
     public static final String UNIVERSITY_NOT_FOUND_MSG = "University with this name not found";
     public static final String UNIVERSITY_ALREADY_EXISTS_CODE = "UNIVERSITY_ALREADY_EXISTS";
     public static final String UNIVERSITY_ALREADY_EXISTS_MSG = "University with this name already exists";
+
+    // Email Exception
+    public static final String MAIL_PROBLEM_CODE = "MAIL_PROBLEM";
+    public static final String MAIL_PROBLEM_MSG = "An error occurred while sending email";
 }
