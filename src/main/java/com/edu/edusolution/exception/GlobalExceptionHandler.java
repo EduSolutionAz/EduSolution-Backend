@@ -92,4 +92,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponseDTO> handleEmailException(EmailException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
+
+    @ExceptionHandler(FacultyAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleFacultyAlreadyExistsException(FacultyAlreadyExistsException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(FacultyNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleFacultyNotFoundException(FacultyNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
 }
