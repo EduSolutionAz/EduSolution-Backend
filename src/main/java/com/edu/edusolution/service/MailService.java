@@ -1,28 +1,41 @@
 package com.edu.edusolution.service;
 
+import com.edu.edusolution.exception.EmailException;
 import com.edu.edusolution.exception.MailSendingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import com.resend.*;
+import com.resend.core.exception.ResendException;
+import com.resend.services.emails.model.CreateEmailOptions;
+import com.resend.services.emails.model.CreateEmailResponse;
 
 @Service
 @RequiredArgsConstructor
 public class MailService {
-    private final JavaMailSender javaMailSender;
+
+    @Value("${resend.api.key}")
+    private String resendApiKey;
 
     public void sendPlainText(String to, String subject, String body){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(body);
+        Resend resend = new Resend(resendApiKey);
+
+        CreateEmailOptions params = CreateEmailOptions.builder()
+                .from("onboarding@resend.dev")
+                .to(to)
+                .subject(subject)
+                .html(body)
+                .build();
 
         try {
-            javaMailSender.send(message);
-        } catch (MailException ex){
-            throw new MailSendingException();
+            CreateEmailResponse data = resend.emails().send(params);
+        } catch (ResendException ex){
+            throw new EmailException();
         }
+
 
     }
 }

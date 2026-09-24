@@ -82,4 +82,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponseDTO> handleUniversityNotFoundException(UniversityNotFoundException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
+
+    @ExceptionHandler(TokenNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleTokenNotFoundException(TokenNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleEmailException(EmailException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
 }

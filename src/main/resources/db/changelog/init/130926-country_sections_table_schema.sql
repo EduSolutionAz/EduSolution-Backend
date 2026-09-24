@@ -2,7 +2,7 @@
 
 --changeset ally:130926-country_sections_table_schema
 
-CREATE TABLE country_sections
+CREATE TABLE IF NOT EXISTS country_sections
 (
     section_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     country_id UUID,

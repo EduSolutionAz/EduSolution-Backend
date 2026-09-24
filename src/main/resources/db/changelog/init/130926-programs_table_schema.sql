@@ -2,7 +2,7 @@
 
 --changeset ally:130926-programs_table_schema
 
-CREATE TABLE programs
+CREATE TABLE IF NOT EXISTS programs
 (
     program_id     UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     university_id  UUID         NOT NULL,
