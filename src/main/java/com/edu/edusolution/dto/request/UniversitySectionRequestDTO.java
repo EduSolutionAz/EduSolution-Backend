@@ -7,8 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static com.edu.edusolution.constants.DtoConstants.COUNTRY_IS_REQUIRED_BLANK_MSG;
-import static com.edu.edusolution.constants.DtoConstants.COUNTRY_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +15,7 @@ import static com.edu.edusolution.constants.DtoConstants.COUNTRY_IS_REQUIRED_NUL
 public class UniversitySectionRequestDTO {
 
     @JsonProperty("university_name")
-    @NotNull(message = COUNTRY_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = COUNTRY_IS_REQUIRED_BLANK_MSG)
+    @NotNull(message = UNIVERSITY_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = UNIVERSITY_IS_REQUIRED_BLANK_MSG)
     private String universityName;
 }
