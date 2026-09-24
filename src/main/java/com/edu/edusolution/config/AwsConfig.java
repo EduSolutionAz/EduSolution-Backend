@@ -22,6 +22,9 @@ public class AwsConfig {
     @Value("${spring.cloud.aws.credentials.secret-key}")
     private String awsSecretKey;
 
+    @Value("${cloudfare.r2.endpoint}")
+    private String awsR2Override;
+
 
     @Bean
     public S3Client s3Client() {
@@ -30,7 +33,8 @@ public class AwsConfig {
                 AwsBasicCredentials.create(awsAccessKey, awsSecretKey);
 
         return S3Client.builder()
-                .region(Region.of(awsRegion))
+                .region(Region.of("auto"))
+                .endpointOverride(URI.create(awsR2Override))
                 .credentialsProvider(
                         StaticCredentialsProvider.create(credentials)
                 )

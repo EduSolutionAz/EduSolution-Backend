@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class ApplicantCommentAddingResponseDTO {
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty(namespace = "is_added")
-    private boolean isAdded;
+public class DeleteUniversityResponseDTO {
+
+    @JsonProperty("university_name")
+    private String universityName;
+    @JsonProperty("is_deleted")
+    private boolean isDeleted;
 }

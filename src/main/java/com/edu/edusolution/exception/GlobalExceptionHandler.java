@@ -52,4 +52,34 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponseDTO> handleCountryNotFoundException(CountryNotFoundException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
+
+    @ExceptionHandler(CountryAlreadyExists.class)
+    public ResponseEntity<ExceptionResponseDTO> handleCountryAlreadyExistsException(CountryAlreadyExists ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(CountryUploadException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleCountryUploadExistsException(CountryUploadException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(DataDeleteException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleDataDeleteExistsException(DataDeleteException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(DataInsertException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleDataInsertExistsException(DataInsertException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(UniversityAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleUniversityAlreadyExistsException(UniversityAlreadyExistsException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(UniversityNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleUniversityNotFoundException(UniversityNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
 }

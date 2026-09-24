@@ -41,7 +41,11 @@ public class SecurityConfig {
                             "/api/v1/user/login",
                             "/api/v1/country/**",
                             "/api/v1/applicant/add",
-                            "/api/v1/applicant/top_comments"
+                            "/api/v1/applicant/top_comments",
+                            "/api/v1/country/add_country",
+                            "/api/v1/country/delete_country",
+                            "/api/v1/university/add_university",
+                            "/api/v1/university/delete_university"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })

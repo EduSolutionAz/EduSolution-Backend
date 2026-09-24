@@ -6,13 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class ApplicantCommentAddingResponseDTO {
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty(namespace = "is_added")
-    private boolean isAdded;
+public class UniversitySectionResponseDTO {
+
+    private String title;
+    @JsonProperty("photo_url")
+    private String photoUrl;
+    private String content;
+    private List<String> faculties;
 }

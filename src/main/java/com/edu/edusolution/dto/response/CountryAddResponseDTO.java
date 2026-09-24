@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
-public class ApplicantCommentAddingResponseDTO {
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty(namespace = "is_added")
-    private boolean isAdded;
+@Builder
+public class CountryAddResponseDTO {
+
+    @JsonProperty("country_name")
+    private String countryName;
+    @JsonProperty("is_country_created")
+    private boolean isCountryAdded;
 }
