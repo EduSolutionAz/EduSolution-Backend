@@ -46,6 +46,7 @@ public class DtoConstants {
     public static final String UNIVERSITY_IS_REQUIRED_NULL_MSG = "University cannot be null";
     public static final String UNIVERSITY_IS_REQUIRED_BLANK_MSG = "University cannot be blank";
     public static final String UNIVERSITY_SIZE_MSG = "University name cannot exceed 75 characters";
+    public static final String UNIVERSITY_JSON = "university_name";
 
     public static final String UNIVERSITY_TYPE_IS_REQUIRED_NULL_MSG = "University cannot be null";
     public static final String UNIVERSITY_TYPE_IS_REQUIRED_BLANK_MSG = "University type cannot be blank";
@@ -89,6 +90,13 @@ public class DtoConstants {
     public static final String TOKEN_LENGTH_MSG = "Token must be exactly 36 characters";
     public static final String TOKEN_IS_REQUIRED_NULL_MSG = "Token cannot be null";
     public static final String TOKEN_IS_REQUIRED_BLANK_MSG = "Token cannot be blank";
+
+    public static final String FACULTY_IS_REQUIRED_NULL_MSG = "Faculty cannot be null";
+    public static final String FACULTY_IS_REQUIRED_BLANK_MSG = "Faculty cannot be blank";
+    public static final String FACULTY_JSON = "faculty_name";
+
+    public static final String IS_CREATED_JSON = "is_created";
+    public static final String IS_DELETED_JSON = "is_deleted";
 
 
 

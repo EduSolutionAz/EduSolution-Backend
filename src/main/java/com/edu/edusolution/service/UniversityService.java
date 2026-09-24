@@ -58,7 +58,7 @@ public class UniversityService {
     }
 
     public UniversitySectionResponseDTO getUniversityInformation(UniversitySectionRequestDTO request) {
-        UniversityEntity checkUni = universityRepository.findByUniversityName(request.getUniversityName())
+        UniversityEntity checkUni = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
                 .orElseThrow(UniversityNotFoundException::new);
 
         UniversitySectionEntity checkSection = universitySectionRepository.findByUniversityEntity(checkUni)
@@ -77,13 +77,13 @@ public class UniversityService {
 
     @Transactional
     public AddUniversityResponseDTO addUniversity(AddUniversityRequestDTO request) {
-        Optional<UniversityEntity> checkUni = universityRepository.findByUniversityName(request.getUniversityName());
+        Optional<UniversityEntity> checkUni = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName());
 
         if (checkUni.isPresent()){
             throw new UniversityAlreadyExistsException();
         }
 
-        CountryEntity country = countryRepository.findByCountryName(request.getCountryName())
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
                 .orElseThrow(CountryNotFoundException::new);
 
         PutObjectRequest flagRequest = PutObjectRequest

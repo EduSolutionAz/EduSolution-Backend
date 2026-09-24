@@ -102,7 +102,7 @@ public class CountryService {
 
     @Transactional
     public CountryAddResponseDTO addNewCountry(CountryAddRequestDTO request) {
-        Optional<CountryEntity> checkCountry = countryRepository.findByCountryName(request.getCountryName());
+        Optional<CountryEntity> checkCountry = countryRepository.findByCountryNameIgnoreCase(request.getCountryName());
 
         if (checkCountry.isPresent()) {
             throw new CountryAlreadyExists();

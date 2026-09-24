@@ -1,12 +1,8 @@
 package com.edu.edusolution.service;
 
 import com.edu.edusolution.exception.EmailException;
-import com.edu.edusolution.exception.MailSendingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import com.resend.*;
 import com.resend.core.exception.ResendException;
