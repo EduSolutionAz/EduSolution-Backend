@@ -3,3 +3,23 @@ databaseChangeLog:
       file: db/changelog/init/060626-client_table_schema.sql
   - include:
       file: db/changelog/init/060626-client_nverified_table_schema.sql
+  - include:
+      file: db/changelog/init/130926-countries_table_schema.sql
+  - include:
+      file: db/changelog/init/130926-universities_table_schema.sql
+  - include:
+      file: db/changelog/init/130926-faculties_table_schema.sql
+  - include:
+      file: db/changelog/init/130926-programs_table_schema.sql
+  - include:
+      file: db/changelog/init/130926-country_sections_table_schema.sql
+  - include:
+      file: db/changelog/init/130926-university_sections_table_schema.sql
+  - include:
+      file: db/changelog/init/150926-applicants_table_schema.sql
+  - include:
+      file: db/changelog/init/170926-country-data.sql
+  - include:
+      file: db/changelog/init/170926-university_data.sql
+  - include:
+      file: db/changelog/init/170926-drop_top_list_from_tables.sql
