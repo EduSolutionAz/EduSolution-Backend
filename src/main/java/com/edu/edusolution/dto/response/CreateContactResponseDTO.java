@@ -21,6 +21,6 @@ public class CreateContactResponseDTO {
     @JsonProperty(NAME_JSON_FIELD)
     private String name;
     @JsonProperty(IS_CREATED_JSON)
-    private boolean isCreated;
+    private Boolean isCreated;
     private List<ErrorDto> errors;
 }

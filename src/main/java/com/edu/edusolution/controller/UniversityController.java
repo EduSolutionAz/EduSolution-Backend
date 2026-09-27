@@ -1,11 +1,11 @@
 package com.edu.edusolution.controller;
 
-import com.edu.edusolution.dto.request.AddUniversityRequestDTO;
-import com.edu.edusolution.dto.request.CountryAddRequestDTO;
-import com.edu.edusolution.dto.request.DeleteUniversityRequestDTO;
-import com.edu.edusolution.dto.response.AddUniversityResponseDTO;
-import com.edu.edusolution.dto.response.DeleteUniversityResponseDTO;
-import com.edu.edusolution.dto.response.UniversityLogoResponseDTO;
+import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
+import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
+import com.edu.edusolution.dto.response.university.AddUniversityResponseDTO;
+import com.edu.edusolution.dto.response.university.DeleteUniversityResponseDTO;
+import com.edu.edusolution.dto.response.university.UniversityLogoResponseDTO;
+import com.edu.edusolution.dto.response.university.UniversitySectionResponseDTO;
 import com.edu.edusolution.service.UniversityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +35,10 @@ public class UniversityController {
     @DeleteMapping("/delete_university")
     public ResponseEntity<DeleteUniversityResponseDTO> deleteUniversity(@RequestBody @Valid DeleteUniversityRequestDTO request){
         return ResponseEntity.ok(universityService.deleteUniversity(request));
+    }
+
+    @GetMapping("/university_details/{universityName}")
+    public ResponseEntity<UniversitySectionResponseDTO> getUniversitySection(@PathVariable String universityName) {
+        return ResponseEntity.ok(universityService.getUniversityInformation(universityName));
     }
 }

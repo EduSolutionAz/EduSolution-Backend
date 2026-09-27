@@ -1,13 +1,13 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.ClientPasswordCreationRequestDTO;
-import com.edu.edusolution.dto.request.ClientRegisterRequestDTO;
-import com.edu.edusolution.dto.request.ClientVerificationRequestDTO;
-import com.edu.edusolution.dto.request.LoginRequest;
-import com.edu.edusolution.dto.response.ClientPasswordCreationResponseDTO;
-import com.edu.edusolution.dto.response.ClientRegisterResponseDTO;
-import com.edu.edusolution.dto.response.ClientVerificationResponseDTO;
-import com.edu.edusolution.dto.response.LoginResponse;
+import com.edu.edusolution.dto.request.client.ClientPasswordCreationRequestDTO;
+import com.edu.edusolution.dto.request.client.ClientRegisterRequestDTO;
+import com.edu.edusolution.dto.request.client.ClientVerificationRequestDTO;
+import com.edu.edusolution.dto.request.client.LoginRequest;
+import com.edu.edusolution.dto.response.client.ClientPasswordCreationResponseDTO;
+import com.edu.edusolution.dto.response.client.ClientRegisterResponseDTO;
+import com.edu.edusolution.dto.response.client.ClientVerificationResponseDTO;
+import com.edu.edusolution.dto.response.client.LoginResponse;
 import com.edu.edusolution.entity.client.ClientEntity;
 import com.edu.edusolution.entity.client.ClientNVerifiedEntity;
 import com.edu.edusolution.entity.client.ClientRoles;

@@ -66,6 +66,9 @@ public class DtoConstants {
     public static final String AREA_IS_REQUIRED_NULL_MSG = "Area cannot be null";
     public static final String AREA_IS_REQUIRED_BLANK_MSG = "Area cannot be blank";
 
+    public static final String ICON_IS_REQUIRED_NULL_MSG = "icon cannot be null";
+    public static final String ICON_IS_REQUIRED_BLANK_MSG = "icon cannot be blank";
+
     public static final String FLAG_IS_REQUIRED_NULL_MSG = "Flag cannot be null";
     public static final String FLAG_IS_REQUIRED_BLANK_MSG = "Flag cannot be blank";
 
@@ -86,6 +89,12 @@ public class DtoConstants {
 
     public static final String DORMITORY_HELP_IS_REQUIRED_NULL_MSG = "Dormitory Help cannot be null";
     public static final String DORMITORY_HELP_IS_REQUIRED_BLANK_MSG = "Dormitory Help cannot be blank";
+
+    public static final String TOP_IS_REQUIRED_NULL_MSG = "Top cannot be null";
+    public static final String TOP_IS_REQUIRED_BLANK_MSG = "Top cannot be blank";
+
+    public static final String PARTNER_IS_REQUIRED_NULL_MSG = "Partner cannot be null";
+    public static final String PARTNER_IS_REQUIRED_BLANK_MSG = "Partner cannot be blank";
 
     public static final String TOKEN_LENGTH_MSG = "Token must be exactly 36 characters";
     public static final String TOKEN_IS_REQUIRED_NULL_MSG = "Token cannot be null";

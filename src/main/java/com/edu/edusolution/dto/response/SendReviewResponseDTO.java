@@ -16,6 +16,6 @@ import java.util.List;
 public class SendReviewResponseDTO {
     private String email;
     @JsonProperty("is_comment_accepted")
-    private boolean isCommentAccepted;
+    private Boolean isCommentAccepted;
     List<ErrorDto> errors;
 }

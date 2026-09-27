@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class GenerateCommentLinkResponseDTO {
     private String email;
     @JsonProperty("is_sent")
-    private boolean isSent;
+    private Boolean isSent;
 }

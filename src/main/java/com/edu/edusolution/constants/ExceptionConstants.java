@@ -64,4 +64,6 @@ public class ExceptionConstants {
     public static final String FACULTY_NOT_FOUND_MSG = "Faculty with this name not found";
     public static final String FACULTY_ALREADY_EXISTS_CODE = "FACULTY_ALREADY_EXISTS";
     public static final String FACULTY_ALREADY_EXISTS_MSG = "Faculty with this name already exists";
+
+    public static final String ADMIN_NOT_FOUND_CODE = "ADMIN_NOT_FOUND";
 }
