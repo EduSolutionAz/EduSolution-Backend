@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
@@ -34,12 +38,26 @@ public class UniversityEntity {
     @Column(nullable = false)
     private String description;
 
+    @Column(name = "university_entry_fee", precision = 7, scale = 2)
+    private BigDecimal entryFee;
+
     @Column(name = "university_logo_url")
     private String universityLogoUrl;
 
-    @Column(name = "top_list")
-    private boolean topList;
+    @Column(name = "university_view_url")
+    private String universityViewUrl;
 
     @Column(nullable = false)
     private String city;
+
+    @Column(name = "is_partner")
+    private Boolean isPartner;
+
+    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    private OffsetDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
+    private OffsetDateTime updatedAt;
 }

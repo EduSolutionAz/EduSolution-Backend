@@ -35,20 +35,23 @@ public class CountryEntity {
     @Column(name = "university_count", nullable = false)
     private int universityCount;
 
-    @Column(name = "tuition_fee_entry", nullable = false)
+    @Column(name = "tuition_fee_entry", nullable = false, precision = 8, scale = 2)
     private BigDecimal tuitionFeeEntry;
 
-    @Column(name = "rental_fee_entry")
+    @Column(name = "rental_fee_entry", precision = 8, scale = 2)
     private BigDecimal rentalFeeEntry;
 
     @Column(name = "visa_help", nullable = false)
-    private boolean visaHelp;
+    private Boolean visaHelp;
 
     @Column(name = "dormitory_help", nullable = false)
-    private boolean dormitoryHelp;
+    private Boolean dormitoryHelp;
 
-    @Column(name = "top_list")
-    private boolean topList;
+    @Column(name = "top_list", nullable = false)
+    private Boolean topList;
+
+    @Column(name = "country_icon", length = 20)
+    private String icon;
 
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp

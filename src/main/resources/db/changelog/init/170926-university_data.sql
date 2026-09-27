@@ -11,7 +11,7 @@ INSERT INTO universities (
     city
 ) VALUES
       (
-          '0d5e15f8-51a2-409f-8563-6b0089ebbb92',
+          '0ba8ea26-6649-4b90-9fa9-a3633df3482d',
           'Budapest Metropolitan University',
           'PRIVATE',
           'Budapest Metropolitan University is a private university in Budapest, Hungary, offering practice-oriented programmes in business, communication, tourism, arts, and creative industries.',
@@ -19,7 +19,7 @@ INSERT INTO universities (
           'Budapest'
       ),
       (
-          'dbc56150-8351-455a-8eef-2161e0f47f10',
+          '0315ff5a-9f7e-43b8-b0f8-d547bfbe6dcf',
           'Cyprus Science University',
           'PRIVATE',
           'Cyprus Science University is a private university established in 2013 in Kyrenia, Northern Cyprus, offering undergraduate and postgraduate programmes with a focus on practical and career-oriented education.',
@@ -27,7 +27,7 @@ INSERT INTO universities (
           'Kyrenia'
       ),
       (
-          '286250d1-c7e2-4ef9-9d16-c6a51354524b',
+          'ed2f9e45-3535-4a4a-80ee-ab3e47df2768',
           'Istanbul Medipol University',
           'PRIVATE',
           'Istanbul Medipol University is a private university established in 2009 in Istanbul, Türkiye, offering programmes across health sciences, medicine, engineering, business, law, and other fields.',
@@ -35,7 +35,7 @@ INSERT INTO universities (
           'Istanbul'
       ),
       (
-          '286250d1-c7e2-4ef9-9d16-c6a51354524b',
+          'ed2f9e45-3535-4a4a-80ee-ab3e47df2768',
           'Istanbul Ozyegin University',
           'PRIVATE',
           'Özyeğin University is a private university in Istanbul, Türkiye, offering undergraduate and graduate programmes in business, engineering, architecture, law, social sciences, and other fields.',
@@ -43,7 +43,7 @@ INSERT INTO universities (
           'Istanbul'
       ),
       (
-          '286250d1-c7e2-4ef9-9d16-c6a51354524b',
+          'ed2f9e45-3535-4a4a-80ee-ab3e47df2768',
           'TED University',
           'PRIVATE',
           'TED University is a private university in Ankara, Türkiye, offering English-taught programmes across engineering, education, business, economics, architecture, arts, and sciences.',
@@ -51,7 +51,7 @@ INSERT INTO universities (
           'Ankara'
       ),
       (
-          '687e0698-8214-476a-881b-d1c517c2aa72',
+          '4a42640d-6884-4ffc-a09a-eccb28a227dc',
           'Vistula University',
           'PRIVATE',
           'Vistula University is a private university in Warsaw, Poland, offering Bachelor’s, Engineering, Master’s and postgraduate programmes in fields including business, finance, international relations, IT, architecture and more.',
@@ -59,7 +59,7 @@ INSERT INTO universities (
           'Warsaw'
       ),
       (
-          '687e0698-8214-476a-881b-d1c517c2aa72',
+          '4a42640d-6884-4ffc-a09a-eccb28a227dc',
           'Vizja University',
           'PRIVATE',
           'VIZJA University is a private university in Warsaw, Poland, offering programmes in psychology, management, computer science, finance, law, health sciences, and other fields.',
@@ -67,7 +67,7 @@ INSERT INTO universities (
           'Warsaw'
       ),
       (
-          '687e0698-8214-476a-881b-d1c517c2aa72',
+          '4a42640d-6884-4ffc-a09a-eccb28a227dc',
           'WSB University',
           'PRIVATE',
           'WSB University is a private university in Dąbrowa Górnicza, Poland, offering programmes in business, management, computer science, engineering, international relations, and other fields.',
@@ -75,7 +75,7 @@ INSERT INTO universities (
           'Dąbrowa Górnicza'
       ),
       (
-          'dbc56150-8351-455a-8eef-2161e0f47f10',
+          '0315ff5a-9f7e-43b8-b0f8-d547bfbe6dcf',
           'World Peace University',
           'PRIVATE',
           'World Peace University is a private university in Nicosia, Northern Cyprus, offering programmes in business, engineering, architecture, law, psychology, health sciences, and other fields.',

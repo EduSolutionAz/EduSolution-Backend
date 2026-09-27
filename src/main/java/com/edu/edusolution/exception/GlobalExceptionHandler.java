@@ -1,6 +1,5 @@
 package com.edu.edusolution.exception;
 
-import com.edu.edusolution.dto.response.CountrySectionResponseDTO;
 import com.edu.edusolution.dto.response.exception.ExceptionResponseDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -50,6 +49,66 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CountryNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleCountryNotFoundException(CountryNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(CountryAlreadyExists.class)
+    public ResponseEntity<ExceptionResponseDTO> handleCountryAlreadyExistsException(CountryAlreadyExists ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(CountryUploadException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleCountryUploadExistsException(CountryUploadException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(DataDeleteException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleDataDeleteExistsException(DataDeleteException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(DataInsertException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleDataInsertExistsException(DataInsertException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(UniversityAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleUniversityAlreadyExistsException(UniversityAlreadyExistsException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(UniversityNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleUniversityNotFoundException(UniversityNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(TokenNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleTokenNotFoundException(TokenNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleEmailException(EmailException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(FacultyAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleFacultyAlreadyExistsException(FacultyAlreadyExistsException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(FacultyNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleFacultyNotFoundException(FacultyNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AdminNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleAdminNotFoundException(AdminNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AdminCreationException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleAdminCreationException(AdminCreationException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 }

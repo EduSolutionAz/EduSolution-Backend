@@ -2,10 +2,10 @@
 
 --changeset ally:20251224-client_nverified_table_schema
 CREATE TABLE IF NOT EXISTS clients_nverified(
-    client_nverified_id     UUID                PRIMARY KEY            DEFAULT gen_random_uuid(),
+    client_nverified_id     UUID                PRIMARY KEY             DEFAULT gen_random_uuid(),
     client_name             VARCHAR(50)         NOT NULL,
-    client_email            VARCHAR(50)        NOT NULL                UNIQUE,
-    client_number           VARCHAR(15)        NOT NULL                UNIQUE,
+    client_email            VARCHAR(50)         NOT NULL                UNIQUE,
+    client_number           VARCHAR(15)         NOT NULL                UNIQUE,
     client_code             VARCHAR(6)          NOT NULL,
     client_code_expire      TIMESTAMPTZ         NOT NULL,
     client_code_last_sent   TIMESTAMPTZ         NOT NULL,

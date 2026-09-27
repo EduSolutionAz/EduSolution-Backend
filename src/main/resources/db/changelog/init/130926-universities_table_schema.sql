@@ -2,17 +2,22 @@
 
 --changeset ally:130926-universities_table_schema
 
-CREATE TABLE universities (
-                              university_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                              country_id UUID,
-                              university_name VARCHAR(255) NOT NULL UNIQUE,
-                              university_type VARCHAR(255),
-                              description VARCHAR(255) NOT NULL,
-                              university_logo_url VARCHAR(255),
-                              top_list BOOLEAN,
-                              city VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS universities
+(
+    university_id           UUID                PRIMARY KEY         DEFAULT gen_random_uuid(),
+    country_id              UUID,
+    university_name         VARCHAR(255)        NOT NULL            UNIQUE,
+    university_type         VARCHAR(255),
+    description             VARCHAR(255)        NOT NULL,
+    university_logo_url     VARCHAR(255)        NOT NULL,
+    university_view_url     VARCHAR(255)        NOT NULL,
+    university_entry_fee    NUMERIC(8,2),
+    is_partner              BOOLEAN,
+    city                    VARCHAR(255)        NOT NULL,
+    created_at              TIMESTAMPTZ         NOT NULL            DEFAULT NOW(),
+    updated_at              TIMESTAMPTZ         NOT NULL            DEFAULT NOW(),
 
-                              CONSTRAINT fk_university_country
-                                  FOREIGN KEY (country_id)
-                                      REFERENCES countries(country_id)
+    CONSTRAINT fk_university_country
+        FOREIGN KEY (country_id)
+            REFERENCES countries (country_id)
 );

@@ -20,8 +20,10 @@ public class ApplicantEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "applicant_id")
     private UUID applicantId;
-    @Column(name = "applicant_name", nullable = false, length = 50)
+    @Column(name = "applicant_name", nullable = false, length = 100)
     private String applicantName;
+    @Column(name = "applicant_email", nullable = false, length = 100)
+    private String applicantEmail;
     @Column(name = "applicant_service_type", length = 20)
     @Enumerated(EnumType.STRING)
     private ApplicantServices applicantServiceType;

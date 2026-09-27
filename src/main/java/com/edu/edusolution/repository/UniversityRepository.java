@@ -6,11 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface UniversityRepository extends JpaRepository<UniversityEntity, UUID> {
     List<UniversityEntity> findAllByCountry(CountryEntity country);
 
-    List<UniversityEntity> findAllByTopList(boolean topList);
+    List<UniversityEntity> findTop10By();
+
+    Optional<UniversityEntity> findByUniversityName(String universityName);
+
+    Optional<UniversityEntity> findByUniversityNameIgnoreCase(String universityName);
+
+    List<UniversityEntity> findTop10ByIsPartner(boolean isPartner);
 }
