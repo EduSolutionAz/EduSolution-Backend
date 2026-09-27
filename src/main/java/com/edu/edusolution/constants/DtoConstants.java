@@ -25,7 +25,7 @@ public class DtoConstants {
     public static final String NAME_JSON_FIELD = "name";
 
     public static final String PHONE_IS_REQUIRED_MSG = "Phone is required to proceed";
-    public static final String PHONE_LENGTH_MSG = "Phone must not exceed 15 characters or less than 12 characters";
+    public static final String PHONE_LENGTH_MSG = "Phone must not exceed 15 characters or less than 9 characters";
     public static final String PHONE_JSON_FIELD = "phone";
 
     public static final String CODE_IS_REQUIRED_MSG = "CODE is required to proceed";
