@@ -66,4 +66,7 @@ public class ExceptionConstants {
     public static final String FACULTY_ALREADY_EXISTS_MSG = "Faculty with this name already exists";
 
     public static final String ADMIN_NOT_FOUND_CODE = "ADMIN_NOT_FOUND";
+    public static final String ADMIN_CREATION_ERROR_CODE = "ADMIN_CREATION_ERROR";
+    public static final String ADMIN_CREATION_ERROR_MSG = "An error occurred while creating admin";
+    public static String ADMIN_NOT_FOUND_MSG = "Admin is not found";
 }
