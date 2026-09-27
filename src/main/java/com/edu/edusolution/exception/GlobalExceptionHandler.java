@@ -1,6 +1,5 @@
 package com.edu.edusolution.exception;
 
-import com.edu.edusolution.dto.response.CountrySectionResponseDTO;
 import com.edu.edusolution.dto.response.exception.ExceptionResponseDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -100,6 +99,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FacultyNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleFacultyNotFoundException(FacultyNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AdminNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleAdminNotFoundException(AdminNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AdminCreationException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleAdminCreationException(AdminCreationException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 }

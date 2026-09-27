@@ -1,5 +1,6 @@
 package com.edu.edusolution.config;
 
+import com.edu.edusolution.repository.AdminRepository;
 import com.edu.edusolution.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,10 +18,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ApplicationConfig {
 
     private final ClientRepository clientRepository;
+    private final AdminRepository adminRepository;
 
     @Bean
     UserDetailsService userDetailsService() {
-        return username -> clientRepository.findByClientEmail(username)
+        return username -> adminRepository.findByAdminUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

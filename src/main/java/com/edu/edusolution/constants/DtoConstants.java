@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class DtoConstants {
     
     public static final String EMAIL_IS_REQUIRED_MSG = "Email is required to proceed";
-    public static final String EMAIL_LENGTH_MSG = "Email must not exceed 50 characters";
+    public static final String EMAIL_LENGTH_MSG = "Email must not exceed 75 characters";
     public static final String EMAIL_VALID_MSG = "Email must be a valid email address";
     public static final String EMAIL_JSON_FIELD = "email";
 
@@ -106,6 +106,11 @@ public class DtoConstants {
 
     public static final String IS_CREATED_JSON = "is_created";
     public static final String IS_DELETED_JSON = "is_deleted";
+
+    public static final String USERNAME_LENGTH_MSG = "username can be max 25 characters";
+
+    public static final String PASSWORD_REGEX = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[.,#?/]).+$";
+    public static final String PASSWORD_REGEX_MSG = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (.,#?/)";
 
 
 
