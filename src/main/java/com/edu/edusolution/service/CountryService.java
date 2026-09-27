@@ -1,9 +1,9 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.CountryAddRequestDTO;
-import com.edu.edusolution.dto.request.CountrySectionRequestDTO;
-import com.edu.edusolution.dto.request.DeleteCountryRequestDTO;
-import com.edu.edusolution.dto.response.*;
+import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
+import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
+import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
+import com.edu.edusolution.dto.response.country.*;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.country.CountrySectionEntity;
 import com.edu.edusolution.entity.university.UniversityEntity;
@@ -69,16 +69,16 @@ public class CountryService {
 
     // For Specific Details shown in main
     public List<TopCountriesInfoResponse> getTopCountriesInformation() {
-        List<CountryEntity> countries = countryRepository.findTop5By();
+        List<CountryEntity> countries = countryRepository.findTop6ByTopList(true);
 
         return countries.stream()
                 .map(countryEntity -> TopCountriesInfoResponse
                         .builder()
                         .countryName(countryEntity.getCountryName())
                         .countryBGUrl(countryEntity.getCountryPhotoUrl())
-                        .dormitoryHelp(countryEntity.isDormitoryHelp())
+                        .dormitoryHelp(countryEntity.getDormitoryHelp())
                         .universityCount(countryEntity.getUniversityCount())
-                        .visaHelp(countryEntity.isVisaHelp())
+                        .visaHelp(countryEntity.getVisaHelp())
                         .build()
                 )
                 .toList();
@@ -86,7 +86,7 @@ public class CountryService {
 
     // For Country Flags shown in Main
     public List<CountryFlagResponseDTO> getCountryTopFlags() {
-        List<CountryEntity> countryEntities = countryRepository.findTop10By();
+        List<CountryEntity> countryEntities = countryRepository.findTop10ByTopList(true);
 
         return countryEntities
                 .stream()
@@ -176,6 +176,7 @@ public class CountryService {
                 .orElseThrow(CountryNotFoundException::new);
 
         countrySectionRepository.delete(section);
+        countryRepository.flush();
         countryRepository.delete(country);
 
         DeleteObjectRequest deleteObjectRequest =
@@ -213,11 +214,13 @@ public class CountryService {
         country.setCountryName(request.getCountryName());
         country.setCountryFlagUrl(S3_PUBLIC_SHARE_LINK + COUNTRY_FOLDER_KEY + request.getCountryName().toLowerCase() + COUNTRY_FLAG_KEY);
         country.setCountryPhotoUrl(S3_PUBLIC_SHARE_LINK + COUNTRY_VIEW_FOLDER_KEY + request.getCountryName().toLowerCase() + COUNTRY_VIEW_KEY);
-        country.setDormitoryHelp(request.isDormitoryHelp());
+        country.setDormitoryHelp(request.getIsDormitoryHelp());
         country.setRentalFeeEntry(request.getRentalFee());
         country.setTuitionFeeEntry(request.getTuitionFee());
-        country.setVisaHelp(request.isVisaHelp());
+        country.setVisaHelp(request.getIsVisaHelp());
+        country.setTopList(request.getIsTopList());
         country.setUniversityCount(request.getUniversityCount());
+        country.setIcon(request.getIcon());
         return country;
     }
 

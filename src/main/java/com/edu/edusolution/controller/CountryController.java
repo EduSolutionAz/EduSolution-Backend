@@ -1,9 +1,9 @@
 package com.edu.edusolution.controller;
 
-import com.edu.edusolution.dto.request.CountryAddRequestDTO;
-import com.edu.edusolution.dto.request.CountrySectionRequestDTO;
-import com.edu.edusolution.dto.request.DeleteCountryRequestDTO;
-import com.edu.edusolution.dto.response.*;
+import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
+import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
+import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
+import com.edu.edusolution.dto.response.country.*;
 import com.edu.edusolution.service.CountryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

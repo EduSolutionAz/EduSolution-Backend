@@ -31,6 +31,7 @@ public class ApplicantGenerateService {
     private final ApplicantRepository applicantRepository;
 
     public GenerateCommentLinkResponseDTO generateLink(GenerateCommentLinkRequestDTO request) {
+
         String newGen = UUID.randomUUID().toString().toLowerCase();
         String hash = hashToken(newGen);
 

@@ -18,4 +18,6 @@ public interface UniversityRepository extends JpaRepository<UniversityEntity, UU
     Optional<UniversityEntity> findByUniversityName(String universityName);
 
     Optional<UniversityEntity> findByUniversityNameIgnoreCase(String universityName);
+
+    List<UniversityEntity> findTop10ByIsPartner(boolean isPartner);
 }

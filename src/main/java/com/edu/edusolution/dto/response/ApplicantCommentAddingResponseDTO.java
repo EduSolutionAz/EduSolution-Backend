@@ -14,5 +14,5 @@ public class ApplicantCommentAddingResponseDTO {
     @JsonProperty("name")
     private String name;
     @JsonProperty(namespace = "is_added")
-    private boolean isAdded;
+    private Boolean isAdded;
 }

@@ -1,11 +1,11 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.ClientPasswordCreationRequestDTO;
-import com.edu.edusolution.dto.request.ClientRegisterRequestDTO;
-import com.edu.edusolution.dto.request.ClientVerificationRequestDTO;
-import com.edu.edusolution.dto.response.ClientPasswordCreationResponseDTO;
-import com.edu.edusolution.dto.response.ClientRegisterResponseDTO;
-import com.edu.edusolution.dto.response.ClientVerificationResponseDTO;
+import com.edu.edusolution.dto.request.client.ClientPasswordCreationRequestDTO;
+import com.edu.edusolution.dto.request.client.ClientRegisterRequestDTO;
+import com.edu.edusolution.dto.request.client.ClientVerificationRequestDTO;
+import com.edu.edusolution.dto.response.client.ClientPasswordCreationResponseDTO;
+import com.edu.edusolution.dto.response.client.ClientRegisterResponseDTO;
+import com.edu.edusolution.dto.response.client.ClientVerificationResponseDTO;
 import com.edu.edusolution.entity.client.ClientEntity;
 import com.edu.edusolution.entity.client.ClientNVerifiedEntity;
 import com.edu.edusolution.entity.client.PendingState;
@@ -62,7 +62,7 @@ public class ClientServiceTest {
 
         ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).clientPhone(phone).build());
 
-        assertTrue(response.isCodeSent());
+        assertTrue(response.getCodeSent());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class ClientServiceTest {
 
         ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).build());
 
-        assertTrue(response.isCodeSent());
+        assertTrue(response.getCodeSent());
         assertEquals(PendingState.VERIFICATION_PENDING, response.getRegisterStatus());
     }
 
@@ -105,7 +105,7 @@ public class ClientServiceTest {
 
         ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).clientPhone(phone).build());
 
-        assertFalse(response.isCodeSent());
+        assertFalse(response.getCodeSent());
         assertEquals(PendingState.VERIFICATION_PENDING, response.getRegisterStatus());
     }
 
@@ -127,7 +127,7 @@ public class ClientServiceTest {
 
         ClientRegisterResponseDTO response = clientService.clientRegister(ClientRegisterRequestDTO.builder().clientEmail(email).clientName(name).clientPhone(phone).build());
 
-        assertFalse(response.isCodeSent());
+        assertFalse(response.getCodeSent());
         assertEquals(PendingState.PASSWORD_PENDING, response.getRegisterStatus());
     }
 
@@ -170,7 +170,7 @@ public class ClientServiceTest {
 
         ClientVerificationResponseDTO response = clientService.clientVerify(ClientVerificationRequestDTO.builder().clientEmail(email).verificationCode(code).build());
 
-        assertTrue(response.isVerified());
+        assertTrue(response.getIsVerified());
         assertEquals(PendingState.PASSWORD_PENDING, response.getStatus());
     }
 
@@ -261,7 +261,7 @@ public class ClientServiceTest {
 
         ClientPasswordCreationResponseDTO response = clientService.clientCreation(ClientPasswordCreationRequestDTO.builder().clientEmail(email).clientPassword(password).build());
 
-        assertTrue(response.isProfileCreated());
+        assertTrue(response.getIsProfileCreated());
         verify(clientRepository).save(any(ClientEntity.class));
         verify(clientNVerifiedRepository).delete(client);
     }

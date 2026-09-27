@@ -4,14 +4,14 @@
 
 CREATE TABLE IF NOT EXISTS university_sections
 (
-    section_id    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    university_id UUID         NOT NULL,
-    faculty_id    UUID,
-    title         VARCHAR(255) NOT NULL,
-    content       TEXT         NOT NULL,
-    areas         TEXT         NOT NULL,
-    created_at       TIMESTAMPTZ         NOT NULL                DEFAULT NOW(),
-    updated_at       TIMESTAMPTZ         NOT NULL                DEFAULT NOW(),
+    section_id          UUID            PRIMARY KEY         DEFAULT gen_random_uuid(),
+    university_id       UUID            NOT NULL,
+    faculty_id          UUID,
+    title               VARCHAR(255)    NOT NULL,
+    content             TEXT            NOT NULL,
+    areas               TEXT            NOT NULL,
+    created_at          TIMESTAMPTZ     NOT NULL            DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ     NOT NULL            DEFAULT NOW(),
 
     CONSTRAINT fk_university_section_university
         FOREIGN KEY (university_id)

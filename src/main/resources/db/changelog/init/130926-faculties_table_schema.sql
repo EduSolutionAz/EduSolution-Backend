@@ -4,11 +4,11 @@
 
 CREATE TABLE IF NOT EXISTS faculties
 (
-    faculty_id    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    university_id UUID         NOT NULL,
-    faculty_name  VARCHAR(255) NOT NULL,
-    created_at       TIMESTAMPTZ         NOT NULL                DEFAULT NOW(),
-    updated_at       TIMESTAMPTZ         NOT NULL                DEFAULT NOW(),
+    faculty_id          UUID                PRIMARY KEY             DEFAULT gen_random_uuid(),
+    university_id       UUID                NOT NULL,
+    faculty_name        VARCHAR(255)        NOT NULL,
+    created_at          TIMESTAMPTZ         NOT NULL                DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ         NOT NULL                DEFAULT NOW(),
 
     CONSTRAINT fk_faculty_university
         FOREIGN KEY (university_id)

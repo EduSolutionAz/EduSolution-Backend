@@ -23,9 +23,10 @@ public class UniversitySectionEntity {
     @JoinColumn(name = "university_id", nullable = false)
     private UniversityEntity universityEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "faculty_id")
-    private FacultyEntity faculty;
+//    @ManyToOne
+//    @JoinColumn(name = "faculty_id")
+//    private FacultyEntity faculty;
+//    We may not need faculty as we already have university in faculty entity
 
     @Column(name = "title", nullable = false)
     private String title;

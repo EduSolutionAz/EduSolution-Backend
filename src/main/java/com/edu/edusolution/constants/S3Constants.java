@@ -13,4 +13,7 @@ public class S3Constants {
 
     public static final String UNIVERSITY_FOLDER_KEY = "university-bucket/";
     public static final String UNIVERSITY_LOGO_KEY = "_logo";
+
+    public static final String UNIVERSITY_VIEW_FOLDER_KEY = "university-view-bucket/";
+    public static final String UNIVERSITY_VIEW_KEY = "_view";
 }

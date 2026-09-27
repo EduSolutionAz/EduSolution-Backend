@@ -7,6 +7,7 @@ import com.edu.edusolution.service.ApplicantService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class ApplicantController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ApplicantCommentAddingResponseDTO> addApplicantComment(@RequestBody @Valid ApplicantCommentAddingRequestDTO request){
+    public ResponseEntity<ApplicantCommentAddingResponseDTO> addApplicantComment(Authentication authentication, @RequestBody @Valid ApplicantCommentAddingRequestDTO request) {
         return ResponseEntity.ok(applicantService.addApplicantComment(request));
     }
 }

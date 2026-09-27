@@ -1,12 +1,12 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.AddUniversityRequestDTO;
-import com.edu.edusolution.dto.request.DeleteUniversityRequestDTO;
-import com.edu.edusolution.dto.request.UniversitySectionRequestDTO;
-import com.edu.edusolution.dto.response.AddUniversityResponseDTO;
-import com.edu.edusolution.dto.response.DeleteUniversityResponseDTO;
-import com.edu.edusolution.dto.response.UniversityLogoResponseDTO;
-import com.edu.edusolution.dto.response.UniversitySectionResponseDTO;
+import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
+import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
+import com.edu.edusolution.dto.request.university.UniversitySectionRequestDTO;
+import com.edu.edusolution.dto.response.university.AddUniversityResponseDTO;
+import com.edu.edusolution.dto.response.university.DeleteUniversityResponseDTO;
+import com.edu.edusolution.dto.response.university.UniversityLogoResponseDTO;
+import com.edu.edusolution.dto.response.university.UniversitySectionResponseDTO;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.university.FacultyEntity;
 import com.edu.edusolution.entity.university.UniversityEntity;
@@ -43,7 +43,7 @@ public class UniversityService {
     private final CountryRepository countryRepository;
 
     public List<UniversityLogoResponseDTO> getUniversityLogos(){
-        List<UniversityEntity> universityEntities = universityRepository.findTop10By();
+        List<UniversityEntity> universityEntities = universityRepository.findTop10ByIsPartner(true);
 
         return universityEntities
                 .stream()
@@ -57,8 +57,8 @@ public class UniversityService {
                 .toList();
     }
 
-    public UniversitySectionResponseDTO getUniversityInformation(UniversitySectionRequestDTO request) {
-        UniversityEntity checkUni = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
+    public UniversitySectionResponseDTO getUniversityInformation(String universityName) {
+        UniversityEntity checkUni = universityRepository.findByUniversityNameIgnoreCase(universityName)
                 .orElseThrow(UniversityNotFoundException::new);
 
         UniversitySectionEntity checkSection = universitySectionRepository.findByUniversityEntity(checkUni)
@@ -68,9 +68,10 @@ public class UniversityService {
         List<String> facultiesString = faculties.stream().map(FacultyEntity::getFacultyName).toList();
 
         return UniversitySectionResponseDTO.builder()
-                .title(request.getUniversityName())
+                .title(universityName)
                 .content(checkSection.getContent())
                 .photoUrl(checkUni.getUniversityLogoUrl())
+                .viewUrl(checkUni.getUniversityViewUrl())
                 .faculties(facultiesString)
                 .build();
     }
@@ -92,6 +93,14 @@ public class UniversityService {
                 .key(UNIVERSITY_FOLDER_KEY+request.getUniversityName().toLowerCase().replace(' ','_')+UNIVERSITY_LOGO_KEY)
                 .contentType(request.getUniversityLogo().getContentType())
                 .build();
+        // university-view-bucket
+
+        PutObjectRequest viewRequest = PutObjectRequest
+                .builder()
+                .bucket(S3_BUCKET_NAME)
+                .key(UNIVERSITY_VIEW_FOLDER_KEY+request.getUniversityName().toLowerCase().replace(' ','_')+UNIVERSITY_VIEW_KEY)
+                .contentType(request.getUniversityLogo().getContentType())
+                .build();
 
         try {
             s3Client.putObject(
@@ -102,17 +111,19 @@ public class UniversityService {
                     )
             );
 
+            s3Client.putObject(
+                    viewRequest,
+                    RequestBody.fromInputStream(
+                            request.getUniversityLogo().getInputStream(),
+                            request.getUniversityLogo().getSize()
+                    )
+            );
+
         } catch (S3Exception | IOException ex) {
             throw new CountryUploadException();
         }
 
-        UniversityEntity university = new UniversityEntity();
-        university.setUniversityName(request.getUniversityName());
-        university.setUniversityLogoUrl(S3_PUBLIC_SHARE_LINK+UNIVERSITY_FOLDER_KEY+ request.getUniversityName().toLowerCase()+UNIVERSITY_LOGO_KEY);
-        university.setType(request.getUniversityType());
-        university.setCity(request.getCity());
-        university.setCountry(country);
-        university.setDescription(request.getShortDescription());
+        UniversityEntity university = getUniversityEntity(request, country);
 
         universityRepository.save(university);
 
@@ -131,6 +142,19 @@ public class UniversityService {
                 .build();
     }
 
+    private static UniversityEntity getUniversityEntity(AddUniversityRequestDTO request, CountryEntity country) {
+        UniversityEntity university = new UniversityEntity();
+        university.setUniversityName(request.getUniversityName());
+        university.setUniversityLogoUrl(S3_PUBLIC_SHARE_LINK+UNIVERSITY_FOLDER_KEY+ request.getUniversityName().toLowerCase().replace(' ','_')+UNIVERSITY_LOGO_KEY);
+        university.setUniversityViewUrl(S3_PUBLIC_SHARE_LINK+UNIVERSITY_VIEW_FOLDER_KEY+ request.getUniversityName().toLowerCase().replace(' ','_')+UNIVERSITY_VIEW_KEY);
+        university.setType(request.getUniversityType());
+        university.setCity(request.getCity());
+        university.setCountry(country);
+        university.setDescription(request.getShortDescription());
+        university.setIsPartner(request.getIsPartner());
+        return university;
+    }
+
     @Transactional
     public DeleteUniversityResponseDTO deleteUniversity(DeleteUniversityRequestDTO request) {
         UniversityEntity uni = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
@@ -139,7 +163,12 @@ public class UniversityService {
         UniversitySectionEntity section = universitySectionRepository.findByUniversityEntity(uni)
                 .orElseThrow(UniversityNotFoundException::new);
 
+        List<FacultyEntity> faculties = facultyRepository.findAllByUniversity(uni);
+
+        facultyRepository.deleteAll(faculties);
+        facultyRepository.flush();
         universitySectionRepository.delete(section);
+        universityRepository.flush();
         universityRepository.delete(uni);
 
         DeleteObjectRequest deleteObjectRequest =
@@ -149,8 +178,16 @@ public class UniversityService {
                         .key(UNIVERSITY_FOLDER_KEY+request.getUniversityName().toLowerCase().replace(' ', '_')+UNIVERSITY_LOGO_KEY)
                         .build();
 
+        DeleteObjectRequest deleteViewRequest =
+                DeleteObjectRequest
+                        .builder()
+                        .bucket(S3_BUCKET_NAME)
+                        .key(UNIVERSITY_VIEW_FOLDER_KEY+request.getUniversityName().toLowerCase().replace(' ', '_')+UNIVERSITY_VIEW_KEY)
+                        .build();
+
         try {
             s3Client.deleteObject(deleteObjectRequest);
+            s3Client.deleteObject(deleteViewRequest);
         } catch (S3Exception ex){
             throw new DataDeleteException(DATA_DELETE_S3_UNIVERSITY_MSG);
         }

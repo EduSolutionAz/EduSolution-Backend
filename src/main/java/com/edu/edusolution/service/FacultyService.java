@@ -1,11 +1,11 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.AddNewFacultyRequestDTO;
-import com.edu.edusolution.dto.request.DeleteFacultyRequestDTO;
-import com.edu.edusolution.dto.request.UniversityFacultiesRequestDTO;
-import com.edu.edusolution.dto.response.AddNewFacultyResponseDTO;
-import com.edu.edusolution.dto.response.DeleteFacultyResponseDTO;
-import com.edu.edusolution.dto.response.UniversityFacultiesResponseDTO;
+import com.edu.edusolution.dto.request.university.AddNewFacultyRequestDTO;
+import com.edu.edusolution.dto.request.university.DeleteFacultyRequestDTO;
+import com.edu.edusolution.dto.request.university.UniversityFacultiesRequestDTO;
+import com.edu.edusolution.dto.response.university.AddNewFacultyResponseDTO;
+import com.edu.edusolution.dto.response.university.DeleteFacultyResponseDTO;
+import com.edu.edusolution.dto.response.university.UniversityFacultiesResponseDTO;
 import com.edu.edusolution.entity.university.FacultyEntity;
 import com.edu.edusolution.entity.university.UniversityEntity;
 import com.edu.edusolution.exception.FacultyAlreadyExistsException;
