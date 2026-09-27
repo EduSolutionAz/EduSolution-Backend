@@ -20,7 +20,6 @@ public class SendReviewRequestDTO {
     @NotBlank(message = TOKEN_IS_REQUIRED_BLANK_MSG)
     private String token;
 
-    @NotBlank(message = SERVICE_IS_REQUIRED_BLANK_MSG)
     @NotNull(message = SERVICE_IS_REQUIRED_NULL_MSG)
     private ApplicantServices service;
 
