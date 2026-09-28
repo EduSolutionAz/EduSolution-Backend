@@ -111,4 +111,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponseDTO> handleAdminCreationException(AdminCreationException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
+
+    @ExceptionHandler(ApplicantNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleApplicantNotFoundException(ApplicantNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
 }

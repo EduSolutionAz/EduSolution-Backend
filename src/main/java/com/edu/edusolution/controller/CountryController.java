@@ -3,6 +3,7 @@ package com.edu.edusolution.controller;
 import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
 import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
 import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
+import com.edu.edusolution.dto.request.country.UpdateCountryRequestDTO;
 import com.edu.edusolution.dto.response.country.*;
 import com.edu.edusolution.dto.response.university.AddNewFacultyResponseDTO;
 import com.edu.edusolution.dto.response.university.UniversityFacultiesResponseDTO;
@@ -113,5 +114,10 @@ public class CountryController {
     )
     public ResponseEntity<DeleteCountryResponseDTO> deleteCountry(@RequestBody @Valid DeleteCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.deleteCountry(request));
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<UpdateCountryResponseDTO> updateCountry(@ModelAttribute UpdateCountryRequestDTO request) {
+        return ResponseEntity.ok(countryService.updateCountry(request));
     }
 }
