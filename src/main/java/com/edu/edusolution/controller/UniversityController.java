@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,7 @@ public class UniversityController {
                     schema = @Schema(implementation = AddUniversityResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<AddUniversityResponseDTO> addUniversity(@ModelAttribute AddUniversityRequestDTO request){
         return ResponseEntity.ok(universityService.addUniversity(request));
     }
@@ -74,6 +76,7 @@ public class UniversityController {
                     schema = @Schema(implementation = DeleteUniversityResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<DeleteUniversityResponseDTO> deleteUniversity(@RequestBody @Valid DeleteUniversityRequestDTO request){
         return ResponseEntity.ok(universityService.deleteUniversity(request));
     }
