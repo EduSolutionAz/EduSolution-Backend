@@ -3,6 +3,7 @@ package com.edu.edusolution.controller;
 import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
 import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
 import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
+import com.edu.edusolution.dto.request.country.UpdateCountryRequestDTO;
 import com.edu.edusolution.dto.response.country.*;
 import com.edu.edusolution.dto.response.university.AddNewFacultyResponseDTO;
 import com.edu.edusolution.dto.response.university.UniversityFacultiesResponseDTO;
@@ -113,5 +114,21 @@ public class CountryController {
     )
     public ResponseEntity<DeleteCountryResponseDTO> deleteCountry(@RequestBody @Valid DeleteCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.deleteCountry(request));
+    }
+
+    @PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(
+            summary = "Update a country",
+            description = "Updates the information of an existing country."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Country updated successfully",
+            content = @Content(
+                    schema = @Schema(implementation = UpdateCountryResponseDTO.class)
+            )
+    )
+    public ResponseEntity<UpdateCountryResponseDTO> updateCountry(@ModelAttribute UpdateCountryRequestDTO request) {
+        return ResponseEntity.ok(countryService.updateCountry(request));
     }
 }

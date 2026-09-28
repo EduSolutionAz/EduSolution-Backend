@@ -68,5 +68,8 @@ public class ExceptionConstants {
     public static final String ADMIN_NOT_FOUND_CODE = "ADMIN_NOT_FOUND";
     public static final String ADMIN_CREATION_ERROR_CODE = "ADMIN_CREATION_ERROR";
     public static final String ADMIN_CREATION_ERROR_MSG = "An error occurred while creating admin";
-    public static String ADMIN_NOT_FOUND_MSG = "Admin is not found";
+    public static final String ADMIN_NOT_FOUND_MSG = "Admin is not found";
+
+    public static final String APPLICANT_NOT_FOUND_CODE = "APPLICANT_NOT_FOUND";
+    public static final String APPLICANT_NOT_FOUND_MSG = "Applicant is not found";
 }

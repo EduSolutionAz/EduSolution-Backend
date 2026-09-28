@@ -1,8 +1,11 @@
 package com.edu.edusolution.controller;
 
 import com.edu.edusolution.dto.request.ApplicantCommentAddingRequestDTO;
+import com.edu.edusolution.dto.request.DeleteCommentRequestDTO;
 import com.edu.edusolution.dto.response.ApplicantCommentAddingResponseDTO;
 import com.edu.edusolution.dto.response.ApplicantCommentResponseDTO;
+import com.edu.edusolution.dto.response.ApplicantCommentsResponseDTO;
+import com.edu.edusolution.dto.response.DeleteCommentResponseDTO;
 import com.edu.edusolution.service.ApplicantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -58,5 +61,39 @@ public class ApplicantController {
     )
     public ResponseEntity<ApplicantCommentAddingResponseDTO> addApplicantComment(Authentication authentication, @RequestBody @Valid ApplicantCommentAddingRequestDTO request) {
         return ResponseEntity.ok(applicantService.addApplicantComment(request));
+    }
+
+    @GetMapping("/all")
+    @Operation(
+            summary = "Get all applicant comments",
+            description = "Retrieves all applicant comments available on the platform."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Applicant comments retrieved successfully",
+            content = @Content(
+                    array = @ArraySchema(
+                            schema = @Schema(implementation = ApplicantCommentsResponseDTO.class)
+                    )
+            )
+    )
+    public ResponseEntity<List<ApplicantCommentsResponseDTO>> getAllComments() {
+        return ResponseEntity.ok(applicantService.getComments());
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(
+            summary = "Delete an applicant comment",
+            description = "Deletes an existing applicant comment."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Applicant comment deleted successfully",
+            content = @Content(
+                    schema = @Schema(implementation = DeleteCommentResponseDTO.class)
+            )
+    )
+    public ResponseEntity<DeleteCommentResponseDTO> deleteComment(@RequestBody @Valid DeleteCommentRequestDTO request) {
+        return ResponseEntity.ok(applicantService.deleteComment(request));
     }
 }

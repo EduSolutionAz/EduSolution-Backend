@@ -3,6 +3,7 @@ package com.edu.edusolution.service;
 import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
 import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
 import com.edu.edusolution.dto.request.university.UniversitySectionRequestDTO;
+import com.edu.edusolution.dto.request.university.UpdateUniversityRequestDTO;
 import com.edu.edusolution.dto.response.university.*;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.university.FacultyEntity;
@@ -224,6 +225,33 @@ public class UniversityService {
                 .builder()
                 .universityName(request.getUniversityName())
                 .isDeleted(true)
+                .build();
+    }
+
+    public UpdateUniversityResponseDTO updateUniversity(UpdateUniversityRequestDTO request) {
+        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
+                .orElseThrow(UniversityNotFoundException::new);
+
+        university.setCity(request.getCity());
+        university.setType(request.getUniversityType());
+        university.setDescription(request.getShortDescription());
+        university.setIsPartner(request.getIsPartner());
+        university.setEntryFee(request.getFee());
+
+        universityRepository.save(university);
+
+        UniversitySectionEntity universitySection = universitySectionRepository.findByUniversityEntity(university)
+                .orElseThrow(UniversityNotFoundException::new);
+
+        universitySection.setContent(request.getContent());
+        universitySection.setAreas(request.getArea());
+
+        universitySectionRepository.save(universitySection);
+
+        return UpdateUniversityResponseDTO
+                .builder()
+                .universityName(request.getUniversityName())
+                .isUpdated(true)
                 .build();
     }
 
