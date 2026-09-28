@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,7 @@ public class FacultyController {
                     schema = @Schema(implementation = AddNewFacultyResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<AddNewFacultyResponseDTO> addFaculty(@RequestBody @Valid AddNewFacultyRequestDTO request) {
         return ResponseEntity.ok(facultyService.addFaculty(request));
     }
@@ -57,6 +59,7 @@ public class FacultyController {
                     schema = @Schema(implementation = DeleteFacultyResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<DeleteFacultyResponseDTO> deleteFaculty(@RequestBody @Valid DeleteFacultyRequestDTO request){
         return ResponseEntity.ok(facultyService.deleteFaculty(request));
     }

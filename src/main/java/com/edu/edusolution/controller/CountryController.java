@@ -114,6 +114,7 @@ public class CountryController {
                     schema = @Schema(implementation = DeleteCountryResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<DeleteCountryResponseDTO> deleteCountry(@RequestBody @Valid DeleteCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.deleteCountry(request));
     }
@@ -130,6 +131,7 @@ public class CountryController {
                     schema = @Schema(implementation = UpdateCountryResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<UpdateCountryResponseDTO> updateCountry(@ModelAttribute UpdateCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.updateCountry(request));
     }

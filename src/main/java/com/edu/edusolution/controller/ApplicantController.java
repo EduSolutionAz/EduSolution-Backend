@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,7 @@ public class ApplicantController {
                     schema = @Schema(implementation = ApplicantCommentAddingResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApplicantCommentAddingResponseDTO> addApplicantComment(Authentication authentication, @RequestBody @Valid ApplicantCommentAddingRequestDTO request) {
         return ResponseEntity.ok(applicantService.addApplicantComment(request));
     }
@@ -77,6 +79,7 @@ public class ApplicantController {
                     )
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<List<ApplicantCommentsResponseDTO>> getAllComments() {
         return ResponseEntity.ok(applicantService.getComments());
     }
@@ -93,6 +96,7 @@ public class ApplicantController {
                     schema = @Schema(implementation = DeleteCommentResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<DeleteCommentResponseDTO> deleteComment(@RequestBody @Valid DeleteCommentRequestDTO request) {
         return ResponseEntity.ok(applicantService.deleteComment(request));
     }

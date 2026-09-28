@@ -145,6 +145,7 @@ public class UniversityController {
                     schema = @Schema(implementation = UpdateUniversityResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<UpdateUniversityResponseDTO> updateUniversity(@ModelAttribute UpdateUniversityRequestDTO request) {
         return ResponseEntity.ok(universityService.updateUniversity(request));
     }
