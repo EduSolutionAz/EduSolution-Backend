@@ -1,15 +1,26 @@
 package com.edu.edusolution.exception;
 
 import com.edu.edusolution.dto.response.exception.ExceptionResponseDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.stream.Collectors;
+
 import static com.edu.edusolution.constants.ExceptionConstants.DATA_INTEGRITY_PROBLEM_CODE;
+import static com.edu.edusolution.constants.ExceptionConstants.UNAUTHORIZED_CODE;
+import static com.edu.edusolution.constants.ExceptionConstants.UNAUTHORIZED_MSG;
+import static com.edu.edusolution.constants.ExceptionConstants.UNEXPECTED_ERROR_CODE;
+import static com.edu.edusolution.constants.ExceptionConstants.UNEXPECTED_ERROR_MSG;
+import static com.edu.edusolution.constants.ExceptionConstants.VALIDATION_ERROR_CODE;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ClientAlreadyExistsException.class)
@@ -115,5 +126,27 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ApplicantNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleApplicantNotFoundException(ApplicantNotFoundException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleAccessDeniedException(AccessDeniedException ex){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ExceptionResponseDTO(UNAUTHORIZED_CODE, UNAUTHORIZED_MSG));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleValidationException(MethodArgumentNotValidException ex){
+        String message = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(VALIDATION_ERROR_CODE, message));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponseDTO> handleUnexpectedException(Exception ex){
+        log.error("Unexpected error occurred", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ExceptionResponseDTO(UNEXPECTED_ERROR_CODE, UNEXPECTED_ERROR_MSG));
     }
 }

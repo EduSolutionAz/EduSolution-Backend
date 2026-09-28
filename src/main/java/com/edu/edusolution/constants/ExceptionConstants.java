@@ -72,4 +72,13 @@ public class ExceptionConstants {
 
     public static final String APPLICANT_NOT_FOUND_CODE = "APPLICANT_NOT_FOUND";
     public static final String APPLICANT_NOT_FOUND_MSG = "Applicant is not found";
+
+    // JWT / Security
+    public static final String INVALID_TOKEN_CODE = "INVALID_TOKEN";
+    public static final String INVALID_TOKEN_MSG = "Token is invalid or expired";
+    public static final String UNAUTHORIZED_CODE = "UNAUTHORIZED";
+    public static final String UNAUTHORIZED_MSG = "Authentication is required to access this resource";
+    public static final String UNEXPECTED_ERROR_CODE = "UNEXPECTED_ERROR";
+    public static final String UNEXPECTED_ERROR_MSG = "An unexpected error occurred";
+    public static final String VALIDATION_ERROR_CODE = "VALIDATION_ERROR";
 }

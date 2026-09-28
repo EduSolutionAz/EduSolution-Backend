@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class UpdateUniversityResponseDTO {
     @JsonProperty("university_name")
     private String universityName;
-    @JsonProperty("is_created")
+    @JsonProperty("is_updated")
     private Boolean isUpdated;
 }
