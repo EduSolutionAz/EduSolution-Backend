@@ -1,0 +1,88 @@
+package com.edu.edusolution.dto.request.country;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.math.BigDecimal;
+
+import static com.edu.edusolution.constants.DtoConstants.*;
+import static com.edu.edusolution.constants.DtoConstants.AREA_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.AREA_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.CONTENT_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.CONTENT_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.COUNTRY_IMAGE_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.COUNTRY_IMAGE_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.DORMITORY_HELP_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.DORMITORY_HELP_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.FLAG_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.FLAG_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.RENTAL_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.RENTAL_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.TOP_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.TOP_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.TUITION_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.TUITION_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_COUNT_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_COUNT_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.VISA_HELP_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.VISA_HELP_IS_REQUIRED_NULL_MSG;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateCountryRequestDTO {
+
+    @NotNull(message = COUNTRY_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = COUNTRY_IS_REQUIRED_BLANK_MSG)
+    @Size(max = 50, message = COUNTRY_LENGTH_MSG)
+    private String countryName;
+
+    @NotNull(message = FLAG_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = FLAG_IS_REQUIRED_BLANK_MSG)
+    private MultipartFile flagImage;
+
+    @NotNull(message = COUNTRY_IMAGE_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = COUNTRY_IMAGE_IS_REQUIRED_BLANK_MSG)
+    private MultipartFile countryImage;
+
+    @NotNull(message = UNIVERSITY_COUNT_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = UNIVERSITY_COUNT_IS_REQUIRED_BLANK_MSG)
+    private Integer universityCount;
+
+    @NotNull(message = TUITION_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = TUITION_IS_REQUIRED_BLANK_MSG)
+    private BigDecimal tuitionFee;
+
+    @NotNull(message = RENTAL_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = RENTAL_IS_REQUIRED_BLANK_MSG)
+    private BigDecimal rentalFee;
+
+    @NotNull(message = VISA_HELP_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = VISA_HELP_IS_REQUIRED_BLANK_MSG)
+    private Boolean isVisaHelp;
+
+    @NotNull(message = DORMITORY_HELP_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = DORMITORY_HELP_IS_REQUIRED_BLANK_MSG)
+    private Boolean isDormitoryHelp;
+
+    @NotNull(message = TOP_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = TOP_IS_REQUIRED_BLANK_MSG)
+    private Boolean isTopList;
+
+    @NotNull(message = CONTENT_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = CONTENT_IS_REQUIRED_BLANK_MSG)
+    private String content;
+
+    @NotNull(message = AREA_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = AREA_IS_REQUIRED_BLANK_MSG)
+    private String area;
+
+    @NotNull(message = AREA_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = AREA_IS_REQUIRED_BLANK_MSG)
+    private String icon;
+}

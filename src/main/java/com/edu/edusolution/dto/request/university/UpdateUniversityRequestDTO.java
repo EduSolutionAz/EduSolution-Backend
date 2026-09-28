@@ -12,12 +12,28 @@ import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 
 import static com.edu.edusolution.constants.DtoConstants.*;
+import static com.edu.edusolution.constants.DtoConstants.AREA_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.AREA_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.CITY_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.CITY_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.CONTENT_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.CONTENT_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.COUNTRY_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.COUNTRY_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.COUNTRY_LENGTH_MSG;
+import static com.edu.edusolution.constants.DtoConstants.DESCRIPTION_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.DESCRIPTION_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.PARTNER_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.PARTNER_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_LOGO_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_LOGO_IS_REQUIRED_NULL_MSG;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_TYPE_IS_REQUIRED_BLANK_MSG;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_TYPE_IS_REQUIRED_NULL_MSG;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AddUniversityRequestDTO {
-
+public class UpdateUniversityRequestDTO {
     @NotNull(message = UNIVERSITY_IS_REQUIRED_NULL_MSG)
     @NotBlank(message = UNIVERSITY_IS_REQUIRED_BLANK_MSG)
     @Size(max = 75, message = UNIVERSITY_SIZE_MSG)
@@ -36,13 +52,13 @@ public class AddUniversityRequestDTO {
     @NotBlank(message = DESCRIPTION_IS_REQUIRED_BLANK_MSG)
     private String shortDescription;
 
-    @NotNull(message = FEE_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = FEE_IS_REQUIRED_BLANK_MSG)
-    private BigDecimal fee;
-
     @NotNull(message = UNIVERSITY_LOGO_IS_REQUIRED_NULL_MSG)
     @NotBlank(message = UNIVERSITY_LOGO_IS_REQUIRED_BLANK_MSG)
     private MultipartFile universityLogo;
+
+    @NotNull(message = FEE_IS_REQUIRED_NULL_MSG)
+    @NotBlank(message = FEE_IS_REQUIRED_BLANK_MSG)
+    private BigDecimal fee;
 
     @NotNull(message = CITY_IS_REQUIRED_NULL_MSG)
     @NotBlank(message = CITY_IS_REQUIRED_BLANK_MSG)

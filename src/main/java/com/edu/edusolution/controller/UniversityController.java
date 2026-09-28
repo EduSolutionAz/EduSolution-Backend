@@ -3,6 +3,7 @@ package com.edu.edusolution.controller;
 import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
 import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
 import com.edu.edusolution.dto.request.university.UniversityByCountryRequestDTO;
+import com.edu.edusolution.dto.request.university.UpdateUniversityRequestDTO;
 import com.edu.edusolution.dto.response.university.*;
 import com.edu.edusolution.service.UniversityService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -127,5 +128,21 @@ public class UniversityController {
     )
     public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversitiesByCountry(@RequestBody @Valid UniversityByCountryRequestDTO request) {
         return ResponseEntity.ok(universityService.getUniversitiesByCountry(request.getCountryName()));
+    }
+
+    @PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+    @Operation(
+            summary = "Update a university",
+            description = "Updates the information of an existing university."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "University updated successfully",
+            content = @Content(
+                    schema = @Schema(implementation = UpdateUniversityResponseDTO.class)
+            )
+    )
+    public ResponseEntity<UpdateUniversityResponseDTO> updateUniversity(@ModelAttribute UpdateUniversityRequestDTO request) {
+        return ResponseEntity.ok(universityService.updateUniversity(request));
     }
 }

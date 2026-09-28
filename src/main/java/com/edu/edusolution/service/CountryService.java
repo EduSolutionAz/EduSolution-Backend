@@ -3,6 +3,7 @@ package com.edu.edusolution.service;
 import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
 import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
 import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
+import com.edu.edusolution.dto.request.country.UpdateCountryRequestDTO;
 import com.edu.edusolution.dto.response.country.*;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.country.CountrySectionEntity;
@@ -205,6 +206,35 @@ public class CountryService {
                 .builder()
                 .isDeleted(true)
                 .countryName(request.getCountryName())
+                .build();
+    }
+
+    public UpdateCountryResponseDTO updateCountry(UpdateCountryRequestDTO request) {
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
+                .orElseThrow(CountryNotFoundException::new);
+
+        country.setIcon(request.getIcon());
+        country.setTopList(request.getIsTopList());
+        country.setUniversityCount(request.getUniversityCount());
+        country.setTuitionFeeEntry(request.getTuitionFee());
+        country.setRentalFeeEntry(request.getRentalFee());
+        country.setVisaHelp(request.getIsVisaHelp());
+        country.setDormitoryHelp(request.getIsDormitoryHelp());
+
+        countryRepository.save(country);
+
+        CountrySectionEntity countrySection = countrySectionRepository.findByCountry(country)
+                .orElseThrow(CountryNotFoundException::new);
+
+        countrySection.setContent(request.getContent());
+        countrySection.setAreas(request.getArea());
+
+        countrySectionRepository.save(countrySection);
+
+        return UpdateCountryResponseDTO
+                .builder()
+                .countryName(request.getCountryName())
+                .isCountryAdded(true)
                 .build();
     }
 

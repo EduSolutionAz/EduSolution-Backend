@@ -113,5 +113,7 @@ public class DtoConstants {
     public static final String PASSWORD_REGEX_MSG = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (.,#?/)";
 
 
+    public static final String FEE_IS_REQUIRED_NULL_MSG = "Fee cannot be null";
+    public static final String FEE_IS_REQUIRED_BLANK_MSG = "Fee cannot be blank";
 
 }
