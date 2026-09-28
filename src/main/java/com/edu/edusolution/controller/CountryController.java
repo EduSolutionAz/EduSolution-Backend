@@ -1,11 +1,9 @@
 package com.edu.edusolution.controller;
 
-import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
-import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
-import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
-import com.edu.edusolution.dto.request.country.UpdateCountryRequestDTO;
+import com.edu.edusolution.dto.request.country.*;
 import com.edu.edusolution.dto.response.country.*;
 import com.edu.edusolution.dto.response.university.AddNewFacultyResponseDTO;
+import com.edu.edusolution.dto.response.university.CountryEntityResponseDTO;
 import com.edu.edusolution.dto.response.university.UniversityFacultiesResponseDTO;
 import com.edu.edusolution.service.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -95,7 +93,7 @@ public class CountryController {
                     schema = @Schema(implementation = CountryAddResponseDTO.class)
             )
     )
-    @SecurityRequirement(name = "bearerAuth")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<CountryAddResponseDTO> addCountry(@ModelAttribute CountryAddRequestDTO request) {
         System.out.println(request.getTuitionFee());
         System.out.println(request.getCountryName());
@@ -114,7 +112,7 @@ public class CountryController {
                     schema = @Schema(implementation = DeleteCountryResponseDTO.class)
             )
     )
-    @SecurityRequirement(name = "bearerAuth")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<DeleteCountryResponseDTO> deleteCountry(@RequestBody @Valid DeleteCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.deleteCountry(request));
     }
@@ -131,8 +129,14 @@ public class CountryController {
                     schema = @Schema(implementation = UpdateCountryResponseDTO.class)
             )
     )
-    @SecurityRequirement(name = "bearerAuth")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<UpdateCountryResponseDTO> updateCountry(@ModelAttribute UpdateCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.updateCountry(request));
     }
+
+    @GetMapping("/country_entity")
+    public ResponseEntity<CountryEntityResponseDTO> getCountryEntity(@RequestBody @Valid CountryEntityRequestDTO request) {
+        return ResponseEntity.ok(countryService.countryEntity(request));
+    }
+
 }

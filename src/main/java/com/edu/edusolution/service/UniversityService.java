@@ -1,11 +1,10 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
-import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
-import com.edu.edusolution.dto.request.university.UniversitySectionRequestDTO;
-import com.edu.edusolution.dto.request.university.UpdateUniversityRequestDTO;
+import com.edu.edusolution.dto.request.country.CountryEntityRequestDTO;
+import com.edu.edusolution.dto.request.university.*;
 import com.edu.edusolution.dto.response.university.*;
 import com.edu.edusolution.entity.country.CountryEntity;
+import com.edu.edusolution.entity.country.CountrySectionEntity;
 import com.edu.edusolution.entity.university.FacultyEntity;
 import com.edu.edusolution.entity.university.UniversityEntity;
 import com.edu.edusolution.entity.university.UniversitySectionEntity;
@@ -252,6 +251,30 @@ public class UniversityService {
                 .builder()
                 .universityName(request.getUniversityName())
                 .isUpdated(true)
+                .build();
+    }
+
+    public UniversityEntityResponseDTO universityEntity(UniversityEntityRequestDTO request) {
+
+        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
+                .orElseThrow(UniversityNotFoundException::new);
+
+        UniversitySectionEntity universitySection = universitySectionRepository.findByUniversityEntity(university)
+                .orElseThrow(CountryNotFoundException::new);
+
+
+
+        return UniversityEntityResponseDTO
+                .builder()
+                .universityName(university.getUniversityName())
+                .countryName(university.getCountry().getCountryName())
+                .universityType(university.getType())
+                .city(university.getCity())
+                .shortDescription(university.getDescription())
+                .fee(university.getEntryFee())
+                .universityLogo(university.getUniversityLogoUrl())
+                .content(universitySection.getContent())
+                .area(universitySection.getAreas())
                 .build();
     }
 

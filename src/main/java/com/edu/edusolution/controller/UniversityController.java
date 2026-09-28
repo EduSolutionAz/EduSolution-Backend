@@ -1,9 +1,6 @@
 package com.edu.edusolution.controller;
 
-import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
-import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
-import com.edu.edusolution.dto.request.university.UniversityByCountryRequestDTO;
-import com.edu.edusolution.dto.request.university.UpdateUniversityRequestDTO;
+import com.edu.edusolution.dto.request.university.*;
 import com.edu.edusolution.dto.response.university.*;
 import com.edu.edusolution.service.UniversityService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -148,5 +145,10 @@ public class UniversityController {
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<UpdateUniversityResponseDTO> updateUniversity(@ModelAttribute UpdateUniversityRequestDTO request) {
         return ResponseEntity.ok(universityService.updateUniversity(request));
+    }
+
+    @GetMapping("/university_entity")
+    public ResponseEntity<UniversityEntityResponseDTO> getUniversityEntity(@RequestBody @Valid UniversityEntityRequestDTO request) {
+        return ResponseEntity.ok(universityService.universityEntity(request));
     }
 }

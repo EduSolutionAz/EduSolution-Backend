@@ -1,10 +1,8 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
-import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
-import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
-import com.edu.edusolution.dto.request.country.UpdateCountryRequestDTO;
+import com.edu.edusolution.dto.request.country.*;
 import com.edu.edusolution.dto.response.country.*;
+import com.edu.edusolution.dto.response.university.CountryEntityResponseDTO;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.country.CountrySectionEntity;
 import com.edu.edusolution.entity.university.UniversityEntity;
@@ -16,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
@@ -23,6 +22,10 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -235,6 +238,32 @@ public class CountryService {
                 .builder()
                 .countryName(request.getCountryName())
                 .isCountryAdded(true)
+                .build();
+    }
+
+    public CountryEntityResponseDTO countryEntity(CountryEntityRequestDTO request) {
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
+                .orElseThrow(CountryNotFoundException::new);
+
+        CountrySectionEntity countrySection = countrySectionRepository.findByCountry(country)
+                .orElseThrow(CountryNotFoundException::new);
+
+
+
+        return CountryEntityResponseDTO
+                .builder()
+                .countryName(country.getCountryName())
+                .flagImage(country.getCountryFlagUrl())
+                .countryImage(country.getCountryPhotoUrl())
+                .universityCount(country.getUniversityCount())
+                .tuitionFee(country.getTuitionFeeEntry())
+                .rentalFee(country.getRentalFeeEntry())
+                .icon(country.getIcon())
+                .isVisaHelp(country.getVisaHelp())
+                .isDormitoryHelp(country.getDormitoryHelp())
+                .isTopList(country.getTopList())
+                .content(countrySection.getContent())
+                .area(countrySection.getAreas())
                 .build();
     }
 
