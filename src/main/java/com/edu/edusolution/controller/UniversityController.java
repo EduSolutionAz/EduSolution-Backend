@@ -94,11 +94,37 @@ public class UniversityController {
     }
 
     @GetMapping("/all")
+    @Operation(
+            summary = "Get all universities",
+            description = "Retrieves a list of all universities available on the platform."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Universities retrieved successfully",
+            content = @Content(
+                    array = @ArraySchema(
+                            schema = @Schema(implementation = UniversitiesResponseDTO.class)
+                    )
+            )
+    )
     public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversities(){
         return ResponseEntity.ok(universityService.getAllUniversities());
     }
 
     @GetMapping("/all_by_country")
+    @Operation(
+            summary = "Get universities by country",
+            description = "Retrieves all universities associated with the specified country."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Universities retrieved successfully",
+            content = @Content(
+                    array = @ArraySchema(
+                            schema = @Schema(implementation = UniversitiesResponseDTO.class)
+                    )
+            )
+    )
     public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversitiesByCountry(@RequestBody @Valid UniversityByCountryRequestDTO request) {
         return ResponseEntity.ok(universityService.getUniversitiesByCountry(request.getCountryName()));
     }
