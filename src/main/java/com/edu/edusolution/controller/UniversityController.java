@@ -2,10 +2,8 @@ package com.edu.edusolution.controller;
 
 import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
 import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
-import com.edu.edusolution.dto.response.university.AddUniversityResponseDTO;
-import com.edu.edusolution.dto.response.university.DeleteUniversityResponseDTO;
-import com.edu.edusolution.dto.response.university.UniversityLogoResponseDTO;
-import com.edu.edusolution.dto.response.university.UniversitySectionResponseDTO;
+import com.edu.edusolution.dto.request.university.UniversityByCountryRequestDTO;
+import com.edu.edusolution.dto.response.university.*;
 import com.edu.edusolution.service.UniversityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -93,5 +91,15 @@ public class UniversityController {
     )
     public ResponseEntity<UniversitySectionResponseDTO> getUniversitySection(@PathVariable String universityName) {
         return ResponseEntity.ok(universityService.getUniversityInformation(universityName));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversities(){
+        return ResponseEntity.ok(universityService.getAllUniversities());
+    }
+
+    @GetMapping("/all_by_country")
+    public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversitiesByCountry(@RequestBody @Valid UniversityByCountryRequestDTO request) {
+        return ResponseEntity.ok(universityService.getUniversitiesByCountry(request.getCountryName()));
     }
 }

@@ -3,10 +3,7 @@ package com.edu.edusolution.service;
 import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
 import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
 import com.edu.edusolution.dto.request.university.UniversitySectionRequestDTO;
-import com.edu.edusolution.dto.response.university.AddUniversityResponseDTO;
-import com.edu.edusolution.dto.response.university.DeleteUniversityResponseDTO;
-import com.edu.edusolution.dto.response.university.UniversityLogoResponseDTO;
-import com.edu.edusolution.dto.response.university.UniversitySectionResponseDTO;
+import com.edu.edusolution.dto.response.university.*;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.university.FacultyEntity;
 import com.edu.edusolution.entity.university.UniversityEntity;
@@ -140,6 +137,37 @@ public class UniversityService {
                 .universityName(request.getUniversityName())
                 .isCreated(true)
                 .build();
+    }
+    public List<UniversitiesResponseDTO> getAllUniversities(){
+        List<UniversityEntity> universities = universityRepository.findAll();
+
+        return universities.stream()
+                .map(universityEntity ->
+                        UniversitiesResponseDTO.
+                                builder()
+                                .universityName(universityEntity.getUniversityName())
+                                .countryName(universityEntity.getCountry().getCountryName())
+                                .build()
+                )
+                .toList();
+    }
+
+    public List<UniversitiesResponseDTO> getUniversitiesByCountry(String countryName) {
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(countryName)
+                .orElseThrow(CountryNotFoundException::new);
+
+        List<UniversityEntity> universities = universityRepository.findAllByCountry(country);
+
+        return universities.stream()
+                .map(
+                        universityEntity ->
+                                UniversitiesResponseDTO.
+                                        builder()
+                                        .universityName(universityEntity.getUniversityName())
+                                        .countryName(universityEntity.getCountry().getCountryName())
+                                        .build()
+                )
+                .toList();
     }
 
     private static UniversityEntity getUniversityEntity(AddUniversityRequestDTO request, CountryEntity country) {

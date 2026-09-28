@@ -57,7 +57,9 @@ public class SecurityConfig {
                             "/api/v1/applicant/top_comments",
                             "/api/v1/admin/login",
                             "/v3/api-docs/**",
-                            "/swagger-ui/**"
+                            "/swagger-ui/**",
+                            "/api/v1/university/all_by_country",
+                            "/api/v1/university/all"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
