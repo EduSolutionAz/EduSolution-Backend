@@ -61,9 +61,6 @@ public class SecurityConfig {
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .httpBasic(httpbasic -> {
-                    httpbasic.realmName("EsAcademy");
-                })
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
