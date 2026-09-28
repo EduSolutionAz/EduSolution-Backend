@@ -116,7 +116,18 @@ public class CountryController {
         return ResponseEntity.ok(countryService.deleteCountry(request));
     }
 
-    @PatchMapping("/update")
+    @PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(
+            summary = "Update a country",
+            description = "Updates the information of an existing country."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Country updated successfully",
+            content = @Content(
+                    schema = @Schema(implementation = UpdateCountryResponseDTO.class)
+            )
+    )
     public ResponseEntity<UpdateCountryResponseDTO> updateCountry(@ModelAttribute UpdateCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.updateCountry(request));
     }

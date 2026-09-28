@@ -64,11 +64,35 @@ public class ApplicantController {
     }
 
     @GetMapping("/all")
+    @Operation(
+            summary = "Get all applicant comments",
+            description = "Retrieves all applicant comments available on the platform."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Applicant comments retrieved successfully",
+            content = @Content(
+                    array = @ArraySchema(
+                            schema = @Schema(implementation = ApplicantCommentsResponseDTO.class)
+                    )
+            )
+    )
     public ResponseEntity<List<ApplicantCommentsResponseDTO>> getAllComments() {
         return ResponseEntity.ok(applicantService.getComments());
     }
 
     @DeleteMapping("/delete")
+    @Operation(
+            summary = "Delete an applicant comment",
+            description = "Deletes an existing applicant comment."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Applicant comment deleted successfully",
+            content = @Content(
+                    schema = @Schema(implementation = DeleteCommentResponseDTO.class)
+            )
+    )
     public ResponseEntity<DeleteCommentResponseDTO> deleteComment(@RequestBody @Valid DeleteCommentRequestDTO request) {
         return ResponseEntity.ok(applicantService.deleteComment(request));
     }
