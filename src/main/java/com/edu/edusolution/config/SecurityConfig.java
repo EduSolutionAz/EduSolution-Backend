@@ -55,7 +55,9 @@ public class SecurityConfig {
                             "/api/v1/contact/add",
                             "/api/v1/applicant/review",
                             "/api/v1/applicant/top_comments",
-                            "/api/v1/admin/login"
+                            "/api/v1/admin/login",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
