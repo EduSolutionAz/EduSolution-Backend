@@ -28,7 +28,7 @@ import java.util.List;
 public class CountryController {
     private final CountryService countryService;
 
-    @GetMapping("/{countryName}")
+    @GetMapping("/country_detail/{countryName}")
     @Operation(
             summary = "Get country information",
             description = "Retrieves detailed information about a specific country."

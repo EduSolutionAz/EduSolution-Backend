@@ -49,7 +49,7 @@ public class SecurityConfig {
                             "/api/v1/university/university_logos",
                             "/api/v1/university/university_details/*",
                             "/api/v1/faculty/get_faculties",
-                            "/api/v1/country/*",
+                            "/api/v1/country/country_detail/**",
                             "/api/v1/country/country_logos",
                             "/api/v1/country/top_countries",
                             "/api/v1/contact/add",
