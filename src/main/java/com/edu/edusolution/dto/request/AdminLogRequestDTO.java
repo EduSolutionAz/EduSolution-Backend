@@ -14,7 +14,7 @@ import static com.edu.edusolution.constants.DtoConstants.*;
 public class AdminLogRequestDTO {
     @Size(max = 20, message = USERNAME_LENGTH_MSG)
     private String username;
-    @Size(min = 9, max = 20, message = PASSWORD_LENGTH_MSG)
+    @Size(min = 9, max = 30, message = PASSWORD_LENGTH_MSG)
     @Pattern(regexp = PASSWORD_REGEX, message = PASSWORD_REGEX_MSG)
     private String password;
 }

@@ -14,7 +14,7 @@ public class DtoConstants {
     public static final String EMAIL_JSON_FIELD = "email";
 
     public static final String PASSWORD_IS_REQUIRED_MSG = "Password is required to proceed";
-    public static final String PASSWORD_LENGTH_MSG = "Password must not exceed 20 characters and less than 9 characters";
+    public static final String PASSWORD_LENGTH_MSG = "Password must not exceed 30 characters and less than 9 characters";
     public static final String PASSWORD_JSON_FIELD = "password";
 
     public static final String NAME_IS_REQUIRED_MSG = "Name is required to proceed";

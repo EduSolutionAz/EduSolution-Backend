@@ -47,20 +47,21 @@ public class SecurityConfig {
                             "/api/v1/user/register/password",
                             "/api/v1/user/login",
                             "/api/v1/university/university_logos",
-                            "/api/v1/university/university_details/",
+                            "/api/v1/university/university_details/*",
                             "/api/v1/faculty/get_faculties",
-                            "/api/v1/country/",
+                            "/api/v1/country/country_detail/**",
                             "/api/v1/country/country_logos",
                             "/api/v1/country/top_countries",
                             "/api/v1/contact/add",
                             "/api/v1/applicant/review",
                             "/api/v1/applicant/top_comments",
-                            "/api/v1/admin/login"
+                            "/api/v1/admin/login",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/api/v1/university/all_by_country",
+                            "/api/v1/university/all"
                     ).permitAll();
                     auth.anyRequest().authenticated();
-                })
-                .httpBasic(httpbasic -> {
-                    httpbasic.realmName("EsAcademy");
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
