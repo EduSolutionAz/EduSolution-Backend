@@ -64,7 +64,7 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.deleteFaculty(request));
     }
 
-    @GetMapping("/get_faculties")
+    @GetMapping("/get_faculties/{universityName}")
     @Operation(
             summary = "Get university faculties",
             description = "Retrieves the faculties associated with a specific university."
@@ -78,7 +78,7 @@ public class FacultyController {
                     )
             )
     )
-    public ResponseEntity<List<UniversityFacultiesResponseDTO>> getFaculties(@RequestBody @Valid UniversityFacultiesRequestDTO request) {
-        return ResponseEntity.ok(facultyService.getUniversityFaculties(request));
+    public ResponseEntity<List<UniversityFacultiesResponseDTO>> getFaculties(@PathVariable String universityName) {
+        return ResponseEntity.ok(facultyService.getUniversityFaculties(new UniversityFacultiesRequestDTO(universityName)));
     }
 }

@@ -112,7 +112,7 @@ public class UniversityController {
         return ResponseEntity.ok(universityService.getAllUniversities());
     }
 
-    @GetMapping("/all_by_country")
+    @GetMapping("/all_by_country/{countryName}")
     @Operation(
             summary = "Get universities by country",
             description = "Retrieves all universities associated with the specified country."
@@ -126,8 +126,8 @@ public class UniversityController {
                     )
             )
     )
-    public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversitiesByCountry(@RequestBody @Valid UniversityByCountryRequestDTO request) {
-        return ResponseEntity.ok(universityService.getUniversitiesByCountry(request.getCountryName()));
+    public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversitiesByCountry(@PathVariable String countryName) {
+        return ResponseEntity.ok(universityService.getUniversitiesByCountry(countryName));
     }
 
     @PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
@@ -147,8 +147,19 @@ public class UniversityController {
         return ResponseEntity.ok(universityService.updateUniversity(request));
     }
 
-    @GetMapping("/university_entity")
-    public ResponseEntity<UniversityEntityResponseDTO> getUniversityEntity(@RequestBody @Valid UniversityEntityRequestDTO request) {
-        return ResponseEntity.ok(universityService.universityEntity(request));
+    @GetMapping("/university_entity/{universityName}")
+    @Operation(
+            summary = "Get university entity",
+            description = "Retrieves the entity information for a specified university."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "University entity retrieved successfully",
+            content = @Content(
+                    schema = @Schema(implementation = UniversityEntityResponseDTO.class)
+            )
+    )
+    public ResponseEntity<UniversityEntityResponseDTO> getUniversityEntity(@PathVariable String universityName) {
+        return ResponseEntity.ok(universityService.universityEntity(new UniversityEntityRequestDTO(universityName)));
     }
 }

@@ -249,7 +249,6 @@ public class CountryService {
                 .orElseThrow(CountryNotFoundException::new);
 
 
-
         return CountryEntityResponseDTO
                 .builder()
                 .countryName(country.getCountryName())
@@ -265,6 +264,22 @@ public class CountryService {
                 .content(countrySection.getContent())
                 .area(countrySection.getAreas())
                 .build();
+    }
+
+    public List<CountriesResponseDTO> getAllCountries() {
+        List<CountryEntity> countryEntities = countryRepository.findAll();
+
+        return countryEntities.stream()
+                .map
+                        (
+                                country -> CountriesResponseDTO
+                                        .builder()
+                                        .dormitoryHelp(country.getDormitoryHelp())
+                                        .universityCount(country.getUniversityCount())
+                                        .countryName(country.getCountryName())
+                                        .visaHelp(country.getVisaHelp())
+                                        .build()
+                        ).toList();
     }
 
 

@@ -50,7 +50,7 @@ public class SecurityConfig {
                             "/api/v1/user/login",
                             "/api/v1/university/university_logos",
                             "/api/v1/university/university_details/*",
-                            "/api/v1/faculty/get_faculties",
+                            "/api/v1/faculty/get_faculties/**",
                             "/api/v1/country/country_detail/**",
                             "/api/v1/country/country_logos",
                             "/api/v1/country/top_countries",
@@ -60,8 +60,11 @@ public class SecurityConfig {
                             "/api/v1/admin/login",
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
-                            "/api/v1/university/all_by_country",
-                            "/api/v1/university/all"
+                            "/api/v1/university/all_by_country/**",
+                            "/api/v1/university/all",
+                            "/api/v1/country/country_entity/**",
+                            "/api/v1/university/university_entity",
+                            "/api/v1/country/all"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })

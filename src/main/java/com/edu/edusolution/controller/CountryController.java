@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.util.List;
 
@@ -134,9 +135,38 @@ public class CountryController {
         return ResponseEntity.ok(countryService.updateCountry(request));
     }
 
-    @GetMapping("/country_entity")
-    public ResponseEntity<CountryEntityResponseDTO> getCountryEntity(@RequestBody @Valid CountryEntityRequestDTO request) {
-        return ResponseEntity.ok(countryService.countryEntity(request));
+    @GetMapping("/country_entity/{countryName}")
+    @Operation(
+            summary = "Get country entity",
+            description = "Retrieves the entity information for a specified country."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Country entity retrieved successfully",
+            content = @Content(
+                    schema = @Schema(implementation = CountryEntityResponseDTO.class)
+            )
+    )
+    public ResponseEntity<CountryEntityResponseDTO> getCountryEntity(@PathVariable String countryName) {
+        return ResponseEntity.ok(countryService.countryEntity(new CountryEntityRequestDTO(countryName)));
+    }
+
+    @Operation(
+            summary = "Get all countries",
+            description = "Retrieves a list of all countries available on the platform."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Countries retrieved successfully",
+            content = @Content(
+                    array = @ArraySchema(
+                            schema = @Schema(implementation = CountriesResponseDTO.class)
+                    )
+            )
+    )
+    @GetMapping("/all")
+    public ResponseEntity<List<CountriesResponseDTO>> getAllCountries() {
+        return ResponseEntity.ok(countryService.getAllCountries());
     }
 
 }
