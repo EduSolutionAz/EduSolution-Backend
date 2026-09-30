@@ -81,4 +81,7 @@ public class ExceptionConstants {
     public static final String UNEXPECTED_ERROR_CODE = "UNEXPECTED_ERROR";
     public static final String UNEXPECTED_ERROR_MSG = "An unexpected error occurred";
     public static final String VALIDATION_ERROR_CODE = "VALIDATION_ERROR";
+
+    public static final String COUNTRY_DELETE_ERROR_CODE = "COUNTRY_DELETE_ERROR";
+    public static final String COUNTRY_DELETE_ERROR_UNI_MSG = "Before deleting country you should delete universities belonging to that country";
 }
