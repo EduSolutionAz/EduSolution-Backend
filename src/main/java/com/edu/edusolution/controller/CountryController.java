@@ -42,7 +42,7 @@ public class CountryController {
             )
     )
     public ResponseEntity<CountrySectionResponseDTO> getCountryInformation(@PathVariable String countryName) {
-        System.out.println(countryName);
+
         return ResponseEntity.ok(countryService.getCountryInformation(new CountrySectionRequestDTO(countryName)));
     }
 
@@ -96,8 +96,7 @@ public class CountryController {
     )
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CountryAddResponseDTO> addCountry(@ModelAttribute CountryAddRequestDTO request) {
-        System.out.println(request.getTuitionFee());
-        System.out.println(request.getCountryName());
+
         return ResponseEntity.ok(countryService.addNewCountry(request));
     }
 
