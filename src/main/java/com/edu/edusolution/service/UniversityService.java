@@ -81,7 +81,7 @@ public class UniversityService {
             throw new UniversityAlreadyExistsException();
         }
 
-        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName().toLowerCase().trim().replace(' ','_').replace('-','_'))
                 .orElseThrow(CountryNotFoundException::new);
 
         PutObjectRequest flagRequest = PutObjectRequest
