@@ -5,7 +5,6 @@ import com.edu.edusolution.dto.response.country.*;
 import com.edu.edusolution.dto.response.university.CountryEntityResponseDTO;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.country.CountrySectionEntity;
-import com.edu.edusolution.entity.university.UniversityEntity;
 import com.edu.edusolution.exception.*;
 import com.edu.edusolution.repository.CountryRepository;
 import com.edu.edusolution.repository.CountrySectionRepository;
@@ -339,7 +338,7 @@ public class CountryService {
                                         .builder()
                                         .dormitoryHelp(country.getDormitoryHelp())
                                         .universityCount(country.getUniversityCount())
-                                        .countryName(country.getCountryName())
+                                        .countryName(country.getCountryName().replace('_',' '))
                                         .visaHelp(country.getVisaHelp())
                                         .build()
                         ).toList();
@@ -350,7 +349,7 @@ public class CountryService {
         String countryName = request.getCountryName().trim().replace(' ','_').replace('-','_');
 
         CountryEntity country = new CountryEntity();
-        country.setCountryName(countryName.replace('_',' '));
+        country.setCountryName(countryName);
         country.setCountryFlagUrl(S3_PUBLIC_SHARE_LINK + COUNTRY_FOLDER_KEY + countryName.toLowerCase() + COUNTRY_FLAG_KEY);
         country.setCountryPhotoUrl(S3_PUBLIC_SHARE_LINK + COUNTRY_VIEW_FOLDER_KEY + countryName.toLowerCase() + COUNTRY_VIEW_KEY);
         country.setDormitoryHelp(request.getIsDormitoryHelp());
