@@ -232,6 +232,7 @@ public class UniversityService {
                 .build();
     }
 
+    @Transactional
     public UpdateUniversityResponseDTO updateUniversity(UpdateUniversityRequestDTO request) {
         String uniName = request.getUniversityName().toLowerCase().trim().replace(' ','_').replace('-','_');
 
@@ -243,6 +244,63 @@ public class UniversityService {
         university.setDescription(request.getShortDescription());
         university.setIsPartner(request.getIsPartner());
         university.setEntryFee(request.getFee());
+
+        DeleteObjectRequest deleteObjectRequest =
+                DeleteObjectRequest
+                        .builder()
+                        .bucket(S3_BUCKET_NAME)
+                        .key(UNIVERSITY_FOLDER_KEY+uniName+UNIVERSITY_LOGO_KEY)
+                        .build();
+
+        DeleteObjectRequest deleteViewRequest =
+                DeleteObjectRequest
+                        .builder()
+                        .bucket(S3_BUCKET_NAME)
+                        .key(UNIVERSITY_VIEW_FOLDER_KEY+uniName+UNIVERSITY_VIEW_KEY)
+                        .build();
+
+        try {
+            s3Client.deleteObject(deleteObjectRequest);
+            s3Client.deleteObject(deleteViewRequest);
+        } catch (S3Exception ex){
+            throw new DataDeleteException(DATA_DELETE_S3_UNIVERSITY_MSG);
+        }
+
+        PutObjectRequest flagRequest = PutObjectRequest
+                .builder()
+                .bucket(S3_BUCKET_NAME)
+                .key(UNIVERSITY_FOLDER_KEY+uniName+UNIVERSITY_LOGO_KEY)
+                .contentType(request.getUniversityLogo().getContentType())
+                .build();
+        // university-view-bucket
+
+        PutObjectRequest viewRequest = PutObjectRequest
+                .builder()
+                .bucket(S3_BUCKET_NAME)
+                .key(UNIVERSITY_VIEW_FOLDER_KEY+uniName+UNIVERSITY_VIEW_KEY)
+                .contentType(request.getUniversityLogo().getContentType())
+                .build();
+
+        try {
+            s3Client.putObject(
+                    flagRequest,
+                    RequestBody.fromInputStream(
+                            request.getUniversityLogo().getInputStream(),
+                            request.getUniversityLogo().getSize()
+                    )
+            );
+
+            s3Client.putObject(
+                    viewRequest,
+                    RequestBody.fromInputStream(
+                            request.getUniversityLogo().getInputStream(),
+                            request.getUniversityLogo().getSize()
+                    )
+            );
+
+        } catch (S3Exception | IOException ex) {
+            throw new CountryUploadException();
+        }
 
         universityRepository.save(university);
 
