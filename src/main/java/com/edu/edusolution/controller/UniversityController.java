@@ -162,4 +162,20 @@ public class UniversityController {
     public ResponseEntity<UniversityEntityResponseDTO> getUniversityEntity(@PathVariable String universityName) {
         return ResponseEntity.ok(universityService.universityEntity(new UniversityEntityRequestDTO(universityName)));
     }
+
+    @PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+    @Operation(
+            summary = "Update a university",
+            description = "Updates the information of an existing university."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "University updated successfully",
+            content = @Content(
+                    schema = @Schema(implementation = UpdateUniversityResponseDTO.class)
+            )
+    )
+    public ResponseEntity<UpdateUniversityResponseDTO> updateUniversity(@ModelAttribute UpdateUniversityRequestDTO request) {
+        return ResponseEntity.ok(universityService.updateUniversity(request));
+    }
 }
