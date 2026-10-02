@@ -23,3 +23,5 @@ databaseChangeLog:
       file: db/changelog/init/250926-contacts_table_schema.sql
   - include:
       file: db/changelog/init/270926-admins_table_schema.sql
+  - include:
+      file: db/changelog/init/020926-web_properties_table_schema.sql
