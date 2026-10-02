@@ -84,4 +84,11 @@ public class ExceptionConstants {
 
     public static final String COUNTRY_DELETE_ERROR_CODE = "COUNTRY_DELETE_ERROR";
     public static final String COUNTRY_DELETE_ERROR_UNI_MSG = "Before deleting country you should delete universities belonging to that country";
+
+    public static final String WEB_PROPERTY_NOT_FOUND_CODE = "WEB_PROPERTY_NOT_FOUND";
+    public static final String WEB_PROPERTY_NOT_FOUND_MSG = "There is no web-property data found. Try to add one!";
+    public static final String WEB_PROPERTY_ILLEGAL_ARGUMENT_CODE = "WEB_PROPERTY_ILLEGAL_ARGUMENT";
+    public static final String WEB_PROPERTY_ILLEGAL_ARGUMENT_ADMISSION_MSG = "Successful Admission cannot be bigger than total admissions";
+    public static final String WEB_PROPERTY_ILLEGAL_ARGUMENT_VISA_MSG = "Successful visa help cannot be bigger than total visa help";
+
 }

@@ -1,9 +1,6 @@
 package com.edu.edusolution.constants;
 
 import lombok.experimental.UtilityClass;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.math.BigDecimal;
 
 @UtilityClass
 public class DtoConstants {
@@ -115,5 +112,28 @@ public class DtoConstants {
 
     public static final String FEE_IS_REQUIRED_NULL_MSG = "Fee cannot be null";
     public static final String FEE_IS_REQUIRED_BLANK_MSG = "Fee cannot be blank";
+
+    // Properties
+    public static final String STUDENTS_HELPED_JSON = "students_helped";
+    public static final String STUDENTS_HELP_NULL_MSG = "Number of students helped cannot be null";
+    public static final String STUDENTS_HELP_BLANK_MSG = "Number of students helped cannot be blank";
+
+    public static final String ADMISSIONS_SENT_JSON = "admissions_sent";
+    public static final String ADMISSION_SENT_NULL_MSG = "Number of admissions sent cannot be null";
+    public static final String ADMISSION_SENT_BLANK_MSG = "Number of admissions sent cannot be blank";
+
+    public static final String SUCCESSFUL_ADMISSION_JSON = "successful_admission";
+    public static final String SUCCESSFUL_ADMISSION_NULL_MSG = "Number of successful admissions cannot be null";
+    public static final String SUCCESSFUL_ADMISSION_BLANK_MSG = "Number of successful admissions cannot be blank";
+
+    public static final String VISA_HELP_JSON = "visa_help";
+    public static final String VISA_HELP_NULL_MSG = "Number of visa help cannot be null";
+    public static final String VISA_HELP_BLANK_MSG = "Number of visa help cannot be blank";
+
+    public static final String SUCCESSFUL_VISA_HELP_JSON = "successful_visa_help";
+    public static final String SUCCESSFUL_VISA_HELP_NULL_MSG = "Number of successful visa help cannot be null";
+    public static final String SUCCESSFUL_VISA_HELP_BLANK_MSG = "Number of successful visa help cannot be blank";
+
+    public static final String VISA_SUCCESS_RATE_JSON = "visa_success_rate";
 
 }

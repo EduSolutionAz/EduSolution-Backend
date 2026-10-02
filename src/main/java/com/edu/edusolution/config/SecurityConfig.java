@@ -64,7 +64,8 @@ public class SecurityConfig {
                             "/api/v1/university/all",
                             "/api/v1/country/country_entity/**",
                             "/api/v1/university/university_entity",
-                            "/api/v1/country/all"
+                            "/api/v1/country/all",
+                            "/api/v1/property/all"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
