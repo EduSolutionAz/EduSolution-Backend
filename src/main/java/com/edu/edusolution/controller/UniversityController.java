@@ -1,9 +1,6 @@
 package com.edu.edusolution.controller;
 
-import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
-import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
-import com.edu.edusolution.dto.request.university.UniversityByCountryRequestDTO;
-import com.edu.edusolution.dto.request.university.UpdateUniversityRequestDTO;
+import com.edu.edusolution.dto.request.university.*;
 import com.edu.edusolution.dto.response.university.*;
 import com.edu.edusolution.service.UniversityService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -115,7 +112,7 @@ public class UniversityController {
         return ResponseEntity.ok(universityService.getAllUniversities());
     }
 
-    @GetMapping("/all_by_country")
+    @GetMapping("/all_by_country/{countryName}")
     @Operation(
             summary = "Get universities by country",
             description = "Retrieves all universities associated with the specified country."
@@ -129,8 +126,41 @@ public class UniversityController {
                     )
             )
     )
-    public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversitiesByCountry(@RequestBody @Valid UniversityByCountryRequestDTO request) {
-        return ResponseEntity.ok(universityService.getUniversitiesByCountry(request.getCountryName()));
+    public ResponseEntity<List<UniversitiesResponseDTO>> getAllUniversitiesByCountry(@PathVariable String countryName) {
+        return ResponseEntity.ok(universityService.getUniversitiesByCountry(countryName));
+    }
+
+    @PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+    @Operation(
+            summary = "Update a university",
+            description = "Updates the information of an existing university."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "University updated successfully",
+            content = @Content(
+                    schema = @Schema(implementation = UpdateUniversityResponseDTO.class)
+            )
+    )
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<UpdateUniversityResponseDTO> updateUniversity(@ModelAttribute UpdateUniversityRequestDTO request) {
+        return ResponseEntity.ok(universityService.updateUniversity(request));
+    }
+
+    @GetMapping("/university_entity/{universityName}")
+    @Operation(
+            summary = "Get university entity",
+            description = "Retrieves the entity information for a specified university."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "University entity retrieved successfully",
+            content = @Content(
+                    schema = @Schema(implementation = UniversityEntityResponseDTO.class)
+            )
+    )
+    public ResponseEntity<UniversityEntityResponseDTO> getUniversityEntity(@PathVariable String universityName) {
+        return ResponseEntity.ok(universityService.universityEntity(new UniversityEntityRequestDTO(universityName)));
     }
 
     @PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )

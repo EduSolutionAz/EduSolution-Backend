@@ -27,18 +27,18 @@ public class FacultyService {
 
     public AddNewFacultyResponseDTO addFaculty(AddNewFacultyRequestDTO request) {
 
-        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
+        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName().replace(' ','_').replace('-','_'))
                 .orElseThrow(UniversityNotFoundException::new);
 
         Optional<FacultyEntity> faculty = facultyRepository
-                .findByFacultyNameIgnoreCaseAndUniversity(request.getFacultyName(),university);
+                .findByFacultyNameIgnoreCaseAndUniversity(request.getFacultyName().replace(' ','_').replace('-','_'),university);
 
         if(faculty.isPresent()){
             throw new FacultyAlreadyExistsException();
         }
 
         FacultyEntity newFaculty = new FacultyEntity();
-        newFaculty.setFacultyName(request.getFacultyName());
+        newFaculty.setFacultyName(request.getFacultyName().replace(' ','_').replace('-','_'));
         newFaculty.setUniversity(university);
 
         facultyRepository.save(newFaculty);
@@ -53,11 +53,11 @@ public class FacultyService {
 
 
     public DeleteFacultyResponseDTO deleteFaculty(DeleteFacultyRequestDTO request) {
-        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
+        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName().replace(' ','_').replace('-','_'))
                 .orElseThrow(UniversityNotFoundException::new);
 
         FacultyEntity faculty = facultyRepository
-                .findByFacultyNameIgnoreCaseAndUniversity(request.getFacultyName(),university)
+                .findByFacultyNameIgnoreCaseAndUniversity(request.getFacultyName().replace(' ','_').replace('-','_'),university)
                 .orElseThrow(FacultyNotFoundException::new);
 
         facultyRepository.delete(faculty);
@@ -71,12 +71,12 @@ public class FacultyService {
     }
 
     public List<UniversityFacultiesResponseDTO> getUniversityFaculties(UniversityFacultiesRequestDTO request) {
-        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
+        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName().replace(' ','_').replace('-','_'))
                 .orElseThrow(UniversityNotFoundException::new);
 
         List<FacultyEntity> faculty = facultyRepository
                 .findAllByUniversity(university);
 
-        return faculty.stream().map(facultyEntity -> new UniversityFacultiesResponseDTO(facultyEntity.getFacultyName())).toList();
+        return faculty.stream().map(facultyEntity -> new UniversityFacultiesResponseDTO(facultyEntity.getFacultyName().replace('_',' '))).toList();
     }
 }

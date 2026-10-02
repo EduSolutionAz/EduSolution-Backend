@@ -1,13 +1,10 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
-import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
-import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
-import com.edu.edusolution.dto.request.country.UpdateCountryRequestDTO;
+import com.edu.edusolution.dto.request.country.*;
 import com.edu.edusolution.dto.response.country.*;
+import com.edu.edusolution.dto.response.university.CountryEntityResponseDTO;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.country.CountrySectionEntity;
-import com.edu.edusolution.entity.university.UniversityEntity;
 import com.edu.edusolution.exception.*;
 import com.edu.edusolution.repository.CountryRepository;
 import com.edu.edusolution.repository.CountrySectionRepository;
@@ -40,7 +37,7 @@ public class CountryService {
 
     // For specific information about the country
     public CountrySectionResponseDTO getCountryInformation(CountrySectionRequestDTO request) {
-        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName().trim().replace(' ','_').replace('-','_'))
                 .orElseThrow
                         (
                                 CountryNotFoundException::new
@@ -53,13 +50,13 @@ public class CountryService {
                         );
 
         List<String> universities = universityRepository.findAllByCountry(country).stream()
-                .map(UniversityEntity::getUniversityName)
+                .map(universityEntity -> universityEntity.getUniversityName().replace('_', ' '))
                 .toList();
 
 
         return CountrySectionResponseDTO
                 .builder()
-                .title(country.getCountryName())
+                .title(country.getCountryName().replace('_',' '))
                 .photoUrl(country.getCountryPhotoUrl())
                 .title(section.getTitle())
                 .content(section.getContent())
@@ -75,7 +72,7 @@ public class CountryService {
         return countries.stream()
                 .map(countryEntity -> TopCountriesInfoResponse
                         .builder()
-                        .countryName(countryEntity.getCountryName())
+                        .countryName(countryEntity.getCountryName().replace('_',' '))
                         .countryBGUrl(countryEntity.getCountryPhotoUrl())
                         .dormitoryHelp(countryEntity.getDormitoryHelp())
                         .universityCount(countryEntity.getUniversityCount())
@@ -103,7 +100,9 @@ public class CountryService {
 
     @Transactional
     public CountryAddResponseDTO addNewCountry(CountryAddRequestDTO request) {
-        Optional<CountryEntity> checkCountry = countryRepository.findByCountryNameIgnoreCase(request.getCountryName());
+        String countryName = request.getCountryName().toLowerCase().trim().replace(' ','_').replace('-','_');
+
+        Optional<CountryEntity> checkCountry = countryRepository.findByCountryNameIgnoreCase(countryName);
 
         if (checkCountry.isPresent()) {
             throw new CountryAlreadyExists();
@@ -112,14 +111,14 @@ public class CountryService {
         PutObjectRequest flagRequest = PutObjectRequest
                 .builder()
                 .bucket(S3_BUCKET_NAME)
-                .key(COUNTRY_FOLDER_KEY + request.getCountryName().toLowerCase() + COUNTRY_FLAG_KEY)
+                .key(COUNTRY_FOLDER_KEY + countryName + COUNTRY_FLAG_KEY)
                 .contentType(request.getFlagImage().getContentType())
                 .build();
 
         PutObjectRequest photoRequest = PutObjectRequest
                 .builder()
                 .bucket(S3_BUCKET_NAME)
-                .key(COUNTRY_VIEW_FOLDER_KEY + request.getCountryName().toLowerCase() + COUNTRY_VIEW_KEY)
+                .key(COUNTRY_VIEW_FOLDER_KEY + countryName + COUNTRY_VIEW_KEY)
                 .contentType(request.getCountryImage().getContentType())
                 .build();
 
@@ -136,7 +135,7 @@ public class CountryService {
                     photoRequest,
                     RequestBody.fromInputStream(
                             request.getCountryImage().getInputStream(),
-                            request.getFlagImage().getSize()
+                            request.getCountryImage().getSize()
                     )
             );
         } catch (IOException exception) {
@@ -170,28 +169,34 @@ public class CountryService {
 
     @Transactional
     public DeleteCountryResponseDTO deleteCountry(DeleteCountryRequestDTO request) {
-        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
+        String countryName = request.getCountryName().trim().toLowerCase().replace(' ','_').replace('-','_');
+
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(countryName)
                 .orElseThrow(CountryNotFoundException::new);
 
         CountrySectionEntity section = countrySectionRepository.findByCountry(country)
                 .orElseThrow(CountryNotFoundException::new);
 
-        countrySectionRepository.delete(section);
-        countryRepository.flush();
-        countryRepository.delete(country);
+        try {
+            countrySectionRepository.delete(section);
+            countryRepository.flush();
+            countryRepository.delete(country);
+        } catch (DataIntegrityViolationException ex){
+            throw new CountryDeleteException(COUNTRY_DELETE_ERROR_UNI_MSG);
+        }
 
         DeleteObjectRequest deleteObjectRequest =
                 DeleteObjectRequest
                         .builder()
                         .bucket(S3_BUCKET_NAME)
-                        .key(COUNTRY_FOLDER_KEY + request.getCountryName().toLowerCase() + COUNTRY_FLAG_KEY)
+                        .key(COUNTRY_FOLDER_KEY + countryName + COUNTRY_FLAG_KEY)
                         .build();
 
         DeleteObjectRequest deleteObjectRequest1 =
                 DeleteObjectRequest
                         .builder()
                         .bucket(S3_BUCKET_NAME)
-                        .key(COUNTRY_VIEW_FOLDER_KEY + request.getCountryName().toLowerCase() + COUNTRY_VIEW_KEY)
+                        .key(COUNTRY_VIEW_FOLDER_KEY + countryName + COUNTRY_VIEW_KEY)
                         .build();
 
 
@@ -209,8 +214,12 @@ public class CountryService {
                 .build();
     }
 
+    @Transactional
     public UpdateCountryResponseDTO updateCountry(UpdateCountryRequestDTO request) {
-        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
+
+        String countryName = request.getCountryName().trim().toLowerCase().replace(' ','_').replace('-','_');
+
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(countryName)
                 .orElseThrow(CountryNotFoundException::new);
 
         country.setIcon(request.getIcon());
@@ -220,6 +229,62 @@ public class CountryService {
         country.setRentalFeeEntry(request.getRentalFee());
         country.setVisaHelp(request.getIsVisaHelp());
         country.setDormitoryHelp(request.getIsDormitoryHelp());
+
+        DeleteObjectRequest deleteObjectRequest =
+                DeleteObjectRequest
+                        .builder()
+                        .bucket(S3_BUCKET_NAME)
+                        .key(COUNTRY_FOLDER_KEY + countryName + COUNTRY_FLAG_KEY)
+                        .build();
+
+        DeleteObjectRequest deleteObjectRequest1 =
+                DeleteObjectRequest
+                        .builder()
+                        .bucket(S3_BUCKET_NAME)
+                        .key(COUNTRY_VIEW_FOLDER_KEY + countryName + COUNTRY_VIEW_KEY)
+                        .build();
+
+
+        try {
+            s3Client.deleteObject(deleteObjectRequest);
+            s3Client.deleteObject(deleteObjectRequest1);
+        } catch (S3Exception ex) {
+            throw new DataDeleteException(DATA_DELETE_S3_COUNTRY_MSG);
+        }
+
+        PutObjectRequest flagRequest = PutObjectRequest
+                .builder()
+                .bucket(S3_BUCKET_NAME)
+                .key(COUNTRY_FOLDER_KEY + countryName + COUNTRY_FLAG_KEY)
+                .contentType(request.getFlagImage().getContentType())
+                .build();
+
+        PutObjectRequest photoRequest = PutObjectRequest
+                .builder()
+                .bucket(S3_BUCKET_NAME)
+                .key(COUNTRY_VIEW_FOLDER_KEY + countryName + COUNTRY_VIEW_KEY)
+                .contentType(request.getCountryImage().getContentType())
+                .build();
+
+        try {
+            s3Client.putObject(
+                    flagRequest,
+                    RequestBody.fromInputStream(
+                            request.getFlagImage().getInputStream(),
+                            request.getFlagImage().getSize()
+                    )
+            );
+
+            s3Client.putObject(
+                    photoRequest,
+                    RequestBody.fromInputStream(
+                            request.getCountryImage().getInputStream(),
+                            request.getCountryImage().getSize()
+                    )
+            );
+        } catch (IOException exception) {
+            throw new CountryUploadException();
+        }
 
         countryRepository.save(country);
 
@@ -238,12 +303,55 @@ public class CountryService {
                 .build();
     }
 
+    public CountryEntityResponseDTO countryEntity(CountryEntityRequestDTO request) {
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName().trim().replace(' ','_').replace('-','_'))
+                .orElseThrow(CountryNotFoundException::new);
+
+        CountrySectionEntity countrySection = countrySectionRepository.findByCountry(country)
+                .orElseThrow(CountryNotFoundException::new);
+
+
+        return CountryEntityResponseDTO
+                .builder()
+                .countryName(country.getCountryName().replace('_',' '))
+                .flagImage(country.getCountryFlagUrl())
+                .countryImage(country.getCountryPhotoUrl())
+                .universityCount(country.getUniversityCount())
+                .tuitionFee(country.getTuitionFeeEntry())
+                .rentalFee(country.getRentalFeeEntry())
+                .icon(country.getIcon())
+                .isVisaHelp(country.getVisaHelp())
+                .isDormitoryHelp(country.getDormitoryHelp())
+                .isTopList(country.getTopList())
+                .content(countrySection.getContent())
+                .area(countrySection.getAreas())
+                .build();
+    }
+
+    public List<CountriesResponseDTO> getAllCountries() {
+        List<CountryEntity> countryEntities = countryRepository.findAll();
+
+        return countryEntities.stream()
+                .map
+                        (
+                                country -> CountriesResponseDTO
+                                        .builder()
+                                        .dormitoryHelp(country.getDormitoryHelp())
+                                        .universityCount(country.getUniversityCount())
+                                        .countryName(country.getCountryName().replace('_',' '))
+                                        .visaHelp(country.getVisaHelp())
+                                        .build()
+                        ).toList();
+    }
+
 
     private CountryEntity getCountryEntity(CountryAddRequestDTO request) {
+        String countryName = request.getCountryName().trim().replace(' ','_').replace('-','_');
+
         CountryEntity country = new CountryEntity();
-        country.setCountryName(request.getCountryName());
-        country.setCountryFlagUrl(S3_PUBLIC_SHARE_LINK + COUNTRY_FOLDER_KEY + request.getCountryName().toLowerCase() + COUNTRY_FLAG_KEY);
-        country.setCountryPhotoUrl(S3_PUBLIC_SHARE_LINK + COUNTRY_VIEW_FOLDER_KEY + request.getCountryName().toLowerCase() + COUNTRY_VIEW_KEY);
+        country.setCountryName(countryName);
+        country.setCountryFlagUrl(S3_PUBLIC_SHARE_LINK + COUNTRY_FOLDER_KEY + countryName.toLowerCase() + COUNTRY_FLAG_KEY);
+        country.setCountryPhotoUrl(S3_PUBLIC_SHARE_LINK + COUNTRY_VIEW_FOLDER_KEY + countryName.toLowerCase() + COUNTRY_VIEW_KEY);
         country.setDormitoryHelp(request.getIsDormitoryHelp());
         country.setRentalFeeEntry(request.getRentalFee());
         country.setTuitionFeeEntry(request.getTuitionFee());

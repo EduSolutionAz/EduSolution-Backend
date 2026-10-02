@@ -1,9 +1,6 @@
 package com.edu.edusolution.service;
 
-import com.edu.edusolution.dto.request.university.AddUniversityRequestDTO;
-import com.edu.edusolution.dto.request.university.DeleteUniversityRequestDTO;
-import com.edu.edusolution.dto.request.university.UniversitySectionRequestDTO;
-import com.edu.edusolution.dto.request.university.UpdateUniversityRequestDTO;
+import com.edu.edusolution.dto.request.university.*;
 import com.edu.edusolution.dto.response.university.*;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.university.FacultyEntity;
@@ -56,7 +53,7 @@ public class UniversityService {
     }
 
     public UniversitySectionResponseDTO getUniversityInformation(String universityName) {
-        UniversityEntity checkUni = universityRepository.findByUniversityNameIgnoreCase(universityName)
+        UniversityEntity checkUni = universityRepository.findByUniversityNameIgnoreCase(universityName.trim().replace(' ','_').replace('-','_'))
                 .orElseThrow(UniversityNotFoundException::new);
 
         UniversitySectionEntity checkSection = universitySectionRepository.findByUniversityEntity(checkUni)
@@ -76,19 +73,21 @@ public class UniversityService {
 
     @Transactional
     public AddUniversityResponseDTO addUniversity(AddUniversityRequestDTO request) {
-        Optional<UniversityEntity> checkUni = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName());
+        String uniName = request.getUniversityName().toLowerCase().trim().replace(' ','_').replace('-','_');
+
+        Optional<UniversityEntity> checkUni = universityRepository.findByUniversityNameIgnoreCase(uniName);
 
         if (checkUni.isPresent()){
             throw new UniversityAlreadyExistsException();
         }
 
-        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName())
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName().toLowerCase().trim().replace(' ','_').replace('-','_'))
                 .orElseThrow(CountryNotFoundException::new);
 
         PutObjectRequest flagRequest = PutObjectRequest
                 .builder()
                 .bucket(S3_BUCKET_NAME)
-                .key(UNIVERSITY_FOLDER_KEY+request.getUniversityName().toLowerCase().replace(' ','_')+UNIVERSITY_LOGO_KEY)
+                .key(UNIVERSITY_FOLDER_KEY+uniName+UNIVERSITY_LOGO_KEY)
                 .contentType(request.getUniversityLogo().getContentType())
                 .build();
         // university-view-bucket
@@ -96,7 +95,7 @@ public class UniversityService {
         PutObjectRequest viewRequest = PutObjectRequest
                 .builder()
                 .bucket(S3_BUCKET_NAME)
-                .key(UNIVERSITY_VIEW_FOLDER_KEY+request.getUniversityName().toLowerCase().replace(' ','_')+UNIVERSITY_VIEW_KEY)
+                .key(UNIVERSITY_VIEW_FOLDER_KEY+uniName+UNIVERSITY_VIEW_KEY)
                 .contentType(request.getUniversityLogo().getContentType())
                 .build();
 
@@ -154,7 +153,7 @@ public class UniversityService {
     }
 
     public List<UniversitiesResponseDTO> getUniversitiesByCountry(String countryName) {
-        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(countryName)
+        CountryEntity country = countryRepository.findByCountryNameIgnoreCase(countryName.trim().replace(' ','_').replace('-','_'))
                 .orElseThrow(CountryNotFoundException::new);
 
         List<UniversityEntity> universities = universityRepository.findAllByCountry(country);
@@ -172,10 +171,12 @@ public class UniversityService {
     }
 
     private static UniversityEntity getUniversityEntity(AddUniversityRequestDTO request, CountryEntity country) {
+        String uniName = request.getUniversityName().toLowerCase().trim().replace(' ','_').replace('-','_');
+
         UniversityEntity university = new UniversityEntity();
-        university.setUniversityName(request.getUniversityName());
-        university.setUniversityLogoUrl(S3_PUBLIC_SHARE_LINK+UNIVERSITY_FOLDER_KEY+ request.getUniversityName().toLowerCase().replace(' ','_')+UNIVERSITY_LOGO_KEY);
-        university.setUniversityViewUrl(S3_PUBLIC_SHARE_LINK+UNIVERSITY_VIEW_FOLDER_KEY+ request.getUniversityName().toLowerCase().replace(' ','_')+UNIVERSITY_VIEW_KEY);
+        university.setUniversityName(uniName);
+        university.setUniversityLogoUrl(S3_PUBLIC_SHARE_LINK+UNIVERSITY_FOLDER_KEY+ uniName+UNIVERSITY_LOGO_KEY);
+        university.setUniversityViewUrl(S3_PUBLIC_SHARE_LINK+UNIVERSITY_VIEW_FOLDER_KEY+ uniName+UNIVERSITY_VIEW_KEY);
         university.setType(request.getUniversityType());
         university.setCity(request.getCity());
         university.setCountry(country);
@@ -186,7 +187,10 @@ public class UniversityService {
 
     @Transactional
     public DeleteUniversityResponseDTO deleteUniversity(DeleteUniversityRequestDTO request) {
-        UniversityEntity uni = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
+
+        String uniName = request.getUniversityName().toLowerCase().trim().replace(' ','_').replace('-','_');
+
+        UniversityEntity uni = universityRepository.findByUniversityNameIgnoreCase(uniName)
                 .orElseThrow(UniversityNotFoundException::new);
 
         UniversitySectionEntity section = universitySectionRepository.findByUniversityEntity(uni)
@@ -204,14 +208,14 @@ public class UniversityService {
                 DeleteObjectRequest
                         .builder()
                         .bucket(S3_BUCKET_NAME)
-                        .key(UNIVERSITY_FOLDER_KEY+request.getUniversityName().toLowerCase().replace(' ', '_')+UNIVERSITY_LOGO_KEY)
+                        .key(UNIVERSITY_FOLDER_KEY+uniName+UNIVERSITY_LOGO_KEY)
                         .build();
 
         DeleteObjectRequest deleteViewRequest =
                 DeleteObjectRequest
                         .builder()
                         .bucket(S3_BUCKET_NAME)
-                        .key(UNIVERSITY_VIEW_FOLDER_KEY+request.getUniversityName().toLowerCase().replace(' ', '_')+UNIVERSITY_VIEW_KEY)
+                        .key(UNIVERSITY_VIEW_FOLDER_KEY+uniName+UNIVERSITY_VIEW_KEY)
                         .build();
 
         try {
@@ -228,8 +232,11 @@ public class UniversityService {
                 .build();
     }
 
+    @Transactional
     public UpdateUniversityResponseDTO updateUniversity(UpdateUniversityRequestDTO request) {
-        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(request.getUniversityName())
+        String uniName = request.getUniversityName().toLowerCase().trim().replace(' ','_').replace('-','_');
+
+        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(uniName)
                 .orElseThrow(UniversityNotFoundException::new);
 
         university.setCity(request.getCity());
@@ -237,6 +244,63 @@ public class UniversityService {
         university.setDescription(request.getShortDescription());
         university.setIsPartner(request.getIsPartner());
         university.setEntryFee(request.getFee());
+
+        DeleteObjectRequest deleteObjectRequest =
+                DeleteObjectRequest
+                        .builder()
+                        .bucket(S3_BUCKET_NAME)
+                        .key(UNIVERSITY_FOLDER_KEY+uniName+UNIVERSITY_LOGO_KEY)
+                        .build();
+
+        DeleteObjectRequest deleteViewRequest =
+                DeleteObjectRequest
+                        .builder()
+                        .bucket(S3_BUCKET_NAME)
+                        .key(UNIVERSITY_VIEW_FOLDER_KEY+uniName+UNIVERSITY_VIEW_KEY)
+                        .build();
+
+        try {
+            s3Client.deleteObject(deleteObjectRequest);
+            s3Client.deleteObject(deleteViewRequest);
+        } catch (S3Exception ex){
+            throw new DataDeleteException(DATA_DELETE_S3_UNIVERSITY_MSG);
+        }
+
+        PutObjectRequest flagRequest = PutObjectRequest
+                .builder()
+                .bucket(S3_BUCKET_NAME)
+                .key(UNIVERSITY_FOLDER_KEY+uniName+UNIVERSITY_LOGO_KEY)
+                .contentType(request.getUniversityLogo().getContentType())
+                .build();
+        // university-view-bucket
+
+        PutObjectRequest viewRequest = PutObjectRequest
+                .builder()
+                .bucket(S3_BUCKET_NAME)
+                .key(UNIVERSITY_VIEW_FOLDER_KEY+uniName+UNIVERSITY_VIEW_KEY)
+                .contentType(request.getUniversityLogo().getContentType())
+                .build();
+
+        try {
+            s3Client.putObject(
+                    flagRequest,
+                    RequestBody.fromInputStream(
+                            request.getUniversityLogo().getInputStream(),
+                            request.getUniversityLogo().getSize()
+                    )
+            );
+
+            s3Client.putObject(
+                    viewRequest,
+                    RequestBody.fromInputStream(
+                            request.getUniversityLogo().getInputStream(),
+                            request.getUniversityLogo().getSize()
+                    )
+            );
+
+        } catch (S3Exception | IOException ex) {
+            throw new CountryUploadException();
+        }
 
         universityRepository.save(university);
 
@@ -252,6 +316,32 @@ public class UniversityService {
                 .builder()
                 .universityName(request.getUniversityName())
                 .isUpdated(true)
+                .build();
+    }
+
+    public UniversityEntityResponseDTO universityEntity(UniversityEntityRequestDTO request) {
+
+        String uniName = request.getUniversityName().toLowerCase().trim().replace(' ','_').replace('-','_');
+
+        UniversityEntity university = universityRepository.findByUniversityNameIgnoreCase(uniName)
+                .orElseThrow(UniversityNotFoundException::new);
+
+        UniversitySectionEntity universitySection = universitySectionRepository.findByUniversityEntity(university)
+                .orElseThrow(CountryNotFoundException::new);
+
+
+
+        return UniversityEntityResponseDTO
+                .builder()
+                .universityName(university.getUniversityName())
+                .countryName(university.getCountry().getCountryName())
+                .universityType(university.getType())
+                .city(university.getCity())
+                .shortDescription(university.getDescription())
+                .fee(university.getEntryFee())
+                .universityLogo(university.getUniversityLogoUrl())
+                .content(universitySection.getContent())
+                .area(universitySection.getAreas())
                 .build();
     }
 

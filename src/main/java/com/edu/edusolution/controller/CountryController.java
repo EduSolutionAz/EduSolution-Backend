@@ -1,11 +1,9 @@
 package com.edu.edusolution.controller;
 
-import com.edu.edusolution.dto.request.country.CountryAddRequestDTO;
-import com.edu.edusolution.dto.request.country.CountrySectionRequestDTO;
-import com.edu.edusolution.dto.request.country.DeleteCountryRequestDTO;
-import com.edu.edusolution.dto.request.country.UpdateCountryRequestDTO;
+import com.edu.edusolution.dto.request.country.*;
 import com.edu.edusolution.dto.response.country.*;
 import com.edu.edusolution.dto.response.university.AddNewFacultyResponseDTO;
+import com.edu.edusolution.dto.response.university.CountryEntityResponseDTO;
 import com.edu.edusolution.dto.response.university.UniversityFacultiesResponseDTO;
 import com.edu.edusolution.service.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class CountryController {
             )
     )
     public ResponseEntity<CountrySectionResponseDTO> getCountryInformation(@PathVariable String countryName) {
-        System.out.println(countryName);
+
         return ResponseEntity.ok(countryService.getCountryInformation(new CountrySectionRequestDTO(countryName)));
     }
 
@@ -97,8 +96,7 @@ public class CountryController {
     )
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CountryAddResponseDTO> addCountry(@ModelAttribute CountryAddRequestDTO request) {
-        System.out.println(request.getTuitionFee());
-        System.out.println(request.getCountryName());
+
         return ResponseEntity.ok(countryService.addNewCountry(request));
     }
 
@@ -114,6 +112,7 @@ public class CountryController {
                     schema = @Schema(implementation = DeleteCountryResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<DeleteCountryResponseDTO> deleteCountry(@RequestBody @Valid DeleteCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.deleteCountry(request));
     }
@@ -130,7 +129,43 @@ public class CountryController {
                     schema = @Schema(implementation = UpdateCountryResponseDTO.class)
             )
     )
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<UpdateCountryResponseDTO> updateCountry(@ModelAttribute UpdateCountryRequestDTO request) {
         return ResponseEntity.ok(countryService.updateCountry(request));
     }
+
+    @GetMapping("/country_entity/{countryName}")
+    @Operation(
+            summary = "Get country entity",
+            description = "Retrieves the entity information for a specified country."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Country entity retrieved successfully",
+            content = @Content(
+                    schema = @Schema(implementation = CountryEntityResponseDTO.class)
+            )
+    )
+    public ResponseEntity<CountryEntityResponseDTO> getCountryEntity(@PathVariable String countryName) {
+        return ResponseEntity.ok(countryService.countryEntity(new CountryEntityRequestDTO(countryName)));
+    }
+
+    @Operation(
+            summary = "Get all countries",
+            description = "Retrieves a list of all countries available on the platform."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Countries retrieved successfully",
+            content = @Content(
+                    array = @ArraySchema(
+                            schema = @Schema(implementation = CountriesResponseDTO.class)
+                    )
+            )
+    )
+    @GetMapping("/all")
+    public ResponseEntity<List<CountriesResponseDTO>> getAllCountries() {
+        return ResponseEntity.ok(countryService.getAllCountries());
+    }
+
 }
