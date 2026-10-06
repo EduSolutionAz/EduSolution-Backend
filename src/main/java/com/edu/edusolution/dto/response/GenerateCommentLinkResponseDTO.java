@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class GenerateCommentLinkResponseDTO {
+    @JsonProperty("email")
     private String email;
     @JsonProperty("is_sent")
     private Boolean isSent;

@@ -20,5 +20,6 @@ public class AddWebPropertiesResponseDTO {
     @JsonProperty(IS_CREATED_JSON)
     private Boolean isCreated;
 
+    @JsonProperty("errors")
     private List<ErrorDto> errors;
 }

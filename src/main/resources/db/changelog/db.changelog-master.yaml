@@ -31,3 +31,5 @@ databaseChangeLog:
       file: db/changelog/init/030926-spin_participant_table_schema.sql
   - include:
       file: db/changelog/init/060926-spin_results_table_schema.sql
+  - include:
+      file: db/changelog/init/060926-ads_table_schema.sql

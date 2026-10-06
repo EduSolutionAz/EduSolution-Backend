@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class AdminLogResponse {
+    @JsonProperty("token")
     private String token;
     @JsonProperty("expires_in")
     private Long expiresIn;

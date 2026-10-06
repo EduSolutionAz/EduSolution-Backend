@@ -21,5 +21,6 @@ public class PrizeAddResponseDTO {
     private String prizeName;
     @JsonProperty(IS_CREATED_JSON)
     private Boolean isAdded;
+    @JsonProperty("errors")
     private List<ErrorDto> errors;
 }

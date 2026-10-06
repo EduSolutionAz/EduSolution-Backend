@@ -190,4 +190,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
+    @ExceptionHandler(AdAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleAdAlreadyExistsException(AdAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AdNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleAdNotFoundException(AdNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AdUploadException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleAdUploadException(AdUploadException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
 }
