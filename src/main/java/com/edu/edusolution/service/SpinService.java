@@ -205,6 +205,21 @@ public class SpinService {
                 .build();
     }
 
+    public List<SpinWinnersDTO> spinWinners() {
+        List<SpinResultEntity> results = spinResultRepository.findAllByOrderByCreatedAtDesc();
+
+        return results.stream()
+                .map(
+                        spinResultEntity ->
+                                SpinWinnersDTO
+                                        .builder()
+                                        .email(spinResultEntity.getEmail())
+                                        .prizeId(spinResultEntity.getRewardId())
+                                        .prize(spinResultEntity.getPrize().getSpinPrizeName())
+                                        .build()
+                ).toList();
+    }
+
     private SpinParticipantEntity createParticipant(SpinCheckRequestDTO request) {
 
         return SpinParticipantEntity
@@ -285,37 +300,6 @@ public class SpinService {
     }
 
     private String prizeBody(UUID code) {
-        String body = """
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Your EduSolution Academy Prize</title>
-                </head>
-                <body>
-                    <h1>Congratulations! 🎉</h1>
-                
-                    <p>You have won a prize from <strong>EduSolution Academy</strong>.</p>
-                
-                    <p>Your prize:</p>
-                
-                    <h2>20% Visa Consultation Discount</h2>
-                
-                    <p>Your redemption code:</p>
-                
-                    <h2>%s</h2>
-                
-                    <p>
-                        Contact us on WhatsApp and provide this code
-                        to claim your prize.
-                    </p>
-                
-                    <p>
-                        Thank you for participating!
-                    </p>
-                </body>
-                </html>
-                """;
         return """
                 <!DOCTYPE html>
                 <html>

@@ -56,4 +56,9 @@ public class SpinController {
     public ResponseEntity<List<PrizeUpdateResponseDTO>> updatePrizes(@RequestBody @Valid List<PrizeUpdateRequestDTO> request) {
         return ResponseEntity.ok(spinService.updatePrizes(request));
     }
+
+    @GetMapping("/winners")
+    public ResponseEntity<List<SpinWinnersDTO>> getWinners() {
+        return ResponseEntity.ok(spinService.spinWinners());
+    }
 }
