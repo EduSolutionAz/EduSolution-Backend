@@ -21,8 +21,10 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.edu.edusolution.constants.S3Constants.*;
 import static com.edu.edusolution.constants.ExceptionConstants.DATA_DELETE_S3_UNIVERSITY_MSG;
@@ -62,8 +64,12 @@ public class UniversityService {
         List<FacultyEntity> faculties = facultyRepository.findAllByUniversity(checkUni);
         List<String> facultiesString = faculties.stream().map(FacultyEntity::getFacultyName).toList();
 
+        String uniName = Arrays.stream(universityName.replace('_',' ').split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                .collect(Collectors.joining(" "));
+
         return UniversitySectionResponseDTO.builder()
-                .title(universityName)
+                .title(uniName)
                 .content(checkSection.getContent())
                 .photoUrl(checkUni.getUniversityLogoUrl())
                 .viewUrl(checkUni.getUniversityViewUrl())
@@ -142,12 +148,18 @@ public class UniversityService {
         List<UniversityEntity> universities = universityRepository.findAll();
 
         return universities.stream()
-                .map(universityEntity ->
-                        UniversitiesResponseDTO.
-                                builder()
-                                .universityName(universityEntity.getUniversityName())
-                                .countryName(universityEntity.getCountry().getCountryName())
-                                .build()
+                .map(universityEntity ->{
+                    String uniName = Arrays.stream(universityEntity.getUniversityName().replace('_',' ').split(" "))
+                            .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                            .collect(Collectors.joining(" "));
+
+                    return UniversitiesResponseDTO.
+                            builder()
+                            .universityName(uniName)
+                            .countryName(universityEntity.getCountry().getCountryName())
+                            .build();
+                        }
+
                 )
                 .toList();
     }
@@ -160,12 +172,18 @@ public class UniversityService {
 
         return universities.stream()
                 .map(
-                        universityEntity ->
-                                UniversitiesResponseDTO.
-                                        builder()
-                                        .universityName(universityEntity.getUniversityName())
-                                        .countryName(universityEntity.getCountry().getCountryName())
-                                        .build()
+                        universityEntity ->{
+                            String uniName = Arrays.stream(universityEntity.getUniversityName().replace('_',' ').split(" "))
+                                    .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                                    .collect(Collectors.joining(" "));
+
+                            return UniversitiesResponseDTO.
+                                    builder()
+                                    .universityName(universityEntity.getUniversityName())
+                                    .countryName(universityEntity.getCountry().getCountryName())
+                                    .build();
+                        }
+
                 )
                 .toList();
     }
@@ -329,6 +347,10 @@ public class UniversityService {
         UniversitySectionEntity universitySection = universitySectionRepository.findByUniversityEntity(university)
                 .orElseThrow(CountryNotFoundException::new);
 
+
+        String uniNameNormalized = Arrays.stream(university.getUniversityName().replace('_',' ').split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                .collect(Collectors.joining(" "));
 
 
         return UniversityEntityResponseDTO

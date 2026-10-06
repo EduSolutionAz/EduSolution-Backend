@@ -14,8 +14,10 @@ import java.util.List;
 @Data
 @Builder
 public class SendReviewResponseDTO {
+    @JsonProperty("email")
     private String email;
     @JsonProperty("is_comment_accepted")
     private Boolean isCommentAccepted;
+    @JsonProperty("errors")
     List<ErrorDto> errors;
 }

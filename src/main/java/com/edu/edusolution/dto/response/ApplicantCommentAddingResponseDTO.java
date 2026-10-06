@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class ApplicantCommentAddingResponseDTO {
     @JsonProperty("name")
     private String name;
-    @JsonProperty(namespace = "is_added")
+    @JsonProperty("is_added")
     private Boolean isAdded;
 }

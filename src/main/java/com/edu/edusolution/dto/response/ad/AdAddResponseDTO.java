@@ -1,17 +1,16 @@
-package com.edu.edusolution.dto.response.spin;
+package com.edu.edusolution.dto.response.ad;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
-public class SpinPrizeResponseDTO {
-    @JsonProperty("prize")
-    public String prize;
-
+public class AdAddResponseDTO {
+    @JsonProperty("title")
+    private String title;
+    @JsonProperty("is_created")
+    private Boolean isCreated;
 }

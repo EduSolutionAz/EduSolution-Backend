@@ -20,8 +20,10 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.edu.edusolution.constants.S3Constants.*;
 import static com.edu.edusolution.constants.ExceptionConstants.*;
@@ -50,7 +52,9 @@ public class CountryService {
                         );
 
         List<String> universities = universityRepository.findAllByCountry(country).stream()
-                .map(universityEntity -> universityEntity.getUniversityName().replace('_', ' '))
+                .map(universityEntity -> Arrays.stream(universityEntity.getUniversityName().replace('_',' ').split(" "))
+                        .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                        .collect(Collectors.joining(" ")))
                 .toList();
 
 

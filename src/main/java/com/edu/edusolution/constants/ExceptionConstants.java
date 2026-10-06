@@ -40,6 +40,7 @@ public class ExceptionConstants {
     public static final String DATA_DELETE_ERROR_CODE = "DATA_DELETE_ERROR";
     public static final String DATA_DELETE_S3_COUNTRY_MSG = "An error occurred while deleting country from storage";
     public static final String DATA_DELETE_S3_UNIVERSITY_MSG = "An error occurred while deleting university from storage";
+    public static final String DATA_DELETE_S3_AD_MSG = "An error occurred while deleting ad from storage";
 
     // Country Exception
     public static final String COUNTRY_NOT_FOUND_CODE = "COUNTRY_NOT_FOUND";
@@ -110,4 +111,14 @@ public class ExceptionConstants {
 
     public static final String PRIZE_NOT_FOUND_CODE = "PRIZE_NOT_FOUND";
     public static final String PRIZE_NOT_FOUND_MSG = "Prize not found";
+
+    public static final String AD_ALREADY_EXISTS_CODE = "AD_ALREADY_EXISTS";
+    public static final String AD_ALREADY_EXISTS_MSG = "Ad with this name already exists";
+
+    public static final String AD_NOT_FOUND_CODE = "AD_NOT_FOUND";
+    public static final String AD_NOT_FOUND_MSG = "Ad not found";
+
+    public static final String AD_UPLOAD_ERROR_CODE = "AD_UPLOAD_ERROR";
+    public static final String AD_UPLOAD_ERROR_MSG = "An error occurred while uploading the add";
+
 }
