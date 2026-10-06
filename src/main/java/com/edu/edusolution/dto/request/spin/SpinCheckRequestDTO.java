@@ -18,5 +18,6 @@ public class SpinCheckRequestDTO {
     @JsonProperty(BROWSER_ID_JSON) //38
     @Size(max = BROWSER_ID_LENGTH, message = BROWSER_ID_LENGTH_MSG)
     private UUID browserId;
+    @JsonProperty("ip")
     private String ip;
 }

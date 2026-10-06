@@ -28,8 +28,10 @@ public class CreateContactRequestDTO {
     @NotBlank(message = PHONE_IS_REQUIRED_MSG)
     @NotNull(message = PHONE_IS_REQUIRED_MSG)
     @Size(max = 15, min = 9, message = PHONE_LENGTH_MSG)
+    @JsonProperty(PHONE_JSON_FIELD)
     private String phone;
 
     @NotNull(message = SERVICE_IS_REQUIRED_NULL_MSG)
+    @JsonProperty("service")
     private ApplicantServices service;
 }
