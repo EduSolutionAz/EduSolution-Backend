@@ -138,6 +138,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
+    @ExceptionHandler(WebPropertyNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleWebPropertyNotFoundException(WebPropertyNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+    @ExceptionHandler(WebPropertyArgumentException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleWebArgumentFoundException(WebPropertyArgumentException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ExceptionResponseDTO> handleAccessDeniedException(AccessDeniedException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ExceptionResponseDTO(UNAUTHORIZED_CODE, UNAUTHORIZED_MSG));
