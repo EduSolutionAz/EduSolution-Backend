@@ -91,4 +91,23 @@ public class ExceptionConstants {
     public static final String WEB_PROPERTY_ILLEGAL_ARGUMENT_ADMISSION_MSG = "Successful Admission cannot be bigger than total admissions";
     public static final String WEB_PROPERTY_ILLEGAL_ARGUMENT_VISA_MSG = "Successful visa help cannot be bigger than total visa help";
 
+    public static final String TOO_MANY_REQUEST_CODE = "TOO_MANY_REQUESTS";
+    public static final String TOO_MANY_REQUEST_GAME_MSG = "You made too many requests for game, wait a little bit";
+    public static final String PARTICIPANT_NOT_FOUND_CODE = "PARTICIPANT_NOT_FOUND";
+    public static final String PARTICIPANT_NOT_FOUND_MSG = "Participant not found";
+    public static final String RESULT_NOT_FOUND_CODE = "RESULT_NOT_FOUND";
+    public static final String RESULT_NOT_FOUND_MSG = "Result Not Found";
+    public static final String SPIN_PLAY_ERROR = "SPIN_PLAY_ERROR";
+    public static final String SPIN_PLAY_WAIT_MSG = "You need to wait at least 6 months to play another game";
+    public static final String SPIN_PLAY_WEIGHT_ZERO_MSG = "Prize weights are invalid, Weight cannot be less than 0";
+    public static final String SPIN_PLAY_WEIGHT_HUNDRED_MSG = "Prize weights are invalid, Weight cannot be more than 100";
+
+    public static final String TOTAL_WEIGHT_MSG = "Total Weight cannot exceed 100. Try to remove another prize, or reduce the prize weight. Current Weight: ";
+    public static final String TOTAL_WEIGHT_CODE = "TOTAL_WEIGHT_ERROR";
+
+    public static final String PRIZE_ALREADY_EXISTS_CODE = "PRIZE_ALREADY_EXISTS";
+    public static final String PRIZE_ALREADY_EXISTS_MSG = "Prize with this name already exists";
+
+    public static final String PRIZE_NOT_FOUND_CODE = "PRIZE_NOT_FOUND";
+    public static final String PRIZE_NOT_FOUND_MSG = "Prize not found";
 }

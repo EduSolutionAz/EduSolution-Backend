@@ -65,7 +65,12 @@ public class SecurityConfig {
                             "/api/v1/country/country_entity/**",
                             "/api/v1/university/university_entity",
                             "/api/v1/country/all",
-                            "/api/v1/property/all"
+                            "/api/v1/property/all",
+                            "/api/v1/spin/check",
+                            "/api/v1/spin/play/**",
+                            "/api/v1/spin/send",
+                            "/api/v1/spin/prizes"
+
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
