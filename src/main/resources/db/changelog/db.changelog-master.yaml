@@ -25,3 +25,9 @@ databaseChangeLog:
       file: db/changelog/init/270926-admins_table_schema.sql
   - include:
       file: db/changelog/init/020926-web_properties_table_schema.sql
+  - include:
+      file: db/changelog/init/030926-spin_prize_table_schema.sql
+  - include:
+      file: db/changelog/init/030926-spin_participant_table_schema.sql
+  - include:
+      file: db/changelog/init/060926-spin_results_table_schema.sql

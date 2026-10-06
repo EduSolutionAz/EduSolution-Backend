@@ -136,4 +136,19 @@ public class DtoConstants {
 
     public static final String VISA_SUCCESS_RATE_JSON = "visa_success_rate";
 
+    public static final int PRIZE_NAME_LENGTH = 50;
+    public static final String PRIZE_NAME_LENGTH_MSG = "Prize name cannot exceed 50 character";
+    public static final String PRIZE_NAME_JSON = "prize_name";
+    public static final String PRIZE_NAME_NOT_NULL = "Prize name cannot be null";
+    public static final String PRIZE_NAME_BLANK = "Prize name cannot be blank";
+
+    public static final String PRIZE_WEIGHT_JSON = "prize_weight";
+    public static final int PRIZE_WEIGHT_MIN = 0;
+    public static final int PRIZE_WEIGHT_MAX = 100;
+
+    public static final String BROWSER_ID_JSON = "browser_id";
+    public static final int BROWSER_ID_LENGTH = 45;
+    public static final String BROWSER_ID_LENGTH_MSG ="Browser ID cannot exceed 45 characters";
+
+
 }
