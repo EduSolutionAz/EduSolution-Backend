@@ -66,6 +66,6 @@ public class WebPropertyService {
 
         double rate = (double) (successfulAdmission * 100) / visaAdmission;
 
-        return new BigDecimal(rate).setScale(2, RoundingMode.UNNECESSARY);
+        return new BigDecimal(rate).setScale(2, RoundingMode.DOWN);
     }
 }
