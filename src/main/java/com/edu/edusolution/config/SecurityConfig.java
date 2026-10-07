@@ -71,7 +71,7 @@ public class SecurityConfig {
                             "/api/v1/spin/send",
                             "/api/v1/spin/prizes",
                             "/api/v1/ad/info/**",
-                            "/api/v1/ad/all_top_5"
+                            "/api/v1/ad/all"
 
                     ).permitAll();
                     auth.anyRequest().authenticated();
