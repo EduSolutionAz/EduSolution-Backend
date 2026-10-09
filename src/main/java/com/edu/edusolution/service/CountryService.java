@@ -11,6 +11,7 @@ import com.edu.edusolution.repository.CountrySectionRepository;
 import com.edu.edusolution.repository.UniversityRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 import static com.edu.edusolution.constants.S3Constants.*;
 import static com.edu.edusolution.constants.ExceptionConstants.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CountryService {
@@ -57,6 +59,7 @@ public class CountryService {
                         .collect(Collectors.joining(" ")))
                 .toList();
 
+        log.info("Country information is retrieved : {}", request.getCountryName());
 
         return CountrySectionResponseDTO
                 .builder()
@@ -154,6 +157,7 @@ public class CountryService {
             throw new DataInsertException(DATA_INSERT_COUNTRY_MSG);
         }
 
+        log.info("New country added {}", request.getCountryName());
 
         CountrySectionEntity section = getSectionEntity(request, country);
 
@@ -163,6 +167,7 @@ public class CountryService {
             throw new DataInsertException(DATA_INSERT_COUNTRY_SECTION_MSG);
         }
 
+        log.info("New country section added {}", request.getCountryName());
 
         return CountryAddResponseDTO
                 .builder()
@@ -210,6 +215,8 @@ public class CountryService {
         } catch (S3Exception ex) {
             throw new DataDeleteException(DATA_DELETE_S3_COUNTRY_MSG);
         }
+
+        log.info("Country is deleted {}", request.getCountryName());
 
         return DeleteCountryResponseDTO
                 .builder()
@@ -299,6 +306,8 @@ public class CountryService {
         countrySection.setAreas(request.getArea());
 
         countrySectionRepository.save(countrySection);
+
+        log.info("Country is updated {}", request.getCountryName());
 
         return UpdateCountryResponseDTO
                 .builder()

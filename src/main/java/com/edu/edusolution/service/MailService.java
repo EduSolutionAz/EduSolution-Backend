@@ -16,6 +16,8 @@ public class MailService {
     @Value("${resend.api.key}")
     private String resendApiKey;
 
+    private String email;
+
     public void sendPlainText(String to, String subject, String body){
         Resend resend = new Resend(resendApiKey);
 

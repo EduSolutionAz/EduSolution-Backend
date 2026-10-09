@@ -9,6 +9,7 @@ import com.edu.edusolution.exception.AdminCreationException;
 import com.edu.edusolution.exception.AdminNotFoundException;
 import com.edu.edusolution.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 import static com.edu.edusolution.constants.ExceptionConstants.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminService {
@@ -40,6 +42,8 @@ public class AdminService {
         );
 
         String jwtToken = jwtService.generateToken(user);
+
+        log.info("Admin login successfully");
 
         return AdminLogResponse
                 .builder()

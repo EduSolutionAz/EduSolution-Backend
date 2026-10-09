@@ -14,11 +14,13 @@ import com.edu.edusolution.exception.UniversityNotFoundException;
 import com.edu.edusolution.repository.FacultyRepository;
 import com.edu.edusolution.repository.UniversityRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FacultyService {
@@ -43,6 +45,8 @@ public class FacultyService {
 
         facultyRepository.save(newFaculty);
 
+        log.info("Faculty added {}", newFaculty.getFacultyName());
+
         return AddNewFacultyResponseDTO
                 .builder()
                 .facultyName(request.getFacultyName())
@@ -61,6 +65,8 @@ public class FacultyService {
                 .orElseThrow(FacultyNotFoundException::new);
 
         facultyRepository.delete(faculty);
+
+        log.info("Faculty is deleted {}", faculty.getFacultyName());
 
         return DeleteFacultyResponseDTO
                 .builder()

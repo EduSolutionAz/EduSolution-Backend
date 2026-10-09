@@ -13,6 +13,7 @@ import com.edu.edusolution.repository.UniversityRepository;
 import com.edu.edusolution.repository.UniversitySectionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 import static com.edu.edusolution.constants.S3Constants.*;
 import static com.edu.edusolution.constants.ExceptionConstants.DATA_DELETE_S3_UNIVERSITY_MSG;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UniversityService {
@@ -129,6 +131,7 @@ public class UniversityService {
         UniversityEntity university = getUniversityEntity(request, country);
 
         universityRepository.save(university);
+        log.info("University created : {}", request.getUniversityName());
 
         UniversitySectionEntity section = new UniversitySectionEntity();
         section.setTitle(request.getUniversityName());
@@ -243,6 +246,8 @@ public class UniversityService {
             throw new DataDeleteException(DATA_DELETE_S3_UNIVERSITY_MSG);
         }
 
+        log.info("University deleted : {}", request.getUniversityName());
+
         return DeleteUniversityResponseDTO
                 .builder()
                 .universityName(request.getUniversityName())
@@ -321,6 +326,7 @@ public class UniversityService {
         }
 
         universityRepository.save(university);
+        log.info("University updated : {}", request.getUniversityName());
 
         UniversitySectionEntity universitySection = universitySectionRepository.findByUniversityEntity(university)
                 .orElseThrow(UniversityNotFoundException::new);

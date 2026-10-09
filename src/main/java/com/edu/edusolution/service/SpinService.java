@@ -12,6 +12,7 @@ import com.edu.edusolution.repository.SpinResultRepository;
 import io.github.bucket4j.Bandwidth;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import io.github.bucket4j.Bucket;
 
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 import static com.edu.edusolution.constants.ExceptionConstants.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SpinService {
@@ -53,6 +55,8 @@ public class SpinService {
 
         spinPrizeRepository.save(spinPrize);
 
+        log.info("New prize been added : {}", request.getPrizeName());
+
         return PrizeAddResponseDTO
                 .builder()
                 .prizeName(request.getPrizeName())
@@ -78,6 +82,7 @@ public class SpinService {
                 .orElseThrow(PrizeNotFoundException::new);
 
         spinPrizeRepository.delete(spinPrize);
+        log.info("{} is deleted from prize list", prizeName);
 
         return PrizeDeleteResponseDTO
                 .builder()
@@ -126,6 +131,7 @@ public class SpinService {
         canUpdatePrize(totalWeight);
 
         spinPrizeRepository.saveAll(prizes);
+        log.info("Prize list is updated");
 
         return response;
     }
@@ -172,7 +178,7 @@ public class SpinService {
         spinResultEntity.setRewardId(UUID.randomUUID());
 
         spinResultRepository.save(spinResultEntity);
-
+        log.info("New spin play detected");
 
         return SpinPrizeResponseDTO
                 .builder()
@@ -198,6 +204,8 @@ public class SpinService {
         spinResult.setRewardId(reward);
 
         mailService.sendPlainText(request.getEmail(), MAIL_SUBJECT, prizeBody(reward));
+
+        log.info("Spin prize has been send to user");
 
         return PrizeSendResponseDTO
                 .builder()

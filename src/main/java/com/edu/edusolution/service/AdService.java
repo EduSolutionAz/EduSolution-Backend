@@ -7,6 +7,7 @@ import com.edu.edusolution.exception.*;
 import com.edu.edusolution.repository.AdRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -22,6 +23,7 @@ import static com.edu.edusolution.constants.ExceptionConstants.DATA_DELETE_S3_AD
 import static com.edu.edusolution.constants.S3Constants.*;
 import static com.edu.edusolution.constants.S3Constants.S3_BUCKET_NAME;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdService {
@@ -37,6 +39,7 @@ public class AdService {
         Optional<AdEntity> ad = adRepository.findByTitleIgnoreCase(title);
 
         if(ad.isPresent()) {
+            log.error("Already existed ad tried to created again");
             throw new AdAlreadyExistsException();
         }
 
@@ -67,6 +70,7 @@ public class AdService {
         newAd.setTitleNotChanged(request.getTitle());
 
         adRepository.save(newAd);
+        log.info("New ad created");
 
         return AdAddResponseDTO
                 .builder()
@@ -81,9 +85,11 @@ public class AdService {
         Optional<AdEntity> checkAd = adRepository.findByTitleIgnoreCase(title);
 
         if(checkAd.isEmpty()){
+            log.error("Ad is not found");
             throw new AdNotFoundException();
         }
 
+        log.info("\"{}\" named ad is retrieved", checkAd.get().getTitleNotChanged());
         return AdInformationResponseDTO
                 .builder()
                 .content(checkAd.get().getContent())
@@ -131,7 +137,7 @@ public class AdService {
         }
 
         adRepository.delete(checkAd.get());
-
+        log.info("Add deleted successfully");
         return DeleteAdResponseDTO
                 .builder()
                 .title(adTitle)
@@ -186,7 +192,7 @@ public class AdService {
         }
 
         adRepository.save(checkAd.get());
-
+        log.info("\"{}\" named ad is updated", checkAd.get().getTitleNotChanged());
         return UpdateAdResponseDTO
                 .builder()
                 .build();

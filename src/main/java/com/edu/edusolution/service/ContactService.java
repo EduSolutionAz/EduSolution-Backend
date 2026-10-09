@@ -7,12 +7,14 @@ import com.edu.edusolution.entity.contact.ContactEntity;
 import com.edu.edusolution.repository.ContactRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ContactService {
@@ -26,6 +28,9 @@ public class ContactService {
                 .findByPhoneNumberOrderByCreatedAtDesc(request.getPhone());
 
         if(checkContact.isPresent() && checkContact.get().getCreatedAt().isBefore(OffsetDateTime.now().plusMinutes(15))) {
+
+            log.error("Contact creation failed due to time error");
+
             return CreateContactResponseDTO
                     .builder()
                     .name(request.getName())
@@ -46,6 +51,7 @@ public class ContactService {
         contactRepository.save(contact);
 
         mailService.sendPlainText("alinurmammadzada@gmail.com","New Contact Request", "New Contact request \n phone number : "+request.getPhone() +"\n name + " +request.getName()+"\n service : "+request.getService());
+        log.info("New contact created and email has been send to server");
 
         return CreateContactResponseDTO
                 .builder()

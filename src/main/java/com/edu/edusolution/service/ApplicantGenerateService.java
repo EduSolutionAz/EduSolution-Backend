@@ -12,6 +12,7 @@ import com.edu.edusolution.repository.ApplicantGenerationRepository;
 import com.edu.edusolution.repository.ApplicantRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -22,6 +23,7 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApplicantGenerateService {
@@ -46,6 +48,7 @@ public class ApplicantGenerateService {
         newAppGen.setTokenHash(hash);
 
         applicantGenerationRepository.save(newAppGen);
+        log.info("New applicant created");
 
         return GenerateCommentLinkResponseDTO
                 .builder()
@@ -65,6 +68,8 @@ public class ApplicantGenerateService {
                 .orElseThrow(TokenNotFoundException::new);
 
         if(entity.getExpiresAt().isBefore(OffsetDateTime.now())) {
+
+            log.error("Review send is failed due to : "+TOKEN_EXPIRED);
             return SendReviewResponseDTO
                     .builder()
                     .isCommentAccepted(false)
@@ -77,6 +82,9 @@ public class ApplicantGenerateService {
         }
 
         if(entity.isUsed()){
+
+            log.error("Review send is failed due to : "+TOKEN_USED);
+
             return SendReviewResponseDTO
                     .builder()
                     .email(entity.getClientEmail())
@@ -99,6 +107,8 @@ public class ApplicantGenerateService {
 
         applicantRepository.save(applicant);
         applicantGenerationRepository.save(entity);
+
+        log.info("Review send happened");
 
         return SendReviewResponseDTO
                 .builder()

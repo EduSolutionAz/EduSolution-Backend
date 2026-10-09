@@ -10,10 +10,12 @@ import com.edu.edusolution.entity.applicant.ApplicantEntity;
 import com.edu.edusolution.exception.ApplicantNotFoundException;
 import com.edu.edusolution.repository.ApplicantRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApplicantService {
@@ -73,6 +75,7 @@ public class ApplicantService {
                 .orElseThrow(ApplicantNotFoundException::new);
 
         applicantRepository.delete(applicant);
+        log.info("Comment deletion happened");
 
         return DeleteCommentResponseDTO
                 .builder()
