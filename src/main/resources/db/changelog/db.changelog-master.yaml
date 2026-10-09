@@ -33,3 +33,5 @@ databaseChangeLog:
       file: db/changelog/init/060926-spin_results_table_schema.sql
   - include:
       file: db/changelog/init/060926-ads_table_schema.sql
+  - include:
+      file: db/changelog/init/090926-drop-ip.sql
