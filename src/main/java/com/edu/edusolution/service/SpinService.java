@@ -161,7 +161,7 @@ public class SpinService {
         List<SpinPrizeEntity> prizes = spinPrizeRepository.findAll();
         SpinPrizeEntity prize = getPrize(prizes);
 
-        SpinParticipantEntity participant = spinParticipantRepository.findByBrowserId(request.getBrowserId())
+        SpinParticipantEntity participant = spinParticipantRepository.findTop1ByBrowserIdOrderByCreatedAtDesc(request.getBrowserId())
                 .orElseThrow(() -> new ParticipantNotFoundException(PARTICIPANT_NOT_FOUND_MSG));
 
         checkPlayer(participant);
