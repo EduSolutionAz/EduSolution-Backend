@@ -28,8 +28,8 @@ public class SpinController {
     }
 
     @PostMapping("/check")
-    public ResponseEntity<SpinCheckResponseDTO> checkPlayer(@RequestBody @Valid SpinCheckRequestDTO request) {
-        return ResponseEntity.ok(spinService.spinEligibilityCheck(request));
+    public ResponseEntity<SpinCheckResponseDTO> checkPlayer(@RequestBody @Valid SpinCheckRequestDTO request, HttpServletRequest httpRequest) {
+        return ResponseEntity.ok(spinService.spinEligibilityCheck(request, httpRequest.getRemoteAddr()));
     }
 
     @PostMapping("/send")

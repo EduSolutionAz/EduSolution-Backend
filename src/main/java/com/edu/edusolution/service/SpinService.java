@@ -130,10 +130,10 @@ public class SpinService {
         return response;
     }
 
-    public SpinCheckResponseDTO spinEligibilityCheck(SpinCheckRequestDTO request) {
+    public SpinCheckResponseDTO spinEligibilityCheck(SpinCheckRequestDTO request, String ip) {
 
         Bucket bucket = buckets.computeIfAbsent(
-                request.getIp(),
+                ip,
                 key -> createBucket()
         );
 
@@ -144,7 +144,7 @@ public class SpinService {
         SpinParticipantEntity spinParticipant = spinParticipantRepository.findByBrowserId(request.getBrowserId())
                 .orElseGet(() -> createParticipant(request));
 
-        spinParticipant.setIp(request.getIp());
+        spinParticipant.setIp(ip);
         spinParticipantRepository.save(spinParticipant);
 
         checkPlayer(spinParticipant);
@@ -224,7 +224,6 @@ public class SpinService {
 
         return SpinParticipantEntity
                 .builder()
-                .ip(request.getIp())
                 .browserId(request.getBrowserId())
                 .build();
     }
