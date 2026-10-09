@@ -141,7 +141,7 @@ public class SpinService {
             throw new TooManyRequestsException(TOO_MANY_REQUEST_GAME_MSG);
         }
 
-        SpinParticipantEntity spinParticipant = spinParticipantRepository.findByBrowserId(request.getBrowserId())
+        SpinParticipantEntity spinParticipant = spinParticipantRepository.findTop1ByBrowserIdOrderByCreatedAtDesc(request.getBrowserId())
                 .orElseGet(() -> createParticipant(request));
 
         spinParticipant.setIp(ip);

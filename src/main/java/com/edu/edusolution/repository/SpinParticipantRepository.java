@@ -11,4 +11,6 @@ public interface SpinParticipantRepository extends JpaRepository<SpinParticipant
     Optional<SpinParticipantEntity> findByBrowserId(UUID browserId);
 
     Optional<SpinParticipantEntity> findByIp(String ip);
+
+    Optional<SpinParticipantEntity> findTop1ByBrowserIdOrderByCreatedAtDesc(UUID browserId);
 }
