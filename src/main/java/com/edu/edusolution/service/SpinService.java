@@ -185,7 +185,7 @@ public class SpinService {
 
         final String MAIL_SUBJECT = "Your Prize from EduSolution Academy🚀";
 
-        SpinParticipantEntity participant = spinParticipantRepository.findByBrowserId(request.getBrowserId())
+        SpinParticipantEntity participant = spinParticipantRepository.findTop1ByBrowserIdOrderByCreatedAtDesc(request.getBrowserId())
                 .orElseThrow(() -> new ParticipantNotFoundException(PARTICIPANT_NOT_FOUND_MSG));
         SpinResultEntity spinResult = spinResultRepository.findTopByParticipantOrderByCreatedAtDesc(participant)
                 .orElseThrow(() -> new ResultNotFoundException(RESULT_NOT_FOUND_MSG));
