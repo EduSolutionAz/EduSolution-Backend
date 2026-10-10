@@ -45,7 +45,7 @@ public class ContactService {
 
         contactRepository.save(contact);
 
-        mailService.sendPlainText("alinurmammadzada@gmail.com","New Contact Request", "New Contact request \n phone number : "+request.getPhone() +"\n name + " +request.getName()+"\n service : "+request.getService());
+        mailService.sendPlainText("edusolutionacademy2023@gmail.com","New Contact Request", "New Contact request \n phone number : "+request.getPhone() +"\n name + " +request.getName()+"\n service : "+request.getService());
 
         return CreateContactResponseDTO
                 .builder()

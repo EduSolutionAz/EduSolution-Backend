@@ -20,5 +20,8 @@ public class AdAddRequestDTO {
     @NotNull
     @NotBlank
     private String content;
+
+    private String link;
+
     private MultipartFile image;
 }

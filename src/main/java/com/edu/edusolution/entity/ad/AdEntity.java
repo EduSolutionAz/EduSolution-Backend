@@ -30,6 +30,9 @@ public class AdEntity {
     @Column(name = "ad_url", nullable = false, length = 512)
     private String adUrl;
 
+    @Column(name = "ad_link", length = 256)
+    private String adLink;
+
     @Column(name = "title_not_changed", nullable = false, columnDefinition = "TEXT")
     private String titleNotChanged;
 
