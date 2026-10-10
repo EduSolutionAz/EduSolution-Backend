@@ -197,7 +197,7 @@ public class SpinService {
 
         spinResultRepository.save(spinResult);
 
-        mailService.sendPlainText(request.getEmail(), MAIL_SUBJECT, prizeBody(reward));
+        mailService.sendPlainText(request.getEmail(), MAIL_SUBJECT, prizeBody(spinResult.getPrize().getSpinPrizeName(),reward));
 
         return PrizeSendResponseDTO
                 .builder()
@@ -298,7 +298,7 @@ public class SpinService {
         }
     }
 
-    private String prizeBody(UUID code) {
+    private String prizeBody(String prize, UUID code) {
         return """
                 <!DOCTYPE html>
                 <html>
@@ -313,7 +313,7 @@ public class SpinService {
                 
                     <p>Your prize:</p>
                 
-                    <h2>20%% Visa Consultation Discount</h2>
+                    <h2>%s</h2>
                 
                     <p>Your redemption code:</p>
                 
@@ -329,7 +329,7 @@ public class SpinService {
                     </p>
                 </body>
                 </html>
-                """.formatted(code);
+                """.formatted(prize,code);
     }
 
 
