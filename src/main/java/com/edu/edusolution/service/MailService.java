@@ -32,7 +32,7 @@ public class MailService {
                 .name(domain).build();
 
         CreateEmailOptions params = CreateEmailOptions.builder()
-                .from("EduSolutionAz <noreply@edusolution.az>")
+                .from(email)
                 .to(to)
                 .subject(subject)
                 .html(body)
