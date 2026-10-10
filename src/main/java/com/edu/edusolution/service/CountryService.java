@@ -234,60 +234,74 @@ public class CountryService {
         country.setVisaHelp(request.getIsVisaHelp());
         country.setDormitoryHelp(request.getIsDormitoryHelp());
 
-        DeleteObjectRequest deleteObjectRequest =
-                DeleteObjectRequest
-                        .builder()
-                        .bucket(S3_BUCKET_NAME)
-                        .key(COUNTRY_FOLDER_KEY + countryName + COUNTRY_FLAG_KEY)
-                        .build();
+        if(request.getFlagImage() != null){
+            DeleteObjectRequest deleteObjectRequest =
+                    DeleteObjectRequest
+                            .builder()
+                            .bucket(S3_BUCKET_NAME)
+                            .key(COUNTRY_FOLDER_KEY + countryName + COUNTRY_FLAG_KEY)
+                            .build();
+            try {
+                s3Client.deleteObject(deleteObjectRequest);
+            } catch (S3Exception ex) {
+                throw new DataDeleteException(DATA_DELETE_S3_COUNTRY_MSG);
+            }
 
-        DeleteObjectRequest deleteObjectRequest1 =
-                DeleteObjectRequest
-                        .builder()
-                        .bucket(S3_BUCKET_NAME)
-                        .key(COUNTRY_VIEW_FOLDER_KEY + countryName + COUNTRY_VIEW_KEY)
-                        .build();
+            PutObjectRequest flagRequest = PutObjectRequest
+                    .builder()
+                    .bucket(S3_BUCKET_NAME)
+                    .key(COUNTRY_FOLDER_KEY + countryName + COUNTRY_FLAG_KEY)
+                    .contentType(request.getFlagImage().getContentType())
+                    .build();
 
+            try {
+                s3Client.putObject(
+                        flagRequest,
+                        RequestBody.fromInputStream(
+                                request.getFlagImage().getInputStream(),
+                                request.getFlagImage().getSize()
+                        )
+                );
 
-        try {
-            s3Client.deleteObject(deleteObjectRequest);
-            s3Client.deleteObject(deleteObjectRequest1);
-        } catch (S3Exception ex) {
-            throw new DataDeleteException(DATA_DELETE_S3_COUNTRY_MSG);
+            } catch (IOException exception) {
+                throw new CountryUploadException();
+            }
         }
 
-        PutObjectRequest flagRequest = PutObjectRequest
-                .builder()
-                .bucket(S3_BUCKET_NAME)
-                .key(COUNTRY_FOLDER_KEY + countryName + COUNTRY_FLAG_KEY)
-                .contentType(request.getFlagImage().getContentType())
-                .build();
 
-        PutObjectRequest photoRequest = PutObjectRequest
-                .builder()
-                .bucket(S3_BUCKET_NAME)
-                .key(COUNTRY_VIEW_FOLDER_KEY + countryName + COUNTRY_VIEW_KEY)
-                .contentType(request.getCountryImage().getContentType())
-                .build();
+        if(request.getCountryImage() != null) {
+            DeleteObjectRequest deleteObjectRequest1 =
+                    DeleteObjectRequest
+                            .builder()
+                            .bucket(S3_BUCKET_NAME)
+                            .key(COUNTRY_VIEW_FOLDER_KEY + countryName + COUNTRY_VIEW_KEY)
+                            .build();
 
-        try {
-            s3Client.putObject(
-                    flagRequest,
-                    RequestBody.fromInputStream(
-                            request.getFlagImage().getInputStream(),
-                            request.getFlagImage().getSize()
-                    )
-            );
 
-            s3Client.putObject(
-                    photoRequest,
-                    RequestBody.fromInputStream(
-                            request.getCountryImage().getInputStream(),
-                            request.getCountryImage().getSize()
-                    )
-            );
-        } catch (IOException exception) {
-            throw new CountryUploadException();
+            try {
+                s3Client.deleteObject(deleteObjectRequest1);
+            } catch (S3Exception ex) {
+                throw new DataDeleteException(DATA_DELETE_S3_COUNTRY_MSG);
+            }
+
+            PutObjectRequest photoRequest = PutObjectRequest
+                    .builder()
+                    .bucket(S3_BUCKET_NAME)
+                    .key(COUNTRY_VIEW_FOLDER_KEY + countryName + COUNTRY_VIEW_KEY)
+                    .contentType(request.getCountryImage().getContentType())
+                    .build();
+
+            try {
+                s3Client.putObject(
+                        photoRequest,
+                        RequestBody.fromInputStream(
+                                request.getCountryImage().getInputStream(),
+                                request.getCountryImage().getSize()
+                        )
+                );
+            } catch (IOException exception) {
+                throw new CountryUploadException();
+            }
         }
 
         countryRepository.save(country);
