@@ -4,6 +4,7 @@ import com.edu.edusolution.exception.EmailException;
 import com.resend.services.domains.model.CreateDomainOptions;
 import com.resend.services.domains.model.CreateDomainResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.resend.*;
@@ -11,6 +12,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.emails.model.CreateEmailResponse;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MailService {
@@ -41,7 +43,7 @@ public class MailService {
             CreateEmailResponse data = resend.emails().send(params);
             CreateDomainResponse domain = resend.domains().create(domainParams);
         } catch (ResendException ex){
-            System.out.println(ex.getMessage());
+            log.error(ex.getMessage());
             throw new EmailException();
         }
 

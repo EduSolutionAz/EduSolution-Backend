@@ -195,6 +195,8 @@ public class SpinService {
         spinResult.setEmail(request.getEmail());
         spinResult.setRewardId(reward);
 
+        spinResultRepository.save(spinResult);
+
         mailService.sendPlainText(request.getEmail(), MAIL_SUBJECT, prizeBody(reward));
 
         return PrizeSendResponseDTO
