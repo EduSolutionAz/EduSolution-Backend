@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import static com.edu.edusolution.constants.ExceptionConstants.DATA_INTEGRITY_PROBLEM_CODE;
@@ -151,7 +152,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponseDTO> handleUnexpectedException(Exception ex) {
-        log.error("Unexpected error occurred", ex);
+        log.error(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ExceptionResponseDTO(UNEXPECTED_ERROR_CODE, UNEXPECTED_ERROR_MSG));
     }
 

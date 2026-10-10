@@ -190,8 +190,6 @@ public class SpinService {
         SpinResultEntity spinResult = spinResultRepository.findTopByParticipantOrderByCreatedAtDesc(participant)
                 .orElseThrow(() -> new ResultNotFoundException(RESULT_NOT_FOUND_MSG));
 
-        checkPlayer(participant);
-
         UUID reward = UUID.randomUUID();
 
         spinResult.setEmail(request.getEmail());

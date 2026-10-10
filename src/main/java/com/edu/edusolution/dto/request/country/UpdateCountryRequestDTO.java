@@ -42,12 +42,8 @@ public class UpdateCountryRequestDTO {
     @Size(max = 50, message = COUNTRY_LENGTH_MSG)
     private String countryName;
 
-    @NotNull(message = FLAG_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = FLAG_IS_REQUIRED_BLANK_MSG)
     private MultipartFile flagImage;
 
-    @NotNull(message = COUNTRY_IMAGE_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = COUNTRY_IMAGE_IS_REQUIRED_BLANK_MSG)
     private MultipartFile countryImage;
 
     @NotNull(message = UNIVERSITY_COUNT_IS_REQUIRED_NULL_MSG)

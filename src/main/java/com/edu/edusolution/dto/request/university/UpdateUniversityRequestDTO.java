@@ -52,8 +52,6 @@ public class UpdateUniversityRequestDTO {
     @NotBlank(message = DESCRIPTION_IS_REQUIRED_BLANK_MSG)
     private String shortDescription;
 
-    @NotNull(message = UNIVERSITY_LOGO_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = UNIVERSITY_LOGO_IS_REQUIRED_BLANK_MSG)
     private MultipartFile universityLogo;
 
     @NotNull(message = FEE_IS_REQUIRED_NULL_MSG)
