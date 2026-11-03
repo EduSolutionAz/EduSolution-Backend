@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_LOGO_URL_JSON;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class UniversityLogoResponseDTO {
-    @JsonProperty("university_logo_url")
+    @JsonProperty(UNIVERSITY_LOGO_URL_JSON)
     private String universityLogoUrl;
 }

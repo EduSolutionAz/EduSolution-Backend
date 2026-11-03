@@ -6,14 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.edu.edusolution.constants.DtoConstants.IS_DELETED_JSON;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_NAME_JSON;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class DeleteUniversityResponseDTO {
 
-    @JsonProperty("university_name")
+    @JsonProperty(UNIVERSITY_NAME_JSON)
     private String universityName;
-    @JsonProperty("is_deleted")
+    @JsonProperty(IS_DELETED_JSON)
     private Boolean isDeleted;
 }

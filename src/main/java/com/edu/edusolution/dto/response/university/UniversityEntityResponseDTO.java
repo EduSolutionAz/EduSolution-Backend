@@ -1,6 +1,7 @@
 package com.edu.edusolution.dto.response.university;
 
 import com.edu.edusolution.entity.university.UniversityType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,45 +20,36 @@ import static com.edu.edusolution.constants.DtoConstants.*;
 @Builder
 public class UniversityEntityResponseDTO {
 
-    @NotNull(message = UNIVERSITY_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = UNIVERSITY_IS_REQUIRED_BLANK_MSG)
-    @Size(max = 75, message = UNIVERSITY_SIZE_MSG)
+    @JsonProperty(UNIVERSITY_NAME_JSON)
     private String universityName;
 
-    @NotNull(message = COUNTRY_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = COUNTRY_IS_REQUIRED_BLANK_MSG)
-    @Size(max = 50, message = COUNTRY_LENGTH_MSG)
+    @JsonProperty(COUNTRY_NAME_JSON)
     private String countryName;
 
-    @NotNull(message = UNIVERSITY_TYPE_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = UNIVERSITY_TYPE_IS_REQUIRED_BLANK_MSG)
+    @JsonProperty(UNIVERSITY_TYPE_JSON)
     private UniversityType universityType;
 
-    @NotNull(message = DESCRIPTION_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = DESCRIPTION_IS_REQUIRED_BLANK_MSG)
-    private String shortDescription;
-
-    @NotNull(message = FEE_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = FEE_IS_REQUIRED_BLANK_MSG)
+    @JsonProperty(FEE_JSON)
     private BigDecimal fee;
 
-    @NotNull(message = UNIVERSITY_LOGO_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = UNIVERSITY_LOGO_IS_REQUIRED_BLANK_MSG)
+    @JsonProperty(UNIVERSITY_LOGO_JSON)
     private String universityLogo;
 
-    @NotNull(message = CITY_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = CITY_IS_REQUIRED_BLANK_MSG)
+    @JsonProperty(CITY_JSON)
     private String city;
 
-    @NotNull(message = CONTENT_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = CONTENT_IS_REQUIRED_BLANK_MSG)
+    @JsonProperty(CONTENT_JSON)
     private String content;
 
-    @NotNull(message = AREA_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = AREA_IS_REQUIRED_BLANK_MSG)
+    @JsonProperty(SHORT_DESC_JSON)
+    private String shortDescription;
+
+    @JsonProperty(SEMESTER_COUNT_JSON)
+    private Integer semesterCount;
+
+    @JsonProperty(AREA_JSON)
     private String area;
 
-    @NotNull(message = PARTNER_IS_REQUIRED_NULL_MSG)
-    @NotBlank(message = PARTNER_IS_REQUIRED_BLANK_MSG)
+    @JsonProperty(IS_PARTNER_JSON)
     private Boolean isPartner;
 }

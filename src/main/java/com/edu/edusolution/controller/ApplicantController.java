@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,7 @@ public class ApplicantController {
             description = "Creates a new applicant comment for the authenticated user."
     )
     @ApiResponse(
-            responseCode = "200",
+            responseCode = "201",
             description = "Applicant comment added successfully",
             content = @Content(
                     schema = @Schema(implementation = ApplicantCommentAddingResponseDTO.class)
@@ -62,7 +63,7 @@ public class ApplicantController {
     )
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApplicantCommentAddingResponseDTO> addApplicantComment(Authentication authentication, @RequestBody @Valid ApplicantCommentAddingRequestDTO request) {
-        return ResponseEntity.ok(applicantService.addApplicantComment(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(applicantService.addApplicantComment(request));
     }
 
     @GetMapping("/all")

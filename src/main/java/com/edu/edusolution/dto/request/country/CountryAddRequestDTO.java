@@ -41,6 +41,9 @@ public class CountryAddRequestDTO {
     @NotBlank(message = RENTAL_IS_REQUIRED_BLANK_MSG)
     private BigDecimal rentalFee;
 
+    @NotNull(message = "Monthly spending cannot be null")
+    private BigDecimal monthlySpending;
+
     @NotNull(message = VISA_HELP_IS_REQUIRED_NULL_MSG)
     @NotBlank(message = VISA_HELP_IS_REQUIRED_BLANK_MSG)
     private Boolean isVisaHelp;

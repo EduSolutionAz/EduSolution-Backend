@@ -2,9 +2,7 @@ package com.edu.edusolution.controller;
 
 import com.edu.edusolution.dto.request.country.*;
 import com.edu.edusolution.dto.response.country.*;
-import com.edu.edusolution.dto.response.university.AddNewFacultyResponseDTO;
-import com.edu.edusolution.dto.response.university.CountryEntityResponseDTO;
-import com.edu.edusolution.dto.response.university.UniversityFacultiesResponseDTO;
+import com.edu.edusolution.dto.response.country.CountryEntityResponseDTO;
 import com.edu.edusolution.service.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -15,10 +13,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.util.List;
 
@@ -41,6 +39,7 @@ public class CountryController {
                     schema = @Schema(implementation = CountrySectionResponseDTO.class)
             )
     )
+    // Country Page Data
     public ResponseEntity<CountrySectionResponseDTO> getCountryInformation(@PathVariable String countryName) {
 
         return ResponseEntity.ok(countryService.getCountryInformation(new CountrySectionRequestDTO(countryName)));
@@ -60,6 +59,7 @@ public class CountryController {
                     )
             )
     )
+    // Top Countries in Main Page
     public ResponseEntity<List<TopCountriesInfoResponse>> getTopCountries() {
         return ResponseEntity.ok(countryService.getTopCountriesInformation());
     }
@@ -78,6 +78,7 @@ public class CountryController {
                     )
             )
     )
+    // Top Country Logos in Main Page
     public ResponseEntity<List<CountryFlagResponseDTO>> getCountryFlags() {
         return ResponseEntity.ok(countryService.getCountryTopFlags());
     }
@@ -88,7 +89,7 @@ public class CountryController {
             description = "Creates a new country and uploads its associated information and files."
     )
     @ApiResponse(
-            responseCode = "200",
+            responseCode = "201",
             description = "Country added successfully",
             content = @Content(
                     schema = @Schema(implementation = CountryAddResponseDTO.class)
@@ -97,7 +98,7 @@ public class CountryController {
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CountryAddResponseDTO> addCountry(@ModelAttribute CountryAddRequestDTO request) {
 
-        return ResponseEntity.ok(countryService.addNewCountry(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(countryService.addNewCountry(request));
     }
 
     @DeleteMapping("/delete_country")
@@ -146,6 +147,7 @@ public class CountryController {
                     schema = @Schema(implementation = CountryEntityResponseDTO.class)
             )
     )
+    // Retrieve country all data before update section
     public ResponseEntity<CountryEntityResponseDTO> getCountryEntity(@PathVariable String countryName) {
         return ResponseEntity.ok(countryService.countryEntity(new CountryEntityRequestDTO(countryName)));
     }
@@ -164,6 +166,7 @@ public class CountryController {
             )
     )
     @GetMapping("/all")
+    // Countries navbar
     public ResponseEntity<List<CountriesResponseDTO>> getAllCountries() {
         return ResponseEntity.ok(countryService.getAllCountries());
     }
