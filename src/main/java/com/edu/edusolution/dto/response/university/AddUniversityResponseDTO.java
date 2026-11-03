@@ -6,13 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.edu.edusolution.constants.DtoConstants.IS_CREATED_JSON;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_NAME_JSON;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class AddUniversityResponseDTO {
-    @JsonProperty("university_name")
+    @JsonProperty(UNIVERSITY_NAME_JSON)
     private String universityName;
-    @JsonProperty("is_created")
+    @JsonProperty(IS_CREATED_JSON)
     private Boolean isCreated;
 }

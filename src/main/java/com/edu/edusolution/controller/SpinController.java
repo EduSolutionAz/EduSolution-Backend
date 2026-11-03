@@ -39,7 +39,7 @@ public class SpinController {
 
     @PostMapping("/add_prize")
     public ResponseEntity<PrizeAddResponseDTO> addPrize(@RequestBody @Valid PrizeAddRequestDTO request) {
-        return ResponseEntity.ok(spinService.addPrizeToSpin(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(spinService.addPrizeToSpin(request));
     }
 
     @DeleteMapping("/delete_prize/{prizeName}")

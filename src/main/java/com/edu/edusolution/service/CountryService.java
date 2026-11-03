@@ -2,7 +2,7 @@ package com.edu.edusolution.service;
 
 import com.edu.edusolution.dto.request.country.*;
 import com.edu.edusolution.dto.response.country.*;
-import com.edu.edusolution.dto.response.university.CountryEntityResponseDTO;
+import com.edu.edusolution.dto.response.country.CountryEntityResponseDTO;
 import com.edu.edusolution.entity.country.CountryEntity;
 import com.edu.edusolution.entity.country.CountrySectionEntity;
 import com.edu.edusolution.exception.*;
@@ -37,7 +37,7 @@ public class CountryService {
     private final UniversityRepository universityRepository;
     private final S3Client s3Client;
 
-    // For specific information about the country
+    // Country page data
     public CountrySectionResponseDTO getCountryInformation(CountrySectionRequestDTO request) {
         CountryEntity country = countryRepository.findByCountryNameIgnoreCase(request.getCountryName().trim().replace(' ','_').replace('-','_'))
                 .orElseThrow
@@ -66,10 +66,11 @@ public class CountryService {
                 .content(section.getContent())
                 .universities(universities)
                 .areas(section.getAreas())
+                .monthlySpending(country.getMonthlySpending())
                 .build();
     }
 
-    // For Specific Details shown in main
+    // Countries card information in main page
     public List<TopCountriesInfoResponse> getTopCountriesInformation() {
         List<CountryEntity> countries = countryRepository.findTop6ByTopList(true);
 
@@ -86,7 +87,7 @@ public class CountryService {
                 .toList();
     }
 
-    // For Country Flags shown in Main
+    // Country Flags shown in the main page
     public List<CountryFlagResponseDTO> getCountryTopFlags() {
         List<CountryEntity> countryEntities = countryRepository.findTop10ByTopList(true);
 
@@ -233,6 +234,7 @@ public class CountryService {
         country.setRentalFeeEntry(request.getRentalFee());
         country.setVisaHelp(request.getIsVisaHelp());
         country.setDormitoryHelp(request.getIsDormitoryHelp());
+        country.setMonthlySpending(request.getMonthlySpending());
 
         if(request.getFlagImage() != null){
             DeleteObjectRequest deleteObjectRequest =
@@ -337,6 +339,7 @@ public class CountryService {
                 .universityCount(country.getUniversityCount())
                 .tuitionFee(country.getTuitionFeeEntry())
                 .rentalFee(country.getRentalFeeEntry())
+                .monthlySpending(country.getMonthlySpending())
                 .icon(country.getIcon())
                 .isVisaHelp(country.getVisaHelp())
                 .isDormitoryHelp(country.getDormitoryHelp())
@@ -346,6 +349,7 @@ public class CountryService {
                 .build();
     }
 
+    // Show all countries in navbar
     public List<CountriesResponseDTO> getAllCountries() {
         List<CountryEntity> countryEntities = countryRepository.findAll();
 
@@ -377,6 +381,7 @@ public class CountryService {
         country.setTopList(request.getIsTopList());
         country.setUniversityCount(request.getUniversityCount());
         country.setIcon(request.getIcon());
+        country.setMonthlySpending(request.getMonthlySpending());
         return country;
     }
 

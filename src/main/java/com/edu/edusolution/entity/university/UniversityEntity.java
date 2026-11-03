@@ -38,6 +38,9 @@ public class UniversityEntity {
     @Column(nullable = false)
     private String description;
 
+    @Column(name = "semester_count", nullable = true)
+    private Integer semesterCount;
+
     @Column(name = "university_entry_fee", precision = 7, scale = 2)
     private BigDecimal entryFee;
 

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/applicant")
+@RequestMapping("/api/v1/applicant")
 @RequiredArgsConstructor
 @Tag(name = "Applicant Operations", description = "API(s) for applicant operation")
 public class ApplicantGenerationController {

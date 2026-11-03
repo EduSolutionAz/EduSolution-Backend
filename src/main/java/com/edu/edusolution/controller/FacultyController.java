@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class FacultyController {
             description = "Creates a new faculty and associates it with a university."
     )
     @ApiResponse(
-            responseCode = "200",
+            responseCode = "201",
             description = "Faculty added successfully",
             content = @Content(
                     schema = @Schema(implementation = AddNewFacultyResponseDTO.class)
@@ -44,7 +45,7 @@ public class FacultyController {
     )
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<AddNewFacultyResponseDTO> addFaculty(@RequestBody @Valid AddNewFacultyRequestDTO request) {
-        return ResponseEntity.ok(facultyService.addFaculty(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(facultyService.addFaculty(request));
     }
 
     @DeleteMapping("/delete")

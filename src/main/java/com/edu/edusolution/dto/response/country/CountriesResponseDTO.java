@@ -8,18 +8,20 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+import static com.edu.edusolution.constants.DtoConstants.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class CountriesResponseDTO {
 
-    @JsonProperty("country_name")
+    @JsonProperty(COUNTRY_NAME_JSON)
     private String countryName;
-    @JsonProperty("university_count")
+    @JsonProperty(UNIVERSITY_COUNT_JSON)
     private Integer universityCount;
-    @JsonProperty("is_visa_help")
+    @JsonProperty(IS_VISA_HELP_JSON)
     private Boolean visaHelp;
-    @JsonProperty("is_dormitory_help")
+    @JsonProperty(IS_DORM_HELP_JSON)
     private Boolean dormitoryHelp;
 }

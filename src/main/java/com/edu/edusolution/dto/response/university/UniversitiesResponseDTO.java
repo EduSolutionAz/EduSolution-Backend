@@ -6,13 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.edu.edusolution.constants.DtoConstants.COUNTRY_NAME_JSON;
+import static com.edu.edusolution.constants.DtoConstants.UNIVERSITY_NAME_JSON;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class UniversitiesResponseDTO {
-    @JsonProperty("university_name")
+    @JsonProperty(UNIVERSITY_NAME_JSON)
     private String universityName;
-    @JsonProperty("country_name")
+    @JsonProperty(COUNTRY_NAME_JSON)
     private String countryName;
 }

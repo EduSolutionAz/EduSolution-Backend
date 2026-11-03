@@ -6,21 +6,30 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+import static com.edu.edusolution.constants.DtoConstants.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class CountrySectionResponseDTO {
-    @JsonProperty("title")
+    @JsonProperty(TITLE_JSON)
     private String title;
-    @JsonProperty("photo_url")
+    @JsonProperty(PHOTO_URL_JSON)
     private String photoUrl;
-    @JsonProperty("content")
+    @JsonProperty(CONTENT_JSON)
     private String content;
-    @JsonProperty("universities")
+    @JsonProperty(UNIVERSITIES_JSON)
     private List<String> universities;
-    @JsonProperty("areas")
+    @JsonProperty(UNIVERSITY_COST_JSON)
+    private int universityCost;
+    @JsonProperty(MONTHLY_SPENDING_JSON)
+    private BigDecimal monthlySpending;
+    @JsonProperty(RENTAL_FEE_JSON)
+    private int rentalFee;
+    @JsonProperty(AREAS_JSON)
     private String areas;
 }

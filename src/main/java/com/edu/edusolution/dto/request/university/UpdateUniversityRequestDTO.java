@@ -1,6 +1,7 @@
 package com.edu.edusolution.dto.request.university;
 
 import com.edu.edusolution.entity.university.UniversityType;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -69,6 +70,10 @@ public class UpdateUniversityRequestDTO {
     @NotNull(message = AREA_IS_REQUIRED_NULL_MSG)
     @NotBlank(message = AREA_IS_REQUIRED_BLANK_MSG)
     private String area;
+
+    @NotNull(message = SEMESTER_COUNT_NULL_MSG)
+    @Max(12)
+    private Integer semesterCount;
 
     @NotNull(message = PARTNER_IS_REQUIRED_NULL_MSG)
     @NotBlank(message = PARTNER_IS_REQUIRED_BLANK_MSG)
