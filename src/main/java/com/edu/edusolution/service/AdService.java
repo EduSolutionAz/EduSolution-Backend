@@ -100,8 +100,11 @@ public class AdService {
                 .stream()
                 .map
                         (
-                                adEntity ->
-                                        new AdsResponseDTO(adEntity.getTitle(), adEntity.getAdUrl())
+                                adEntity ->{
+                                    String title = adEntity.getTitle().trim().toLowerCase().replace('_',' ');
+                                    return new AdsResponseDTO(title, adEntity.getAdUrl());
+                                }
+
                         )
                 .toList();
     }
