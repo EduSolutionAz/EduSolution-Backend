@@ -1,14 +1,8 @@
 Fixes that would be done during v1.0.1
 Planned release for v1.0.1 - 5 November 2026
-Release Date - 5 November 2026
+Release Date - 6 November 2026
 
 Plan - Fix important bugs that can create a problem in user-side
-
-User Tests are done during the release and this bug's have been seen
-- Monthly Spending gonderilmir +
-- Universities in country section is sending underscore version +
-- Uni semester count gonderilmir - elave etmek lazimdir
-- Uni type sehv gosterilir +
 
 Fixed Bugs:
 - Monthly spending in country section is now available to the user
@@ -16,3 +10,4 @@ Fixed Bugs:
 - University Type is corrected at universities
 - In Main page mapping the Success Rates and Students Helped is solved
 - Updated DTO Constants to make it more clean and readable
+- Fixed FAQ problem. Now users can see the faqs easily, and faqs can be changed easily

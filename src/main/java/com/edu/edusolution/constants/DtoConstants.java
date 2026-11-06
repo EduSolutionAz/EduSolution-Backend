@@ -154,5 +154,11 @@ public class DtoConstants {
     public static final String PRIZE_WEIGHT_JSON = "prize_weight";
     public static final String BROWSER_ID_JSON = "browser_id";
 
+    // FAQ Json
+    public static final String FAQ_ID_JSON = "faq_id";
+    public static final String FAQ_QUESTION_JSON = "faq_question";
+    public static final String FAQ_ANSWER_JSON = "faq_answer";
+    public static final String FAQ_TEXT_JSON = "faq_text";
+
 
 }
