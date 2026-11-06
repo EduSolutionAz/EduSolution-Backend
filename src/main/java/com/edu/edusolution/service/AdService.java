@@ -65,6 +65,7 @@ public class AdService {
         newAd.setTitle(title);
         newAd.setAdUrl(S3_PUBLIC_SHARE_LINK+AD_FOLDER_KEY+title+AD_LOGO_KEY);
         newAd.setTitleNotChanged(request.getTitle());
+        newAd.setAdLink(request.getLink());
 
         adRepository.save(newAd);
 
@@ -89,6 +90,7 @@ public class AdService {
                 .content(checkAd.get().getContent())
                 .photoUrl(checkAd.get().getAdUrl())
                 .title(checkAd.get().getTitleNotChanged())
+                .adLink(checkAd.get().getAdLink())
                 .build();
 
     }

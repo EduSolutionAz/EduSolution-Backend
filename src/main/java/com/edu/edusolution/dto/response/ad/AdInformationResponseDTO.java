@@ -15,4 +15,6 @@ public class AdInformationResponseDTO {
     private String content;
     @JsonProperty("photo_url")
     private String photoUrl;
+    @JsonProperty("ad_link")
+    private String adLink;
 }
