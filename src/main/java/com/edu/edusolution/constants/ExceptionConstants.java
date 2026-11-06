@@ -121,4 +121,7 @@ public class ExceptionConstants {
     public static final String AD_UPLOAD_ERROR_CODE = "AD_UPLOAD_ERROR";
     public static final String AD_UPLOAD_ERROR_MSG = "An error occurred while uploading the add";
 
+    public static final String FAQ_NOT_FOUND_CODE = "FAQ_NOT_FOUND";
+    public static final String FAQ_NOT_FOUND_MSG = "Faq with this ID not found";
+
 }
