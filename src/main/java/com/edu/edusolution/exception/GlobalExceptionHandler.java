@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ClientNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleClientNotFoundException(ClientNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(ClientNotVerifiedException.class)
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CountryNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleCountryNotFoundException(CountryNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(CountryAlreadyExists.class)
@@ -91,12 +91,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UniversityNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleUniversityNotFoundException(UniversityNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(TokenNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleTokenNotFoundException(TokenNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(EmailException.class)
@@ -111,12 +111,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FacultyNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleFacultyNotFoundException(FacultyNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(AdminNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleAdminNotFoundException(AdminNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(AdminCreationException.class)
@@ -126,12 +126,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApplicantNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleApplicantNotFoundException(ApplicantNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(WebPropertyNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleWebPropertyNotFoundException(WebPropertyNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
@@ -168,12 +168,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PrizeNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handlePrizeNotFoundException(PrizeNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(ResultNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleResultNotFoundException(ResultNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(SpinGamePlayException.class)
@@ -198,7 +198,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AdNotFoundException.class)
     public ResponseEntity<ExceptionResponseDTO> handleAdNotFoundException(AdNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
     @ExceptionHandler(AdUploadException.class)
@@ -206,4 +206,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
     }
 
+    @ExceptionHandler(FaqNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleFaqNotFoundException(FaqNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getCode(), ex.getMessage()));
+    }
 }

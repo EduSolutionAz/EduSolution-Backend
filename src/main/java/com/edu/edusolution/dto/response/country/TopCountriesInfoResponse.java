@@ -6,19 +6,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.edu.edusolution.constants.DtoConstants.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class TopCountriesInfoResponse {
-    @JsonProperty("country_name")
+    @JsonProperty(COUNTRY_NAME_JSON)
     private String countryName;
-    @JsonProperty("university_count")
+    @JsonProperty(UNIVERSITY_COUNT_JSON)
     private Integer universityCount;
-    @JsonProperty("visa_help")
+    @JsonProperty(VISA_HELP_JSON)
     private Boolean visaHelp;
-    @JsonProperty("dormitory_help")
+    @JsonProperty(DORM_HELP_JSON)
     private Boolean dormitoryHelp;
-    @JsonProperty("country_bg_url")
+    @JsonProperty(COUNTRY_BG_URL_JSON)
     private String countryBGUrl;
 }

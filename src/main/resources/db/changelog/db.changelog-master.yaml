@@ -37,3 +37,9 @@ databaseChangeLog:
       file: db/changelog/init/090926-drop-ip.sql
   - include:
       file: db/changelog/init/101026-link_column_ads.sql
+  - include:
+      file: db/changelog/init/191026-monthly_spending_country_table.sql
+  - include:
+      file: db/changelog/init/031126-semester_count_university_table.sql
+  - include:
+      file: db/changelog/init/061126-faqs_table_schema.sql

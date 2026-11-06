@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,13 +31,13 @@ public class ContactController {
             description = "Creates a new contact request submitted by a user."
     )
     @ApiResponse(
-            responseCode = "200",
+            responseCode = "201",
             description = "Contact request created successfully",
             content = @Content(
                     schema = @Schema(implementation = CreateContactResponseDTO.class)
             )
     )
     public ResponseEntity<CreateContactResponseDTO> createContact(@RequestBody @Valid CreateContactRequestDTO request) {
-        return ResponseEntity.ok(contactService.createContact(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(contactService.createContact(request));
     }
 }

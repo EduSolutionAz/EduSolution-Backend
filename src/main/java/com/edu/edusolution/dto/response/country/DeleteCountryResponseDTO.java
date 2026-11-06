@@ -6,13 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.edu.edusolution.constants.DtoConstants.COUNTRY_NAME_JSON;
+import static com.edu.edusolution.constants.DtoConstants.IS_DELETED_JSON;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class DeleteCountryResponseDTO {
-    @JsonProperty("country_name")
+    @JsonProperty(COUNTRY_NAME_JSON)
     private String countryName;
-    @JsonProperty("is_deleted")
+    @JsonProperty(IS_DELETED_JSON)
     private Boolean isDeleted;
 }

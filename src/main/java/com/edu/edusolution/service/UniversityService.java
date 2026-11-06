@@ -39,6 +39,7 @@ public class UniversityService {
     private final S3Client s3Client;
     private final CountryRepository countryRepository;
 
+
     public List<UniversityLogoResponseDTO> getUniversityLogos(){
         List<UniversityEntity> universityEntities = universityRepository.findTop10ByIsPartner(true);
 
@@ -69,11 +70,17 @@ public class UniversityService {
                 .collect(Collectors.joining(" "));
 
         return UniversitySectionResponseDTO.builder()
-                .title(uniName)
+                .universityName(uniName)
                 .content(checkSection.getContent())
-                .photoUrl(checkUni.getUniversityLogoUrl())
-                .viewUrl(checkUni.getUniversityViewUrl())
+                .universityLogo(checkUni.getUniversityLogoUrl())
                 .faculties(facultiesString)
+                .area(checkSection.getAreas())
+                .city(checkUni.getCity())
+                .countryName(checkUni.getCountry().getCountryName())
+                .fee(checkUni.getEntryFee())
+                .semesterCount(checkUni.getSemesterCount())
+                .isPartner(checkUni.getIsPartner())
+                .universityType(checkUni.getType())
                 .build();
     }
 
@@ -179,7 +186,7 @@ public class UniversityService {
 
                             return UniversitiesResponseDTO.
                                     builder()
-                                    .universityName(universityEntity.getUniversityName())
+                                    .universityName(uniName)
                                     .countryName(universityEntity.getCountry().getCountryName())
                                     .build();
                         }
@@ -262,6 +269,7 @@ public class UniversityService {
         university.setDescription(request.getShortDescription());
         university.setIsPartner(request.getIsPartner());
         university.setEntryFee(request.getFee());
+        university.setSemesterCount(request.getSemesterCount());
 
         if(request.getUniversityLogo() != null) {
             DeleteObjectRequest deleteObjectRequest =
@@ -357,7 +365,7 @@ public class UniversityService {
 
         return UniversityEntityResponseDTO
                 .builder()
-                .universityName(university.getUniversityName())
+                .universityName(uniNameNormalized)
                 .countryName(university.getCountry().getCountryName())
                 .universityType(university.getType())
                 .city(university.getCity())
@@ -366,6 +374,9 @@ public class UniversityService {
                 .universityLogo(university.getUniversityLogoUrl())
                 .content(universitySection.getContent())
                 .area(universitySection.getAreas())
+                .isPartner(university.getIsPartner())
+                .semesterCount(university.getSemesterCount())
+                .fee(university.getEntryFee())
                 .build();
     }
 

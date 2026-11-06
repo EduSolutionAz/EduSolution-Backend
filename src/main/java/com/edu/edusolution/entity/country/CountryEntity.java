@@ -41,6 +41,9 @@ public class CountryEntity {
     @Column(name = "rental_fee_entry", precision = 8, scale = 2)
     private BigDecimal rentalFeeEntry;
 
+    @Column(name = "monthly_spending", precision = 8, scale = 2)
+    private BigDecimal monthlySpending;
+
     @Column(name = "visa_help", nullable = false)
     private Boolean visaHelp;
 
