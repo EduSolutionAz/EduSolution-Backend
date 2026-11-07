@@ -206,7 +206,7 @@ public class SpinService {
     }
 
     public List<SpinWinnersDTO> spinWinners() {
-        List<SpinResultEntity> results = spinResultRepository.findAllByOrderByCreatedAtDesc();
+        List<SpinResultEntity> results = spinResultRepository.findAllWithPrize();
 
         return results.stream()
                 .map(
